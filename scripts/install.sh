@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# BETTER AI USAGE - Complete Installation Script
+# BETTER TERMINAL USAGE - Complete Installation Script
 # ═══════════════════════════════════════════════════════════════════════════════
-# Installs all tools for the Ultimate AI Terminal Environment
+# Installs all tools for the High-Performance Terminal Environment
 # Run: ./install.sh
 
 set -euo pipefail
@@ -211,10 +211,10 @@ else
     log_info "ast-grep already installed"
 fi
 
-# probe - AI code extraction
+# probe - code extraction
 if ! command_exists probe; then
     log_info "Installing probe..."
-    cargo install probe-cli
+    cargo install probe-code
     log_success "probe installed"
 else
     log_info "probe already installed"
@@ -311,4 +311,4 @@ echo "2. Initialize grepai: grepai init"
 echo "3. Login to GitHub CLI: gh auth login"
 echo "4. Login to Atuin (optional): atuin login"
 echo ""
-echo "Enjoy your Ultimate AI Terminal Environment!"
+echo "Enjoy your High-Performance Terminal Environment!"

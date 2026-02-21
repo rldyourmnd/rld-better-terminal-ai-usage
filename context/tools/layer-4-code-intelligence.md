@@ -24,7 +24,7 @@ grepai init  # Initialize embeddings
 ### Key Features
 - Natural language queries
 - No exact match needed
-- JSON output for AI agents
+- JSON output for developers
 - Token-optimized formats
 
 ### Usage Examples
@@ -38,7 +38,7 @@ grepai search "error handling middleware"
 grepai search "database connection pool"
 grepai search "API request validation"
 
-# JSON output (for AI consumption)
+# JSON output (structured output)
 grepai search "authentication" --json
 
 # Compact output (saves ~80% tokens)
@@ -55,7 +55,7 @@ grepai search "login" --workspace myproject
 grepai search "auth" --workspace myproject --project frontend
 ```
 
-### AI Agent Integration
+### developer Integration
 ```bash
 # Pipe to AI
 grepai search "security vulnerability" --json | claude "Review this code"
@@ -134,7 +134,7 @@ sg -p 'old_func($$$)' -r 'new_func($$$)' -l python --update-all
 ## probe
 
 ### Description
-AI-friendly code block extraction using tree-sitter
+optimized code block extraction using tree-sitter
 
 ### Installation
 ```bash
@@ -165,10 +165,10 @@ probe query "function $NAME($$$) { $$$ }" ./src --language javascript
 probe search "authentication" ./ --max-tokens 8000
 ```
 
-### AI Integration
+### Advanced Usage
 ```bash
-# Feed to AI with context limit
-probe search "main function" ./ --max-tokens 4000 | claude "Explain this"
+# Token-limited search
+probe search "main function" ./ --max-tokens 4000 | head -20
 ```
 
 ---
@@ -344,7 +344,7 @@ tokei src/*.rs
 |---------|--------|----------|-------|---------|
 | **Search type** | Semantic | AST structural | Hybrid | Pattern |
 | **Query format** | Natural language | AST pattern | Both | Rule-based |
-| **AI-friendly** | Yes | Yes | Yes | Yes |
+| **optimized** | Yes | Yes | Yes | Yes |
 | **Token control** | Yes (--toon) | No | Yes (--max-tokens) | No |
 | **Security focus** | No | No | No | Yes |
 | **Code rewrite** | No | Yes | No | No |
@@ -352,7 +352,7 @@ tokei src/*.rs
 
 ---
 
-## AI Agent Workflow
+## developer Workflow
 
 ```bash
 # 1. Semantic search to understand codebase
@@ -361,7 +361,7 @@ grepai search "user registration flow" --json --compact
 # 2. Structural search for specific patterns
 sg -p 'async def $NAME($$$): $$$BODY' -l python
 
-# 3. Extract code for AI context (token-limited)
+# 3. Extract code for context (token-limited)
 probe search "authentication" ./ --max-tokens 8000
 
 # 4. Security scan

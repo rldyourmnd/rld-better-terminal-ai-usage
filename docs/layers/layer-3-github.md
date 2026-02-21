@@ -8,7 +8,7 @@ This layer provides full GitHub functionality in the terminal, plus enhanced git
 
 ## Tools
 
-| Tool | Context7 Score | Purpose |
+| Tool | Score | Purpose |
 |------|----------------|---------|
 | **gh CLI** | 83.2 | Complete GitHub control in terminal |
 | **lazygit** | 46 | Visual git UI for staging, commits, pushes |

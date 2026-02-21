@@ -1,6 +1,6 @@
 # Foundation Layer - Complete Guide
 
-> Terminal + Shell + Prompt configuration for AI-optimized development
+> Terminal + Shell + Prompt configuration for optimized development
 
 ## Overview
 

@@ -76,3 +76,8 @@ go.sum
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+
+# Development tools (local only)
+.serena/
+.claude/
+CLAUDE.md

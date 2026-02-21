@@ -1,22 +1,17 @@
-# Better AI Usage - Ultimate Terminal Environment
+# Better Terminal Usage
 
-> **The most optimized terminal environment for AI agents and high-performance development**
+> **High-performance terminal environment for modern development workflows**
 
 ## Overview
 
-This repository contains a complete, production-ready configuration for building the ultimate terminal environment optimized for AI agents. Based on extensive research using Context7 (February 2026), this setup achieves **30x faster** shell startup and **minimal latency** for AI workflows.
+This repository contains a complete, production-ready terminal configuration optimized for speed and efficiency. Based on extensive research and benchmarking (February 2026), this setup achieves **30x faster** shell startup and **minimal latency** for development workflows.
 
-## Architecture - 5 Layers
+## Architecture - 4 Layers
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│               ULTIMATE AI TERMINAL ENVIRONMENT                      │
+│               HIGH-PERFORMANCE TERMINAL ENVIRONMENT                 │
 ├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  LAYER 5: AI ORCHESTRATION                                         │
-│  ─────────────────────────────                                     │
-│  claude CLI | gemini CLI | codex CLI                               │
-│  Multi-model reasoning, task-specific selection, offline capability │
 │                                                                     │
 │  LAYER 4: CODE INTELLIGENCE                                        │
 │  ─────────────────────────────                                     │
@@ -57,10 +52,10 @@ This repository contains a complete, production-ready configuration for building
 
 ```bash
 # Clone repository
-git clone https://github.com/rldyourmnd/better-ai-usage.git
-cd better-ai-usage
+git clone https://github.com/rldyourmnd/better-terminal-usage.git
+cd better-terminal-usage
 
-# Run installation script
+# Run full installation
 ./scripts/install.sh
 
 # Or install layer by layer
@@ -69,7 +64,6 @@ cd better-ai-usage
 ./scripts/install-layer-2.sh
 ./scripts/install-layer-3.sh
 ./scripts/install-layer-4.sh
-./scripts/install-layer-5.sh
 ```
 
 ## Layers Detail
@@ -86,6 +80,7 @@ Ultra-fast file manipulation tools that replace classic Unix utilities.
 | sd | 90.8 | sed | painless regex, intuitive syntax |
 | jq | 85.7 | JSON parsing | powerful filtering |
 | yq | 96.4 | YAML/JSON/XML | unified processor |
+| eza | - | ls | icons, colors, git status |
 
 ### Layer 2: Productivity
 
@@ -101,6 +96,7 @@ Tools that dramatically speed up daily workflows.
 | watchexec | - | Auto-run commands on file changes |
 | glow | 76.1 | Markdown renderer for terminal |
 | bottom | - | System monitor (htop replacement) |
+| hyperfine | - | Command-line benchmarking |
 
 ### Layer 3: GitHub & Git
 
@@ -114,26 +110,16 @@ Complete git and GitHub automation without leaving terminal.
 
 ### Layer 4: Code Intelligence
 
-AI-ready code analysis and search tools.
+Advanced code analysis and search tools.
 
 | Tool | Score | Purpose |
 |------|-------|---------|
 | grepai | 88.4 | Semantic code search with embeddings |
 | ast-grep | 78.7 | AST-based structural search and rewrite |
-| probe | - | AI-friendly code block extraction |
+| probe | - | Code block extraction for documentation |
 | semgrep | 70.4 | Static analysis for security |
 | ctags | - | Code indexing for navigation |
 | tokei | - | Code statistics by language |
-
-### Layer 5: AI Orchestration
-
-AI CLI tools for multi-model workflows (Context7 verified February 2026).
-
-| Tool | Score | Purpose |
-|------|-------|---------|
-| claude CLI | 80.6 | Anthropic Claude - deep reasoning, code generation |
-| gemini CLI | 78.2 | Google Gemini - fast exploration, research |
-| codex CLI | 56.9 | OpenAI Codex - independent review, critique |
 
 ## Foundation
 
@@ -154,7 +140,7 @@ AI CLI tools for multi-model workflows (Context7 verified February 2026).
 ## Directory Structure
 
 ```
-better-ai-usage/
+better-terminal-usage/
 ├── README.md                   # This file
 ├── LICENSE                     # MIT License
 ├── CONTRIBUTING.md             # Contribution guidelines
@@ -163,12 +149,9 @@ better-ai-usage/
 │   │   ├── layer-1-file-ops.md
 │   │   ├── layer-2-productivity.md
 │   │   ├── layer-3-github.md
-│   │   ├── layer-4-code-intelligence.md
-│   │   └── layer-5-ai-orchestration.md
+│   │   └── layer-4-code-intelligence.md
 │   ├── foundation/
-│   │   ├── wezterm.md
-│   │   ├── fish.md
-│   │   └── starship.md
+│   │   └── foundation.md
 │   └── benchmarks.md
 ├── configs/
 │   ├── wezterm/
@@ -178,25 +161,16 @@ better-ai-usage/
 │   └── starship/
 │       └── starship.toml
 ├── scripts/
+│   ├── install.sh
 │   ├── install-foundation.sh
 │   ├── install-layer-1.sh
 │   ├── install-layer-2.sh
 │   ├── install-layer-3.sh
-│   ├── install-layer-4.sh
-│   └── install-layer-5.sh
-└── research/
-    └── context7-analysis.md
+│   └── install-layer-4.sh
+└── context/
+    ├── benchmarks.md
+    └── tools/
 ```
-
-## Research Methodology
-
-All tool selections are based on Context7 benchmark scores and documentation analysis performed in February 2026. Tools were evaluated on:
-
-- Performance benchmarks
-- Community adoption
-- Documentation quality
-- AI-agent compatibility
-- Active maintenance
 
 ## Contributing
 
@@ -205,9 +179,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-- Context7 for comprehensive documentation analysis
-- All tool maintainers for their excellent work
-- Open source community for continuous innovation

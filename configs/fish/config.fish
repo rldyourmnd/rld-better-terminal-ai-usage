@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# FISH CONFIGURATION - Ultimate AI Terminal Environment
+# FISH CONFIGURATION - High-Performance Terminal Environment
 # ═══════════════════════════════════════════════════════════════════════════════
 # Performance: ~30ms startup (vs 915ms zsh before)
 # Features: Autosuggestions, web-based config, modern scripting

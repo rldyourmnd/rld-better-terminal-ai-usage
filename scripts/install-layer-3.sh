@@ -6,7 +6,7 @@
 # Platform: Linux (Ubuntu/Debian)
 # Run: ./install-layer-3.sh
 #
-# Context7 Verified (February 2026):
+# Verified (February 2026):
 # - gh CLI: Score 83.2 (/websites/cli_github)
 # - lazygit: Score 46 (/jesseduffield/lazygit)
 # - delta: Popular (dandavison/delta)

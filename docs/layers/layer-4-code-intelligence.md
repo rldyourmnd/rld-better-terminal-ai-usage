@@ -1,18 +1,18 @@
 # Layer 4: Code Intelligence - Complete Guide
 
-> AI-ready code analysis and search tools
+> Advanced code analysis and search tools
 
 ## Overview
 
-This layer provides semantic code search, AST-aware editing, and security analysis. These tools give AI agents deep understanding of codebases.
+This layer provides semantic code search, AST-aware editing, and security analysis. These tools enable deep understanding of codebases.
 
 ## Tools
 
-| Tool | Context7 Score | Purpose |
-|------|----------------|---------|
+| Tool | Score | Purpose |
+|------|-------|---------|
 | **grepai** | 88.4 | Semantic code search with embeddings |
 | **ast-grep** | 78.7 | AST structural search and rewrite |
-| **probe** | N/A | AI-friendly code block extraction |
+| **probe** | N/A | Code block extraction |
 | **semgrep** | 70.4 | Static analysis for security |
 | **ctags** | N/A | Code indexing for navigation |
 | **tokei** | N/A | Code statistics by language |
@@ -37,7 +37,7 @@ cargo install tokei
 # ast-grep (78.7) - AST structural search
 cargo install ast-grep
 
-# probe - AI code extraction
+# probe - code extraction
 cargo install probe-code
 
 # semgrep (70.4) - security analysis
@@ -65,14 +65,11 @@ grepai search "user authentication flow"
 grepai search "error handling middleware"
 grepai search "database connection pool"
 
-# JSON output for AI agents
+# JSON output
 grepai search "authentication" --json
 
 # Compact output (saves ~80% tokens)
 grepai search "auth flow" --json --compact
-
-# Token-optimized format
-grepai search "JWT validation" --toon
 
 # Limit results
 grepai search "API" --limit 5
@@ -86,7 +83,7 @@ grepai search "login" --workspace myproject
 1. Indexes code using vector embeddings
 2. Builds semantic understanding of code
 3. Matches queries by meaning, not just text
-4. Perfect for AI agents exploring codebases
+4. Perfect for exploring unfamiliar codebases
 
 ## ast-grep - Structural Search
 
@@ -134,9 +131,9 @@ sg -p 'var $VAR = $VAL' -l javascript -i
 - Ruby
 - And 20+ more
 
-## probe - AI Code Extraction
+## probe - Code Extraction
 
-`★ Key Feature: Extracts code blocks optimized for AI context windows`
+`★ Key Feature: Extracts code blocks optimized for context windows`
 
 ### Usage
 
@@ -156,7 +153,6 @@ probe query "class $NAME: $$$BODY" ./src --language python
 - Token-aware extraction
 - Tree-sitter parsing
 - Respects context window limits
-- Perfect for feeding code to LLMs
 
 ## semgrep - Security Analysis
 
@@ -227,12 +223,11 @@ tokei --exclude node_modules target
 |---------|--------|----------|-------|---------|
 | Search type | Semantic | Structural | Hybrid | Pattern |
 | Query format | Natural | AST pattern | Both | Rule |
-| AI-friendly | Yes | Yes | Yes | Yes |
 | Token control | Yes | No | Yes | No |
 | Security | No | No | No | Yes |
 | Rewrite | No | Yes | No | No |
 
-## AI Agent Workflow
+## Developer Workflow
 
 ```bash
 # 1. Semantic search to understand codebase
@@ -241,7 +236,7 @@ grepai search "user registration flow" --json --compact
 # 2. Structural search for specific patterns
 sg -p 'async def $NAME($$$): $$$BODY' -l python
 
-# 3. Extract code for AI context
+# 3. Extract code for context
 probe search "authentication" ./ --max-tokens 8000
 
 # 4. Security scan

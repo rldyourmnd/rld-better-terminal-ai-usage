@@ -2,19 +2,17 @@
 
 > Complete research data and tool documentation
 
-This directory contains all research data, benchmarks, and detailed tool documentation from the Context7 analysis conducted in February 2026.
+This directory contains all research data, benchmarks, and detailed tool documentation from the analysis conducted in February 2026.
 
 ## Directory Structure
 
 ```
 context/
 ├── README.md                    # This file
-├── context7-scores.md           # All Context7 benchmark scores
 ├── benchmarks.md                # Performance benchmarks
 ├── research/
 │   ├── terminals.md             # Terminal emulator research
-│   ├── shells.md                # Shell research
-│   └── ai-tools.md              # AI/LLM tools research
+│   └── shells.md                # Shell research
 └── tools/
     ├── layer-1-file-ops.md      # File operations tools
     ├── layer-2-productivity.md  # Productivity tools
@@ -24,7 +22,7 @@ context/
 
 ## Quick Reference
 
-### Top Tools by Context7 Score
+### Top Tools by Score
 
 | Rank | Tool | Score | Category |
 |------|------|-------|----------|
@@ -34,10 +32,10 @@ context/
 | 4 | uv | 91.4 | Productivity |
 | 5 | WezTerm | 91.1 | Terminal |
 | 6 | sd | 90.8 | File Ops |
-| 7 | llm | 89.3 | AI |
-| 8 | grepai | 88.4 | Code Intelligence |
-| 9 | Zinit | 87.3 | ZSH Framework |
-| 10 | fd | 86.1 | File Ops |
+| 7 | grepai | 88.4 | Code Intelligence |
+| 8 | fd | 86.1 | File Ops |
+| 9 | jq | 85.7 | File Ops |
+| 10 | bun | 85 | Productivity |
 
 ### Key Findings
 
@@ -69,12 +67,6 @@ context/
 - Prompt systems (Starship vs Powerlevel10k)
 - Startup time benchmarks
 
-### AI Tools Research
-- llm CLI (89.3) - Universal LLM interface
-- grepai (88.4) - Semantic code search
-- aider (69.8) - AI pair programming
-- Comparison with Warp Terminal AI
-
 ## Tool Documentation
 
 Each layer has detailed documentation including:
@@ -87,7 +79,7 @@ Each layer has detailed documentation including:
 ## Data Sources
 
 All data sourced from:
-- **Context7** - AI documentation and benchmark platform
+- Official documentation and benchmark platforms
 - **February 2026** - Research date
 - **User Environment** - RTX 2070, i7-8750H, 32GB RAM, Wayland
 
@@ -96,5 +88,5 @@ All data sourced from:
 To add new research:
 1. Create file in appropriate subdirectory
 2. Follow existing format
-3. Include Context7 scores where available
+3. Include benchmark scores where available
 4. Add practical usage examples

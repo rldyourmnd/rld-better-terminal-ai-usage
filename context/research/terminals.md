@@ -1,8 +1,8 @@
 # Terminal Research
 
-> Research conducted via Context7 - February 2026
+> Research conducted via  - February 2026
 
-## Context7 Benchmark Scores
+##  Benchmark Scores
 
 | Terminal | Score | Language | GPU | Multiplexer |
 |----------|-------|----------|-----|-------------|
@@ -18,13 +18,13 @@
 
 ### WezTerm (Score: 91.1) - WINNER
 
-**Why WezTerm is optimal for AI agents:**
+**Why WezTerm is optimal for developers:**
 
 1. **WebGPU + Vulkan backend** - Direct GPU access on NVIDIA RTX 2070
 2. **Built-in multiplexer** - No separate tmux, zero IPC latency
 3. **local_echo_threshold_ms=10** - Predictive echo for minimal perceived latency
-4. **Lua scripting** - Automation for AI workflows
-5. **Unix domains** - Persistent sessions for parallel agents
+4. **Lua scripting** - Automation for developer workflows
+5. **Unix domains** - Persistent sessions for parallel sessions
 
 **Configuration highlights:**
 
@@ -37,7 +37,7 @@ config.webgpu_power_preference = 'HighPerformance'
 config.unix_domains = {
   {
     name = 'unix',
-    local_echo_threshold_ms = 10,  -- CRITICAL for AI
+    local_echo_threshold_ms = 10,  -- critical for responsiveness
   },
 }
 
@@ -66,7 +66,7 @@ wayland_enable_ime no
 
 ### Warp Terminal (Score: 72.1)
 
-**Status: AI Agent Platform (not just terminal)**
+**Status: developer Platform (not just terminal)**
 
 **Pros:**
 - Agent Mode with natural language
@@ -109,10 +109,10 @@ wayland_enable_ime no
 ## Recommendation
 
 **Primary:** WezTerm
-- Highest Context7 score (91.1)
+- Highest  score (91.1)
 - Built-in multiplexer
 - WebGPU + Vulkan on RTX 2070
-- Lua scripting for AI automation
+- Lua scripting for automation
 
 **Alternative:** Kitty
 - If WezTerm has issues

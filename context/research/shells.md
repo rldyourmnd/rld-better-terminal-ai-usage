@@ -1,8 +1,8 @@
 # Shell Research
 
-> Research conducted via Context7 - February 2026
+> Research conducted via  - February 2026
 
-## Context7 Benchmark Scores
+##  Benchmark Scores
 
 ### Full Shells
 
@@ -32,7 +32,7 @@
 
 ### Fish (Score: 94.5) - RECOMMENDED
 
-**Why Fish is optimal for AI agents:**
+**Why Fish is optimal for developers:**
 
 1. **~30ms startup** (vs 915ms current zsh - 30x improvement)
 2. **Autosuggestions out of the box** - No plugins needed
@@ -50,7 +50,7 @@
 **Trade-off:**
 - NOT POSIX compatible
 - Some scripts may need adaptation
-- For AI agents: This is acceptable
+- For developers: This is acceptable
 
 ### Nushell (Score: 85.0) - Alternative
 
@@ -60,7 +60,7 @@
 - Modern cross-platform design
 
 **Use cases:**
-- Data-intensive AI workflows
+- Data-intensive data-intensive workflows
 - JSON/CSV processing
 - Pipeline operations
 

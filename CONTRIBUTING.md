@@ -1,20 +1,20 @@
-# Contributing to Better AI Usage
+# Contributing to Better Terminal Usage
 
-Thank you for your interest in contributing! This project aims to provide the most optimized terminal environment for AI agents.
+Thank you for your interest in contributing! This project aims to provide the most optimized terminal environment for modern development workflows.
 
 ## Ways to Contribute
 
 ### 1. Report Issues
 
-- Use the [issue tracker](https://github.com/rldyourmnd/better-ai-usage/issues)
+- Use the [issue tracker](https://github.com/rldyourmnd/better-terminal-usage/issues)
 - Check for existing issues before creating new ones
 - Provide detailed reproduction steps
 
 ### 2. Suggest New Tools
 
 - Open an issue with the `tool-suggestion` label
-- Include Context7 benchmark score if available
-- Explain the benefit for AI agent workflows
+- Include benchmark score if available
+- Explain the benefit for developer workflows
 
 ### 3. Improve Documentation
 
@@ -32,8 +32,8 @@ Thank you for your interest in contributing! This project aims to provide the mo
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/better-ai-usage.git
-cd better-ai-usage
+git clone https://github.com/YOUR_USERNAME/better-terminal-usage.git
+cd better-terminal-usage
 
 # Create a branch
 git checkout -b feature/your-feature
@@ -75,7 +75,7 @@ When suggesting new tools, consider:
 | Criterion | Weight |
 |-----------|--------|
 | Performance (benchmark) | 40% |
-| AI-agent compatibility | 25% |
+| Developer compatibility | 25% |
 | Documentation quality | 15% |
 | Active maintenance | 10% |
 | Community adoption | 10% |

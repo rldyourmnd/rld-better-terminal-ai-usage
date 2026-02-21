@@ -6,11 +6,11 @@
 # Platform: Linux (Ubuntu/Debian)
 # Run: ./scripts/install-layer-4.sh
 #
-# Context7 Verified (February 2026):
-# - grepai: Score 88.4 (/yoanbernabeu/grepai) - pip
-# - ast-grep: Score 78.7 (/ast-grep/ast-grep.github.io) - cargo
-# - probe: (/buger/probe) - cargo
-# - semgrep: Score 70.4 (/semgrep/semgrep-docs) - pip
+# Verified February 2026:
+# - grepai: 88.4 score - Go binary
+# - ast-grep: 78.7 score - cargo
+# - probe: cargo (probe-code)
+# - semgrep: 70.4 score - pip
 # - ctags: universal-ctags - apt
 # - tokei: cargo
 
@@ -97,7 +97,7 @@ fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # AST-GREP - Structural search and rewrite (cargo)
-# Context7 Score: 78.7
+# Score: 78.7
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Installing ast-grep..."
 
@@ -117,8 +117,8 @@ else
 fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PROBE - AI code extraction (cargo)
-# Context7: /buger/probe
+# PROBE - code extraction (cargo)
+# /buger/probe
 # Package: probe-code
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Installing probe..."
@@ -132,7 +132,7 @@ fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SEMGREP - Security analysis (pip)
-# Context7 Score: 70.4
+# Score: 70.4
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Installing semgrep..."
 
@@ -151,7 +151,7 @@ fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # GREPAI - Semantic code search (Go binary)
-# Context7 Score: 88.4 (/yoanbernabeu/grepai)
+# Score: 88.4 (/yoanbernabeu/grepai)
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Installing grepai..."
 
@@ -251,7 +251,7 @@ else
 fi
 
 echo ""
-echo "Context7 Verified Scores:"
+echo "Verified Scores:"
 echo "  grepai:   88.4 (/yoanbernabeu/grepai)"
 echo "  ast-grep: 78.7 (/ast-grep/ast-grep.github.io)"
 echo "  semgrep:  70.4 (/semgrep/semgrep-docs)"

@@ -1,8 +1,8 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# STARSHIP CONFIGURATION - Ultimate AI Terminal Environment
+# STARSHIP CONFIGURATION - High-Performance Terminal Environment
 # ═══════════════════════════════════════════════════════════════════════════════
 # Performance: <5ms startup, Rust-based
-# Style: Minimal, high contrast for AI readability
+# Style: Minimal, high contrast for optimal visibility
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FORMAT - Minimal left, info on right

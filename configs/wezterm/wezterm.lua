@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════════
--- WEZTERM CONFIGURATION - Ultimate AI Terminal Environment
+-- WEZTERM CONFIGURATION - High-Performance Terminal Environment
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Performance: WebGPU + Vulkan, ~50-80ms startup
 -- Features: Built-in multiplexer, GPU acceleration, Lua scripting
@@ -22,7 +22,7 @@ for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
 end
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- PERFORMANCE - Minimal latency for AI agents
+-- PERFORMANCE - Minimal latency for developers
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.max_fps = 120
 config.animation_fps = 1              -- Disable animations
@@ -69,7 +69,7 @@ config.font = wezterm.font 'JetBrains Mono'
 config.font_size = 12.0
 config.line_height = 1.1
 
--- Color scheme (dark, high contrast for AI readability)
+-- Color scheme (dark, high contrast for optimal visibility)
 config.color_scheme = 'Catppuccin Mocha'
 config.colors = {
   background = '#1e1e2e',
@@ -79,7 +79,7 @@ config.colors = {
 }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- KEYBINDINGS - AI-optimized
+-- KEYBINDINGS - optimized
 -- ═══════════════════════════════════════════════════════════════════════════════
 local act = wezterm.action
 
@@ -118,7 +118,7 @@ config.keys = {
 }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- LAUNCH MENU - AI agent quick start
+-- LAUNCH MENU - developer quick start
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.launch_menu = {
   { label = 'Fish', args = { 'fish' } },
