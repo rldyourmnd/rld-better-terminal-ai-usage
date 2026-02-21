@@ -1,20 +1,20 @@
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- WEZTERM CONFIGURATION - High-Performance Terminal Environment
 -- ═══════════════════════════════════════════════════════════════════════════════
--- Performance: WebGPU + Vulkan, ~50-80ms startup
+-- Performance: WebGPU + Vulkan
 -- Features: Built-in multiplexer, GPU acceleration, Lua scripting
 
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- GPU RENDERING - WebGPU + Vulkan
+-- GPU RENDERING - WebGPU + Vulkan (optimized for NVIDIA RTX)
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.front_end = 'WebGpu'
-config.webgpu_power_preference = 'HighPerformance'
 
 -- Auto-select Vulkan discrete GPU (NVIDIA, AMD)
-for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
+local gpus = wezterm.gui.enumerate_gpus()
+for _, gpu in ipairs(gpus) do
   if gpu.backend == 'Vulkan' and gpu.device_type == 'DiscreteGpu' then
     config.webgpu_preferred_adapter = gpu
     break
@@ -22,13 +22,17 @@ for _, gpu in ipairs(wezterm.gui.enumerate_gpus()) do
 end
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- PERFORMANCE - Minimal latency for developers
+-- PERFORMANCE - Minimal latency for AI tools
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.max_fps = 120
-config.animation_fps = 1              -- Disable animations
-config.cursor_blink_rate = 0          -- No blinking overhead
-config.cursor_blink_ease_in = 'Constant'
-config.cursor_blink_ease_out = 'Constant'
+config.animation_fps = 1
+config.cursor_blink_rate = 0
+
+-- Large scrollback for AI tool output (Claude Code, etc.)
+config.scrollback_lines = 50000
+
+-- Terminal capabilities for modern tools
+config.term = 'wezterm'
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- MULTIPLEXER - Built-in, no tmux needed
@@ -37,12 +41,10 @@ config.unix_domains = {
   {
     name = 'unix',
     socket_path = '/tmp/wezterm-gui-sock',
-    -- CRITICAL: Predictive echo for minimal perceived latency
     local_echo_threshold_ms = 10,
   },
 }
 
--- Auto-connect to multiplexer on startup
 config.default_gui_startup_args = { 'connect', 'unix' }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
@@ -51,10 +53,15 @@ config.default_gui_startup_args = { 'connect', 'unix' }
 config.enable_wayland = true
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- APPEARANCE - Modern with integrated buttons (like VS Code/Chrome)
+-- DEFAULT SHELL - Fish as primary
+-- ═══════════════════════════════════════════════════════════════════════════════
+config.default_prog = { '/usr/bin/fish', '-l' }
+
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- APPEARANCE - Modern with integrated buttons
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.enable_scroll_bar = false
-config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
+config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
 config.show_new_tab_button_in_tab_bar = true
@@ -69,18 +76,39 @@ config.window_padding = {
 config.font = wezterm.font 'JetBrains Mono'
 config.font_size = 12.0
 config.line_height = 1.1
+config.font_shaper = 'Harfbuzz'  -- Better font rendering
 
--- Color scheme (dark, high contrast for optimal visibility)
+-- Color scheme
 config.color_scheme = 'Catppuccin Mocha'
 config.colors = {
   background = '#1e1e2e',
   foreground = '#cdd6f4',
   cursor_bg = '#f5e0dc',
   cursor_fg = '#1e1e2e',
+  selection_fg = '#1e1e2e',
+  selection_bg = '#f5e0dc',
+  tab_bar = {
+    background = '#181825',
+    active_tab = { bg_color = '#1e1e2e', fg_color = '#cdd6f4' },
+    inactive_tab = { bg_color = '#181825', fg_color = '#6c7086' },
+    new_tab = { bg_color = '#181825', fg_color = '#6c7086' },
+  },
+}
+
+-- Quick select patterns for common items
+config.quick_select_patterns = {
+  -- File paths
+  '[/~]?[a-zA-Z0-9./_-]+',
+  -- Git hashes
+  '[a-f0-9]{7,40}',
+  -- URLs
+  'https?://[^\\s]+',
+  -- IP addresses
+  '\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}',
 }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- KEYBINDINGS - optimized
+-- KEYBINDINGS
 -- ═══════════════════════════════════════════════════════════════════════════════
 local act = wezterm.action
 
@@ -116,10 +144,35 @@ config.keys = {
 
   -- Reload config
   { key = 'r', mods = 'CTRL|SHIFT', action = act.ReloadConfiguration },
+
+  -- Font size
+  { key = '=', mods = 'CTRL|SHIFT', action = act.IncreaseFontSize },
+  { key = '-', mods = 'CTRL|SHIFT', action = act.DecreaseFontSize },
+  { key = '0', mods = 'CTRL|SHIFT', action = act.ResetFontSize },
+}
+
+-- Mouse bindings
+config.mouse_bindings = {
+  -- Ctrl+Click to open links
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'CTRL',
+    action = act.OpenLinkAtMouseCursor,
+  },
+  -- Double click to select word
+  {
+    event = { Up = { streak = 2, button = 'Left' } },
+    action = act.CopyTo 'ClipboardAndPrimarySelection',
+  },
+  -- Triple click to select line
+  {
+    event = { Up = { streak = 3, button = 'Left' } },
+    action = act.CopyTo 'ClipboardAndPrimarySelection',
+  },
 }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- LAUNCH MENU - developer quick start
+-- LAUNCH MENU
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.launch_menu = {
   { label = 'Fish', args = { 'fish' } },
