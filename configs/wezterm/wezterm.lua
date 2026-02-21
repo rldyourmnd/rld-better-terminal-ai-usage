@@ -27,12 +27,21 @@ end
 config.max_fps = 120
 config.animation_fps = 1
 config.cursor_blink_rate = 0
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
 
 -- Large scrollback for AI tool output (Claude Code, etc.)
 config.scrollback_lines = 50000
 
 -- Terminal capabilities for modern tools
 config.term = 'wezterm'
+
+-- Reduce CPU overhead
+config.check_for_updates = false
+config.audible_bell = 'Disabled'
+config.visual_bell = { fade_in_duration_ms = 0, fade_out_duration_ms = 0 }
+config.window_close_confirmation = 'NeverPrompt'
+config.skip_close_confirmation_for_processes_named = {}
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- MULTIPLEXER - Built-in, no tmux needed
