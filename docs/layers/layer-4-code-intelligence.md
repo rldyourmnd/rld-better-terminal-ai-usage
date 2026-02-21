@@ -1,4 +1,4 @@
-# Layer 4: Code Intelligence
+# Layer 4: Code Intelligence - Complete Guide
 
 > AI-ready code analysis and search tools
 
@@ -8,37 +8,46 @@ This layer provides semantic code search, AST-aware editing, and security analys
 
 ## Tools
 
-| Tool | Score | Purpose |
-|------|-------|---------|
+| Tool | Context7 Score | Purpose |
+|------|----------------|---------|
 | **grepai** | 88.4 | Semantic code search with embeddings |
 | **ast-grep** | 78.7 | AST structural search and rewrite |
-| **probe** | - | AI-friendly code block extraction |
+| **probe** | N/A | AI-friendly code block extraction |
 | **semgrep** | 70.4 | Static analysis for security |
-| **ctags** | - | Code indexing for navigation |
-| **tokei** | - | Code statistics by language |
+| **ctags** | N/A | Code indexing for navigation |
+| **tokei** | N/A | Code statistics by language |
 
 ## Installation
 
+### Quick Install
+
 ```bash
-# grepai (88.4) - semantic code search
-pip install grepai
-grepai init  # Initialize embeddings
+./scripts/install-layer-4.sh
+```
+
+### Manual Installation
+
+```bash
+# ctags - code indexing (requires sudo)
+sudo apt install -y universal-ctags
+
+# tokei - code statistics
+cargo install tokei
 
 # ast-grep (78.7) - AST structural search
 cargo install ast-grep
 
 # probe - AI code extraction
-cargo install probe-cli
+cargo install probe-code
 
 # semgrep (70.4) - security analysis
-pip install semgrep
-# Or: brew install semgrep
+pip3 install --user --break-system-packages semgrep
 
-# ctags - code indexing
-sudo apt install -y universal-ctags
-
-# tokei - code statistics
-cargo install tokei
+# grepai (88.4) - semantic code search (Go binary)
+GREPAI_VERSION=$(curl -s https://api.github.com/repos/yoanbernabeu/grepai/releases/latest | grep -oP '"tag_name": "\K[^"]+')
+curl -sSL -o /tmp/grepai.tar.gz "https://github.com/yoanbernabeu/grepai/releases/download/${GREPAI_VERSION}/grepai_${GREPAI_VERSION#v}_linux_amd64.tar.gz"
+tar xzf /tmp/grepai.tar.gz -C /tmp
+mv /tmp/grepai ~/.local/bin/
 ```
 
 ## grepai - Semantic Code Search
