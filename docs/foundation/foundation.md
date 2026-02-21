@@ -238,12 +238,28 @@ format = "$directory$git_branch$git_status$character"
 right_format = "$cmd_duration$jobs"
 ```
 
-### Performance Settings
+### CPU Optimization
 
-```toml
-scan_timeout = 10      # 10ms scan timeout
-command_timeout = 100  # 100ms command timeout
+```lua
+-- Reduce CPU overhead
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
+config.check_for_updates = false
+config.audible_bell = 'Disabled'
+config.visual_bell = { fade_in_duration_ms = 0, fade_out_duration_ms = 0 }
+config.window_close_confirmation = 'NeverPrompt'
+config.skip_close_confirmation_for_processes_named = {}
 ```
+
+| Setting | Value | Effect |
+|---------|-------|--------|
+| cursor_blink_ease | Constant | No easing calculations |
+| check_for_updates | false | No background network |
+| audible_bell | Disabled | No sound processing |
+| visual_bell | 0ms | No animation |
+| window_close_confirmation | NeverPrompt | Instant close |
+
+### Performance Settings
 
 ### Disabled Modules
 
