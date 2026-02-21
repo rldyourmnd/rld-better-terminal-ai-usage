@@ -169,9 +169,6 @@ disabled = true
 [java]
 disabled = true
 
-[jobs]
-disabled = false
-
 [julia]
 disabled = true
 
