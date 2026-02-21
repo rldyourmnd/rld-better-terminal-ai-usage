@@ -51,12 +51,13 @@ config.default_gui_startup_args = { 'connect', 'unix' }
 config.enable_wayland = true
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- APPEARANCE - Minimal, fast
+-- APPEARANCE - Modern with integrated buttons (like VS Code/Chrome)
 -- ═══════════════════════════════════════════════════════════════════════════════
 config.enable_scroll_bar = false
-config.window_decorations = 'RESIZE'
-config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.window_decorations = 'INTEGRATED_BUTTONS | RESIZE'
+config.use_fancy_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = false
+config.show_new_tab_button_in_tab_bar = true
 config.window_padding = {
   left = 5,
   right = 5,
