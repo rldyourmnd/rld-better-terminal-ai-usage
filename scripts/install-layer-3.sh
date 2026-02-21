@@ -125,6 +125,23 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
 fi
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# CATPPUCCIN THEME FOR BAT (required for delta)
+# ═══════════════════════════════════════════════════════════════════════════════
+log_info "Installing Catppuccin Mocha theme for bat..."
+
+BAT_THEMES_DIR="$(bat --config-dir 2>/dev/null)/themes"
+if [ -n "$BAT_THEMES_DIR" ]; then
+    mkdir -p "$BAT_THEMES_DIR"
+    if [ ! -f "$BAT_THEMES_DIR/Catppuccin Mocha.tmTheme" ]; then
+        curl -sL "https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme" -o "$BAT_THEMES_DIR/Catppuccin Mocha.tmTheme"
+        bat cache --build 2>/dev/null
+        log_success "Catppuccin Mocha theme installed for bat"
+    else
+        log_info "Catppuccin Mocha theme already installed"
+    fi
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # DELTA CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Configuring delta..."
