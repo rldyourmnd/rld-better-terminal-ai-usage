@@ -82,7 +82,7 @@ config.enable_kitty_keyboard = true  -- Advanced keyboard protocol
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- DEFAULT SHELL - Fish as primary
 -- ═══════════════════════════════════════════════════════════════════════════════
-config.default_prog = { '/usr/bin/fish', '-l' }
+config.default_prog = { '/home/linuxbrew/.linuxbrew/bin/fish', '-l' }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- REDUCE OVERHEAD (stable optimizations)
