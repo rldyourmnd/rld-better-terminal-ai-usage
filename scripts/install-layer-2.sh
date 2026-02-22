@@ -24,6 +24,19 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 # Check if command exists
 command_exists() { command -v "$1" &>/dev/null; }
 
+resolve_release_binary_url() {
+    local repo="$1"
+    local pattern="$2"
+    local release_json
+
+    release_json="$(curl -fsSL "https://api.github.com/repos/${repo}/releases/latest" 2>/dev/null || true)"
+    if [ -z "$release_json" ]; then
+        return 1
+    fi
+
+    echo "$release_json" | grep -oP '"browser_download_url": "\K([^\"]+)' | grep -E "$pattern" | head -n 1
+}
+
 echo ""
 echo "════════════════════════════════════════════════════════════"
 echo "  LAYER 2: PRODUCTIVITY"
@@ -35,6 +48,13 @@ echo ""
 # PREFLIGHT CHECKS
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Running preflight checks..."
+
+for cmd in curl git tar; do
+    if ! command_exists "$cmd"; then
+        log_error "$cmd is required but not installed"
+        exit 1
+    fi
+done
 
 # Check for cargo (needed for some tools)
 if ! command_exists cargo; then
@@ -138,12 +158,48 @@ fi
 log_info "Installing glow..."
 
 if ! command_exists glow; then
-    # Download latest binary
-    GLOW_VERSION=$(curl -s https://api.github.com/repos/charmbracelet/glow/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-    curl -sL "https://github.com/charmbracelet/glow/releases/download/${GLOW_VERSION}/glow_${GLOW_VERSION#v}_linux_amd64.tar.gz" | tar xz -C /tmp
-    sudo mv /tmp/glow /usr/local/bin/glow
-    sudo chmod +x /usr/local/bin/glow
-    log_success "glow installed"
+    if command_exists apt-cache; then
+        if apt-cache show glow >/dev/null 2>&1; then
+            log_info "Installing glow from apt..."
+            sudo apt install -y glow
+            log_success "glow installed"
+        else
+            log_warn "glow package is not available in apt repositories"
+
+            GLOW_VERSION="$(curl -fsSL https://api.github.com/repos/charmbracelet/glow/releases/latest \
+              | grep -oP '\"tag_name\": \"\\K(.*)(?=\")' || echo "v2.1.2")"
+            GLOW_TMP_DIR="$(mktemp -d)"
+            GLOW_ARCHIVE="$GLOW_TMP_DIR/glow.tar.gz"
+            GLOW_ASSET_URL="$(resolve_release_binary_url "charmbracelet/glow" "glow.*${GLOW_VERSION#v}.*(linux|Linux).*(tar\\.gz)$")"
+
+            if [ -z "$GLOW_ASSET_URL" ]; then
+                log_error "Could not locate a suitable glow binary archive for ${GLOW_VERSION}"
+                rm -rf "$GLOW_TMP_DIR"
+                exit 1
+            fi
+
+            curl -fSsL "$GLOW_ASSET_URL" -o "$GLOW_ARCHIVE"
+            tar -xzf "$GLOW_ARCHIVE" -C "$GLOW_TMP_DIR"
+
+            mkdir -p "$HOME/.local/bin"
+            if [ -x "$GLOW_TMP_DIR/glow" ]; then
+                mv "$GLOW_TMP_DIR/glow" "$HOME/.local/bin/glow"
+            elif [ -x "$GLOW_TMP_DIR/bin/glow" ]; then
+                mv "$GLOW_TMP_DIR/bin/glow" "$HOME/.local/bin/glow"
+            else
+                rm -rf "$GLOW_TMP_DIR"
+                log_error "Glow archive did not contain a glow binary"
+                exit 1
+            fi
+
+            chmod +x "$HOME/.local/bin/glow"
+            log_success "glow installed"
+            rm -rf "$GLOW_TMP_DIR"
+        fi
+    else
+        log_error "apt-cache not found; cannot install glow reliably."
+        exit 1
+    fi
 else
     log_info "glow already installed"
 fi
@@ -203,7 +259,7 @@ for tool in $TOOLS; do
 done
 
 echo ""
-echo "Installed: $INSTALLED/9"
+echo "Installed: $INSTALLED/8"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # COMPLETE

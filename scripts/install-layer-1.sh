@@ -24,6 +24,20 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 # Check if command exists
 command_exists() { command -v "$1" &>/dev/null; }
 
+arch_for_binary() {
+    case "$(uname -m)" in
+        x86_64 | amd64)
+            echo amd64
+            ;;
+        aarch64 | arm64 | armv7l | armv7*)
+            echo arm64
+            ;;
+        *)
+            echo amd64
+            ;;
+    esac
+}
+
 echo ""
 echo "════════════════════════════════════════════════════════════"
 echo "  LAYER 1: FILE OPERATIONS"
@@ -35,6 +49,13 @@ echo ""
 # PREFLIGHT CHECKS
 # ═══════════════════════════════════════════════════════════════════════════════
 log_info "Running preflight checks..."
+
+for cmd in curl apt; do
+    if ! command_exists "$cmd"; then
+        log_error "$cmd is required but not installed"
+        exit 1
+    fi
+done
 
 # Check for cargo (needed for sd)
 if ! command_exists cargo; then
@@ -135,8 +156,10 @@ fi
 log_info "Installing yq..."
 
 if ! command_exists yq; then
-    sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-    sudo chmod +x /usr/local/bin/yq
+    mkdir -p "$HOME/.local/bin"
+    YQ_ARCH="$(arch_for_binary)"
+    curl -fSsL -o "$HOME/.local/bin/yq" "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${YQ_ARCH}"
+    chmod +x "$HOME/.local/bin/yq"
     log_success "yq installed"
 else
     log_info "yq already installed"
