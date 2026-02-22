@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Removed user-specific hardcoded paths from Fish, WezTerm, and Starship config templates so installs work on any Linux user account.
+- Switched Layer 1 `yq` install to user-local execution to reduce privileged-write failures on mixed environments.
+- Main installer now reuses layer scripts end-to-end instead of maintaining duplicate install logic.
+
 ### Planned for 1.2.0
 - Terminal UI layer (window/chrome-level UI improvements beyond prompt)
 - Additional terminal UX polish for open-source default profile

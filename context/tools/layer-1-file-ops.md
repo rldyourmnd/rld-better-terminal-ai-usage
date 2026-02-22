@@ -279,8 +279,15 @@ Portable command-line YAML/JSON/XML/CSV processor
 
 ### Installation
 ```bash
-sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-sudo chmod +x /usr/local/bin/yq
+ARCH=$(uname -m)
+case "$ARCH" in
+  x86_64|amd64) ARCH=amd64 ;;
+  aarch64|arm64|armv7l|armv7*) ARCH=arm64 ;;
+  *) ARCH=amd64 ;;
+esac
+mkdir -p ~/.local/bin
+curl -fSsL -o ~/.local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}"
+chmod +x ~/.local/bin/yq
 ```
 
 ### Key Features

@@ -50,9 +50,37 @@ curl -fsSL https://bun.sh/install | bash
 # watchexec (89.9) - file watcher
 cargo install watchexec
 
-# glow (88.2) - markdown renderer (download binary)
-curl -sL https://github.com/charmbracelet/glow/releases/latest/download/glow_linux_amd64.tar.gz | tar xz
-sudo mv glow /usr/local/bin/
+# glow (88.2) - markdown renderer (recommended via apt, with GitHub fallback)
+if ! command -v glow >/dev/null 2>&1; then
+  if command -v apt-cache >/dev/null 2>&1 && apt-cache show glow >/dev/null 2>&1; then
+    sudo apt install -y glow
+  else
+    GLOW_VERSION=$(curl -s https://api.github.com/repos/charmbracelet/glow/releases/latest \
+      | grep -oP '\"tag_name\": \"\\K(.*)(?=\")' || echo "v2.1.2")
+    GLOW_TMP_DIR="$(mktemp -d)"
+    GLOW_ASSET_URL="$(curl -s https://api.github.com/repos/charmbracelet/glow/releases/latest \
+      | grep -oP '\"browser_download_url\": \"\\K([^\"]+)' \
+      | grep -E "glow.*${GLOW_VERSION#v}.*(linux|Linux).*(tar\\.gz)$" \
+      | head -n 1)"
+
+    if [ -n "$GLOW_ASSET_URL" ]; then
+      curl -fSsL -o "$GLOW_TMP_DIR/glow.tar.gz" "$GLOW_ASSET_URL"
+      tar -xzf "$GLOW_TMP_DIR/glow.tar.gz" -C "$GLOW_TMP_DIR"
+      mkdir -p "$HOME/.local/bin"
+      if [ -x "$GLOW_TMP_DIR/glow" ]; then
+        mv "$GLOW_TMP_DIR/glow" "$HOME/.local/bin/glow"
+      elif [ -x "$GLOW_TMP_DIR/bin/glow" ]; then
+        mv "$GLOW_TMP_DIR/bin/glow" "$HOME/.local/bin/glow"
+      else
+        echo "Glow archive did not contain a glow binary"
+      fi
+      chmod +x "$HOME/.local/bin/glow"
+      rm -rf "$GLOW_TMP_DIR"
+    else
+      echo "Compatible glow archive was not found for fallback install"
+    fi
+  fi
+fi
 
 # bottom (91.5) - system monitor
 cargo install bottom
