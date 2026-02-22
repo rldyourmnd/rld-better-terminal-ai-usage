@@ -135,17 +135,17 @@ config.line_height = 1.1
 -- Color scheme
 config.color_scheme = 'Catppuccin Mocha'
 config.colors = {
-  background = '#1e1e2e',
-  foreground = '#cdd6f4',
-  cursor_bg = '#f5e0dc',
-  cursor_fg = '#1e1e2e',
-  selection_fg = '#1e1e2e',
-  selection_bg = '#f5e0dc',
+  background = '#0b1020',
+  foreground = '#d7f7ff',
+  cursor_bg = '#2cf5ff',
+  cursor_fg = '#0b1020',
+  selection_fg = '#0b1020',
+  selection_bg = '#ff4fd8',
   tab_bar = {
-    background = '#181825',
-    active_tab = { bg_color = '#1e1e2e', fg_color = '#cdd6f4' },
-    inactive_tab = { bg_color = '#181825', fg_color = '#6c7086' },
-    new_tab = { bg_color = '#181825', fg_color = '#6c7086' },
+    background = '#090d1a',
+    active_tab = { bg_color = '#111833', fg_color = '#2cf5ff' },
+    inactive_tab = { bg_color = '#090d1a', fg_color = '#7f88bf' },
+    new_tab = { bg_color = '#090d1a', fg_color = '#ff4fd8' },
   },
 }
 
