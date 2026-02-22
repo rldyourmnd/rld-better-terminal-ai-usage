@@ -4,7 +4,7 @@ Captured from the current machine and intended as the canonical "current state" 
 
 ## Captured At
 
-- Timestamp: 2026-02-23T01:20:38+07:00
+- Timestamp: 2026-02-23T02:30:22+07:00
 - Host profile: Linux, NVIDIA RTX 2070, i7-8750H, 32GB RAM
 
 ## Rendering and Shell Profile
@@ -12,6 +12,8 @@ Captured from the current machine and intended as the canonical "current state" 
 - WezTerm renderer: `OpenGL`
 - Display backend: `X11` (`enable_wayland = false`)
 - WezTerm default shell path: `/home/linuxbrew/.linuxbrew/bin/fish`
+- WezTerm safe renderer switch: `WEZTERM_SAFE_RENDERER=1` (Software fallback)
+- WezTerm scrollback: `20000` lines
 - Prompt: `starship`
 
 ## Config Parity (System vs Repo)

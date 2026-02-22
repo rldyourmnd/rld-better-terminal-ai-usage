@@ -120,7 +120,7 @@ semgrep for static analysis, protecting your code from vulnerabilities.
 │                                                                     │
 │  LAYER 2: PRODUCTIVITY                                             │
 │  fzf (0.68.0) • zoxide (0.9.9) • Atuin (18.12.1) • uv (0.10.4)    │
-│  bun (1.3.9) • watchexec (2.3.3) • glow • bottom (0.12.3)         │
+│  bun (1.3.9) • watchexec (2.4.0) • glow • bottom (0.12.3)         │
 │                                                                     │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
@@ -137,7 +137,7 @@ semgrep for static analysis, protecting your code from vulnerabilities.
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-System snapshot for versions/rendering in this diagram: `2026-02-23T01:20:38+07:00`.
+System snapshot for versions/rendering in this diagram: `2026-02-23T02:30:22+07:00`.
 Full live snapshot: `context/system-state.md`.
 
 ## 🚀 Quick Start
