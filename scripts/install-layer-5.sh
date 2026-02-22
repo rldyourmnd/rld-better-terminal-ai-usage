@@ -8,7 +8,7 @@
 #
 # Versions (February 2026):
 # - Claude Code: npm @anthropic-ai/claude-code
-# - Gemini CLI: npm @anthropic-ai/claude-code (gemini -p "prompt")
+# - Gemini CLI: npm @google/gemini-cli
 # - Codex CLI: npm @openai/codex
 
 set -euo pipefail

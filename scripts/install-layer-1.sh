@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Installs: bat, fd, rg, sd, jq, yq, eza
 # Platform: Linux (Ubuntu/Debian)
-# Run: ./install-layer-1.sh
+# Run: ./scripts/install-layer-1.sh
 
 set -euo pipefail
 

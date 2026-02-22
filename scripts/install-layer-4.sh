@@ -157,7 +157,7 @@ log_info "Installing grepai..."
 
 if ! command_exists grepai && [ ! -f ~/.local/bin/grepai ]; then
     # Get latest version
-    GREPAI_VERSION=$(curl -s https://api.github.com/repos/yoanbernabeu/grepai/releases/latest | grep -oP '"tag_name": "\K[^"]+' || echo "v0.32.1")
+    GREPAI_VERSION=$(curl -s https://api.github.com/repos/yoanbernabeu/grepai/releases/latest | grep -oP '"tag_name": "\K[^"]+' || echo "v0.33.0")
 
     log_info "Downloading grepai ${GREPAI_VERSION}..."
 

@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Installs: fzf, zoxide, atuin, uv, bun, watchexec, glow, bottom, hyperfine
 # Platform: Linux (Ubuntu/Debian)
-# Run: ./install-layer-2.sh
+# Run: ./scripts/install-layer-2.sh
 
 set -euo pipefail
 

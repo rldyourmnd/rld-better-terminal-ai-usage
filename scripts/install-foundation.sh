@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Installs: WezTerm, Fish, Starship
 # Platform: Linux (Ubuntu/Debian)
-# Run: ./install-foundation.sh
+# Run: ./scripts/install-foundation.sh
 
 set -euo pipefail
 

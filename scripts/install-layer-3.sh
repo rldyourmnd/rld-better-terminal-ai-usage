@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Installs: gh CLI, lazygit, delta
 # Platform: Linux (Ubuntu/Debian)
-# Run: ./install-layer-3.sh
+# Run: ./scripts/install-layer-3.sh
 #
 # Verified (February 2026):
 # - gh CLI: Score 83.2 (/websites/cli_github)
@@ -61,7 +61,7 @@ log_info "Installing lazygit..."
 
 if ! command_exists lazygit || lazygit --version 2>/dev/null | grep -q "unversioned"; then
     # Get latest version from GitHub API
-    LAZYGIT_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -oP '"tag_name": "\K[^"]+' || echo "v0.44.1")
+    LAZYGIT_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -oP '"tag_name": "\K[^"]+' || echo "v0.59.0")
 
     log_info "Downloading lazygit ${LAZYGIT_VERSION}..."
 

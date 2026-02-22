@@ -3,7 +3,7 @@
 # BETTER TERMINAL USAGE - Complete Installation Script
 # ═══════════════════════════════════════════════════════════════════════════════
 # Installs all tools for the High-Performance Terminal Environment
-# Run: ./install.sh
+# Run: ./scripts/install.sh
 
 set -euo pipefail
 
