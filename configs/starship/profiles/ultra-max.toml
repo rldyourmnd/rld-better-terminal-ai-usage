@@ -7,7 +7,7 @@ scan_timeout = 60
 command_timeout = 1800
 continuation_prompt = "[▸▹ ](dimmed fg:overlay1)"
 
-format = """($nix_shell$container$fill$git_metrics$custom.ai_stack\n)$cmd_duration$status$sudo$jobs$username$hostname$localip$character"""
+format = """($nix_shell$container$fill$git_metrics${custom.ai_stack}\n)$cmd_duration$status$sudo$jobs$username$hostname$localip$character"""
 
 right_format = """
 $os\
@@ -107,7 +107,7 @@ style = "fg:text"
 show_always = true
 style_user = "bold fg:yellow"
 style_root = "bold fg:red"
-format = "[⭘ $user ]($style)"
+format = "[ $user ]($style)"
 
 [hostname]
 ssh_only = true
@@ -117,7 +117,7 @@ style = "bold fg:peach"
 [localip]
 disabled = false
 ssh_only = true
-format = "[◯$localipv4 ]($style)"
+format = "[ $localipv4 ]($style)"
 style = "bold fg:mauve"
 
 [os]
@@ -125,8 +125,13 @@ disabled = false
 format = "[$symbol ]($style)"
 style = "bold fg:overlay2"
 
+[os.symbols]
+Ubuntu = ""
+Linux = ""
+Unknown = ""
+
 [directory]
-home_symbol = "⌂"
+home_symbol = ""
 truncation_length = 3
 truncation_symbol = "…/"
 read_only = " 󰌾"
@@ -241,7 +246,7 @@ style = "bold fg:peach"
 
 [gcloud]
 disabled = false
-symbol = "☁️ "
+symbol = " "
 format = "[gcp $symbol$account ]($style)"
 style = "bold fg:sky"
 
@@ -281,7 +286,7 @@ detect_extensions = []
 
 [ruby]
 format = "[rb ${symbol}${version} ]($style)"
-symbol = "◆ "
+symbol = " "
 version_format = "${raw}"
 style = "bold fg:red"
 
@@ -294,7 +299,7 @@ style = "bold fg:red"
 [package]
 format = "[pkg $symbol$version ]($style)"
 version_format = "${raw}"
-symbol = "◨ "
+symbol = "󰏗 "
 style = "italic bold fg:yellow"
 
 [golang]
@@ -328,17 +333,17 @@ format = "[swift ${symbol}${version} ]($style)"
 style = "bold fg:red"
 
 [buf]
-symbol = "■ "
+symbol = " "
 format = "[buf $symbol$version ]($style)"
 style = "bold fg:teal"
 
 [conda]
-symbol = "◯ "
+symbol = " "
 format = "[conda $symbol$environment ]($style)"
 style = "bold fg:green"
 
 [pixi]
-symbol = "■ "
+symbol = "󰏗 "
 format = "[pixi $symbol$version($environment )]($style)"
 style = "bold fg:teal"
 

@@ -117,10 +117,10 @@ disabled = false
 format = "[✖ $status ]($style)"
 style = "bold fg:red"
 success_symbol = ""
-not_executable_symbol = "🚫"
 not_found_symbol = ""
 sigint_symbol = "⨯"
-signal_symbol = "⚡"
+not_executable_symbol = ""
+signal_symbol = ""
 
 [sudo]
 disabled = false
