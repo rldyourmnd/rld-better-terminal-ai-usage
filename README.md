@@ -38,9 +38,16 @@
   <img src="https://img.shields.io/badge/shell-Fish-9C27B0?style=flat-square&logo=fish-shell" alt="Shell">
   <img src="https://img.shields.io/badge/terminal-WezTerm-00D8FF?style=flat-square" alt="Terminal">
   <img src="https://img.shields.io/badge/prompt-Starship-DD0B78?style=flat-square" alt="Prompt">
+  <img src="https://img.shields.io/badge/release-v1.1.0-ff4fd8?style=flat-square" alt="Release">
 </p>
 
 ---
+
+## 🏷️ Release Track
+
+- **Current release:** `v1.1.0` — terminal prompt UI stabilized and production-ready
+- **Next milestone:** `v1.2.0` — terminal UI layer (beyond prompt) planned
+- **Version source of truth:** `VERSION`, `CHANGELOG.md`, GitHub Releases
 
 ## 📊 Performance Benchmarks
 

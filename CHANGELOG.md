@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Planned for 1.2.0
+- Terminal UI layer (window/chrome-level UI improvements beyond prompt)
+- Additional terminal UX polish for open-source default profile
+
+## [1.1.0] - 2026-02-23
+
+### Added
+- Cyberpunk prompt UI for `ultra-max` profile (neon cyan/pink palette)
+- Full absolute repository path in prompt layout
+- Canonical markdownlint configuration for repository-wide docs CI
+
+### Changed
+- AI stack prompt labels updated to `CL`, `GEM`, `CX`
+- Install scripts now sync configs reliably from any working directory
+- Foundation/full installer now applies `ultra-max` profile by default
+
+### Fixed
+- WezTerm/Starship icon alignment and fallback rendering behavior
+- Markdown CI failures on docs and policy files
+- README install and Layer 5 behavior consistency
+
 ## [1.0.0] - 2026-02-21
 
 ### Added
@@ -30,15 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Research data in `context/`
 - Contributing guidelines
 
-## [Unreleased]
-
-### Planned
-- macOS support
-- Nix/NixOS configuration
-- Ansible playbook
-- Docker container
-- Video tutorials
-
 ---
 
-[1.0.0]: https://github.com/rldyourmnd/better-terminal-usage/releases/tag/v1.0.0
+[Unreleased]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.1.0
+[1.0.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.0.0
