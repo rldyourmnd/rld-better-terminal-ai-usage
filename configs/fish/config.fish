@@ -22,12 +22,28 @@ fish_add_path /usr/local/go/bin               # go
 fish_add_path /home/linuxbrew/.linuxbrew/bin
 fish_add_path /home/linuxbrew/.linuxbrew/sbin
 
-# Python venvs
-fish_add_path ~/.local/venvs/ai-ml/bin
-fish_add_path ~/.local/venvs/vllm/bin
+# Python venvs (conditional - only add if exists)
+if test -d ~/.local/venvs/ai-ml/bin
+    fish_add_path ~/.local/venvs/ai-ml/bin
+end
+if test -d ~/.local/venvs/vllm/bin
+    fish_add_path ~/.local/venvs/vllm/bin
+end
 
-# Node (nvm)
-fish_add_path ~/.nvm/versions/node/v24.13.1/bin
+# Node (nvm) - use default or detect active version
+if test -d ~/.nvm/versions/node
+    # Try to use nvm's default version, fallback to highest version
+    set nvm_default (cat ~/.nvm/alias/default 2>/dev/null || echo "")
+    if test -n "$nvm_default"; and test -d ~/.nvm/versions/node/$nvm_default/bin
+        fish_add_path ~/.nvm/versions/node/$nvm_default/bin
+    else
+        # Fallback: find any installed node version
+        set node_version (ls ~/.nvm/versions/node 2>/dev/null | head -1)
+        if test -n "$node_version"; and test -d ~/.nvm/versions/node/$node_version/bin
+            fish_add_path ~/.nvm/versions/node/$node_version/bin
+        end
+    end
+end
 
 # Other tools
 fish_add_path ~/.pulumi/bin
@@ -133,9 +149,12 @@ abbr -a code 'code .'
 # ═══════════════════════════════════════════════════════════════════════════════
 # AI Tools (Layer 5 - User-provided CLIs)
 # ═════════════════════════════════════════════════════════════════════════════
-abbr -a cl 'claude'
-abbr -a gem 'gemini'
-abbr -a cx 'codex'
+# Claude - skip permission prompts for faster workflow
+abbr -a cl 'claude --dangerously-skip-permissions'
+# Gemini - auto-approve mode for non-interactive use
+abbr -a gem 'gemini --yolo'
+# Codex - full auto mode for autonomous execution
+abbr -a cx 'codex --full-auto'
 
 # ═════════════════════════════════════════════════════════════════════════════
 # FUNCTIONS
