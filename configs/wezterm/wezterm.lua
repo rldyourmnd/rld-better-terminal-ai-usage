@@ -88,9 +88,19 @@ config.term = 'wezterm'
 config.enable_kitty_keyboard = true  -- Advanced keyboard protocol
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- DEFAULT SHELL - Fish as primary
+-- DEFAULT SHELL - Fish as primary (auto-detect path)
 -- ═══════════════════════════════════════════════════════════════════════════════
-config.default_prog = { '/home/linuxbrew/.linuxbrew/bin/fish', '-l' }
+-- Search Homebrew, /usr/local, and system paths in priority order
+local fish_path = '/usr/bin/fish'
+for _, candidate in ipairs {
+  '/home/linuxbrew/.linuxbrew/bin/fish',
+  '/usr/local/bin/fish',
+  '/usr/bin/fish',
+} do
+  local f = io.open(candidate, 'r')
+  if f then f:close(); fish_path = candidate; break end
+end
+config.default_prog = { fish_path, '-l' }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- REDUCE OVERHEAD (stable optimizations)
