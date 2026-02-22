@@ -125,8 +125,8 @@ config.window_padding = {
 -- Font configuration
 config.font = wezterm.font_with_fallback {
   { family = 'JetBrains Mono', weight = 'Regular' },
-  { family = 'JetBrainsMono Nerd Font', weight = 'Regular' },
   { family = 'Symbols Nerd Font Mono', weight = 'Regular' },
+  { family = 'JetBrainsMono Nerd Font', weight = 'Regular' },
   { family = 'Noto Color Emoji' },
 }
 config.font_size = 12.0
