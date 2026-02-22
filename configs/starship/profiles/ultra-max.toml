@@ -63,7 +63,7 @@ vimcmd_visual_symbol = "[▼](bold fg:yellow)"
 description = "Shows available AI CLIs"
 command = """
 parts=()
-command -v claude >/dev/null 2>&1 && parts+=(" CC")
+command -v claude >/dev/null 2>&1 && parts+=(" CL")
 command -v gemini >/dev/null 2>&1 && parts+=(" GEM")
 command -v codex >/dev/null 2>&1 && parts+=(" CX")
 printf "%s" "${parts[*]}"
