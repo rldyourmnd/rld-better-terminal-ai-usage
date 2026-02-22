@@ -46,7 +46,7 @@ sudo apt install -y fish
 **Verify:**
 ```bash
 fish --version
-# Expected: fish, version 4.0.6 or newer
+# Expected: fish, version 4.5.0 or newer
 ```
 
 **Set as default shell (optional):**
