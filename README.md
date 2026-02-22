@@ -7,14 +7,14 @@
 </p>
 
 <p align="center">
-  <strong>Скриптированный стендпоинт-конфиг для Linux-терминала: WezTerm + Fish + Starship + слойные утилиты разработки.</strong>
+  <strong>Opinionated Linux terminal environment bootstrapping: WezTerm + Fish + Starship with a layered developer tool stack.</strong>
 </p>
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
-  <a href="#-installation">Установка</a> •
-  <a href="#-architecture">Архитектура</a> •
-  <a href="#-screenshots">Скриншоты</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-architecture">Architecture</a> •
+  <a href="#-screenshots">Screenshots</a> •
   <a href="https://github.com/rldyourmnd/rld-better-terminal-ai-usage/wiki">Wiki</a>
 </p>
 
@@ -44,14 +44,14 @@
 
 ## ✅ What this repository is
 
-`rld-better-terminal-ai-usage` — это набор скриптов и конфигов для быстрой сборки рабочего окружения на Ubuntu/Debian:
+`rld-better-terminal-ai-usage` is a collection of scripts and configuration files to quickly set up a development terminal environment on Ubuntu/Debian Linux.
 
-- WezTerm + Fish + Starship как базовый слой терминала.
-- 5-layer подход установки инструментов с отдельными скриптами.
-- Поддержка AI-CLI: claude, gemini, codex (установка через npm, но аутентификация остаётся задачей пользователя).
-- Чёткая разделённость скриптов (`foundation`, `layer-1`…`layer-5`) и `install.sh` как оркестратор.
+- Base terminal stack: WezTerm + Fish + Starship.
+- Layered installation flow with independent scripts per layer.
+- Optional AI CLI support (Claude, Gemini, Codex) via Layer 5.
+- `install.sh` works as an orchestrator for all installation layers.
 
-Проект оптимизирован под **непривязанные к пользователю** пути в конфиге: нет hardcoded `/home/<user>` (кроме документации/состояния, где это исторические записи).
+The repository is designed to be user-agnostic in scripts and runtime configs (no hardcoded `/home/<user>` in install/config logic).
 
 ## 🚀 Quick Start
 
@@ -61,18 +61,18 @@ cd rld-better-terminal-ai-usage
 ./scripts/install.sh
 ```
 
-После завершения:
+After setup:
 
 ```bash
 exec fish
 ```
 
-Если установлен слой 5, выполните первичную авторизацию AI CLI:
+If Layer 5 is installed, authenticate AI CLI tools:
 
 ```bash
 claude      # browser auth
 gemini      # Login with Google
-codex       # OPENAI_API_KEY в окружении
+codex       # set OPENAI_API_KEY in environment
 ```
 
 ## 🧩 Installation
@@ -80,9 +80,9 @@ codex       # OPENAI_API_KEY в окружении
 ### Requirements
 
 - Ubuntu/Debian (apt-based).
-- `curl` и `git` (проверяется `install.sh`).
-- Привилегии `sudo` для системных пакетов.
-- Доступ в интернет.
+- `curl` and `git` (required by `install.sh`).
+- `sudo` access for system packages.
+- Internet access.
 
 ### Full install
 
@@ -90,7 +90,7 @@ codex       # OPENAI_API_KEY в окружении
 ./scripts/install.sh
 ```
 
-`install.sh` запускает:
+`install.sh` executes:
 
 - `scripts/install-foundation.sh`
 - `scripts/install-layer-1.sh`
@@ -110,11 +110,11 @@ codex       # OPENAI_API_KEY в окружении
 ./scripts/install-layer-5.sh
 ```
 
-### Installed content by layers
+### Installed content by layer
 
-| Layer | Script | Что содержит |
+| Layer | Script | Includes |
 |---|---|---|
-| Foundation | `install-foundation.sh` | WezTerm, Fish, Starship, Nerd Fonts + конфиги |
+| Foundation | `install-foundation.sh` | WezTerm, Fish, Starship, Nerd Fonts, and config files |
 | Layer 1 | `install-layer-1.sh` | bat, fd (fdfind), rg, sd, jq, yq, eza |
 | Layer 2 | `install-layer-2.sh` | fzf, zoxide, atuin, uv, bun, watchexec, glow, bottom, hyperfine |
 | Layer 3 | `install-layer-3.sh` | gh CLI, lazygit, delta |
@@ -123,7 +123,7 @@ codex       # OPENAI_API_KEY в окружении
 
 ## 🏗️ Architecture
 
-```
+```text
 Foundation: WezTerm + Fish + Starship
 ↓
 Layer 1: File Operations (bat, fd, rg, sd, jq, yq, eza)
@@ -145,7 +145,7 @@ Layer 5: AI orchestration (claude, gemini, codex)
 
 ## 📁 Project structure
 
-```
+```text
 better-terminal-usage/
 ├── scripts/
 │   ├── install.sh
@@ -167,33 +167,32 @@ better-terminal-usage/
 
 ## 🛠 Troubleshooting
 
-- Если какой-то layer завершился с ошибкой, перезапустите его после устранения причины.
-- Для проверки:
+- If a layer fails, re-run that layer script after fixing the issue.
 
 ```bash
 command -v bat rg fzf gh lazygit delta claude gemini codex
 ```
 
-- Если на вашем окружении нет `sudo` или доступ к apt временно недоступен, скрипты Layer 3/4/5 укажут альтернативные шаги в выводе.
+- If `sudo` is not available or apt access is restricted, Layer 3/4/5 scripts provide fallback instructions in their output.
 
 ## 🤝 Contributing
 
-Если хотите предложить улучшения:
+If you want to contribute:
 
-- откройте Issue: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/issues>
-- предлагайте идеи в Discussions: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/discussions>
-- откройте PR с минимальными и проверяемыми изменениями.
+- open an issue: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/issues>
+- propose ideas in discussions: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/discussions>
+- submit PRs with focused, verifiable changes.
 
 ## 📄 License
 
-Проект распространяется под лицензией MIT. См. файл [LICENSE](LICENSE).
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
 ## 🙌 Acknowledgements
 
-- WezTerm, Fish, Starship
-- Все CLI-инструменты и их авторы
-- `docs/assets/banner.svg` и проектные материалы сообщества
+- WezTerm, Fish, Starship teams and maintainers.
+- All CLI tools used in this setup and their maintainers.
+- Community documentation and project assets.
 
 <p align="center">
-  <strong>Open source-friendly, user-agnostic terminal setup для тех, кто использует AI в ежедневной разработке.</strong>
+  <strong>An open-source, user-agnostic terminal setup for developers using AI in daily workflows.</strong>
 </p>
