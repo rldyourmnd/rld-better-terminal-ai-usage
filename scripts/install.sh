@@ -26,6 +26,15 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 command_exists() { command -v "$1" &>/dev/null; }
 
+to_windows_path_if_needed() {
+    local input_path="$1"
+    if command_exists cygpath; then
+        cygpath -w "$input_path"
+    else
+        echo "$input_path"
+    fi
+}
+
 OS_NAME="$(uname -s)"
 if [[ "$OS_NAME" == "Darwin" ]]; then
     if [[ -x "$PROJECT_DIR/scripts/macos/install.sh" ]]; then
@@ -36,9 +45,29 @@ if [[ "$OS_NAME" == "Darwin" ]]; then
     exit 1
 fi
 
+case "$OS_NAME" in
+    MINGW*|MSYS*|CYGWIN*)
+        if [[ -f "$PROJECT_DIR/scripts/install-windows.ps1" ]]; then
+            WINDOWS_SCRIPT_PATH="$(to_windows_path_if_needed "$PROJECT_DIR/scripts/install-windows.ps1")"
+            if command_exists pwsh; then
+                log_info "Detected Windows-compatible shell environment. Delegating to install-windows.ps1 via pwsh"
+                exec pwsh -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "$@"
+            fi
+            if command_exists powershell.exe; then
+                log_info "Detected Windows-compatible shell environment. Delegating to install-windows.ps1 via powershell.exe"
+                exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "$@"
+            fi
+            log_error "Neither pwsh nor powershell.exe found in PATH."
+            exit 1
+        fi
+        log_error "Windows installer is missing: $PROJECT_DIR/scripts/install-windows.ps1"
+        exit 1
+        ;;
+esac
+
 if [[ "$OS_NAME" != "Linux" ]]; then
     log_error "Unsupported OS: $OS_NAME"
-    log_error "Supported now: Linux (Debian/Ubuntu), macOS"
+    log_error "Supported now: Linux (Debian/Ubuntu), macOS, Windows (PowerShell)"
     exit 1
 fi
 

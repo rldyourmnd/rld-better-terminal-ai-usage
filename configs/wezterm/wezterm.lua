@@ -11,6 +11,8 @@
 
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
+local target_triple = wezterm.target_triple or ''
+local is_windows = target_triple:find('windows') ~= nil
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- GPU RENDERING - OpenGL for MAXIMUM STABILITY
@@ -32,7 +34,9 @@ end
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- CRITICAL: Different refresh rates across monitors cause GPU context loss
 -- under Wayland. XWayland is stable for NVIDIA multi-monitor setups.
-config.enable_wayland = false
+if not is_windows then
+  config.enable_wayland = false
+end
 
 -- FALLBACK: If OpenGL still causes issues, use Software rendering
 -- Uncomment below to use CPU-based rendering (slower but most stable):
@@ -43,15 +47,17 @@ config.enable_wayland = false
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- KEEP ENABLED: If WezTerm GUI crashes, your Claude Code session survives!
 -- The 10ms local echo makes it feel instant while maintaining stability
-config.unix_domains = {
-  {
-    name = 'unix',
-    socket_path = '/tmp/wezterm-gui-sock',
-    local_echo_threshold_ms = 10,  -- Predictive echo = feels instant
-  },
-}
+if not is_windows then
+  config.unix_domains = {
+    {
+      name = 'unix',
+      socket_path = '/tmp/wezterm-gui-sock',
+      local_echo_threshold_ms = 10,  -- Predictive echo = feels instant
+    },
+  }
 
-config.default_gui_startup_args = { 'connect', 'unix' }
+  config.default_gui_startup_args = { 'connect', 'unix' }
+end
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- RENDERING PERFORMANCE - Stable settings for multi-monitor
@@ -82,9 +88,8 @@ config.term = 'wezterm'
 config.enable_kitty_keyboard = true  -- Advanced keyboard protocol
 
 -- ═══════════════════════════════════════════════════════════════════════════════
--- DEFAULT SHELL - Fish as primary (auto-detect path)
+-- DEFAULT SHELL - OS-aware (PowerShell on Windows, Fish on Unix)
 -- ═══════════════════════════════════════════════════════════════════════════════
--- Use `command -v` first, then fallback to common install locations.
 local function trim(s)
   return (s and s:match('^%s*(.-)%s*$')) or nil
 end
@@ -109,37 +114,47 @@ local function file_exists(path)
   return true
 end
 
-local fish_path = command_output('command -v fish 2>/dev/null')
-if not fish_path or fish_path == '' then
-  local homebrew_prefix = os.getenv('HOMEBREW_PREFIX')
-  local home_dir = os.getenv('HOME') or ''
-  local candidates = {
-    '/usr/bin/fish',
-    '/bin/fish',
-    '/usr/local/bin/fish',
-    '/usr/local/sbin/fish',
-    '/home/linuxbrew/.linuxbrew/bin/fish',
-    home_dir .. '/.linuxbrew/bin/fish',
-    '/opt/homebrew/bin/fish',
-  }
-
-  if homebrew_prefix then
-    table.insert(candidates, 1, homebrew_prefix .. '/bin/fish')
+if is_windows then
+  local pwsh_path = command_output('where pwsh.exe 2>NUL')
+  if pwsh_path and pwsh_path ~= '' then
+    config.default_prog = { pwsh_path, '-NoLogo' }
+  else
+    config.default_prog = { 'powershell.exe', '-NoLogo' }
   end
+else
+  -- Use `command -v` first, then fallback to common install locations.
+  local fish_path = command_output('command -v fish 2>/dev/null')
+  if not fish_path or fish_path == '' then
+    local homebrew_prefix = os.getenv('HOMEBREW_PREFIX')
+    local home_dir = os.getenv('HOME') or ''
+    local candidates = {
+      '/usr/bin/fish',
+      '/bin/fish',
+      '/usr/local/bin/fish',
+      '/usr/local/sbin/fish',
+      '/home/linuxbrew/.linuxbrew/bin/fish',
+      home_dir .. '/.linuxbrew/bin/fish',
+      '/opt/homebrew/bin/fish',
+    }
 
-  for _, candidate in ipairs(candidates) do
-    if file_exists(candidate) then
-      fish_path = candidate
-      break
+    if homebrew_prefix then
+      table.insert(candidates, 1, homebrew_prefix .. '/bin/fish')
+    end
+
+    for _, candidate in ipairs(candidates) do
+      if file_exists(candidate) then
+        fish_path = candidate
+        break
+      end
+    end
+
+    if not fish_path then
+      fish_path = '/usr/bin/fish'
     end
   end
 
-  if not fish_path then
-    fish_path = '/usr/bin/fish'
-  end
+  config.default_prog = { fish_path, '-l' }
 end
-
-config.default_prog = { fish_path, '-l' }
 
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- REDUCE OVERHEAD (stable optimizations)
@@ -149,7 +164,7 @@ config.audible_bell = 'Disabled'
 config.visual_bell = { fade_in_duration_ms = 0, fade_out_duration_ms = 0 }
 config.window_close_confirmation = 'NeverPrompt'
 config.skip_close_confirmation_for_processes_named = {
-  'bash', 'sh', 'zsh', 'fish', 'tmux', 'nu', 'cmd.exe', 'pwsh.exe',
+  'bash', 'sh', 'zsh', 'fish', 'tmux', 'nu', 'cmd.exe', 'pwsh.exe', 'powershell.exe',
 }
 
 -- Instant Alt key response

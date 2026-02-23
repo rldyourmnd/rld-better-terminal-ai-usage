@@ -17,6 +17,16 @@ NC='\033[0m'
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OS_NAME="$(uname -s)"
+command_exists() { command -v "$1" >/dev/null 2>&1; }
+
+to_windows_path_if_needed() {
+    local input_path="$1"
+    if command_exists cygpath; then
+        cygpath -w "$input_path"
+    else
+        echo "$input_path"
+    fi
+}
 
 if [[ "$OS_NAME" == "Darwin" ]]; then
     if [[ -x "$PROJECT_DIR/scripts/macos/health-check.sh" ]]; then
@@ -25,6 +35,38 @@ if [[ "$OS_NAME" == "Darwin" ]]; then
     echo "macOS health-check script not found: $PROJECT_DIR/scripts/macos/health-check.sh"
     exit 1
 fi
+
+case "$OS_NAME" in
+    MINGW*|MSYS*|CYGWIN*)
+        if [[ -f "$PROJECT_DIR/scripts/health-check-windows.ps1" ]]; then
+            WINDOWS_SCRIPT_PATH="$(to_windows_path_if_needed "$PROJECT_DIR/scripts/health-check-windows.ps1")"
+            PS_ARGS=()
+            for arg in "$@"; do
+                case "$arg" in
+                    --summary)
+                        PS_ARGS+=("-Summary")
+                        ;;
+                    --strict)
+                        PS_ARGS+=("-Strict")
+                        ;;
+                    *)
+                        PS_ARGS+=("$arg")
+                        ;;
+                esac
+            done
+            if command_exists pwsh; then
+                exec pwsh -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "${PS_ARGS[@]}"
+            fi
+            if command_exists powershell.exe; then
+                exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "${PS_ARGS[@]}"
+            fi
+            echo "Neither pwsh nor powershell.exe found for Windows health-check."
+            exit 1
+        fi
+        echo "Windows health-check script not found: $PROJECT_DIR/scripts/health-check-windows.ps1"
+        exit 1
+        ;;
+esac
 
 if [[ "$OS_NAME" != "Linux" ]]; then
     echo "Unsupported OS for this health-check: $OS_NAME"
@@ -103,8 +145,6 @@ log_banner() {
     echo "  $(date -Iseconds)"
     echo "════════════════════════════════════════════════════════════"
 }
-
-command_exists() { command -v "$1" >/dev/null 2>&1; }
 
 run_bash_syntax() {
     log_info "Checking bash script syntax..."
