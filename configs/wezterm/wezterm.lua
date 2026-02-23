@@ -334,7 +334,9 @@ wezterm.on('update-status', function(window, pane)
     cwd = cwd:gsub('^.*/(.-/[^/]+)$', '%1')
     if cwd ~= '' then table.insert(cells, cwd) end
   end
-  table.insert(cells, wezterm.hostname():gsub('%..*', ''))
+  -- string.gsub returns (value, substitutions_count); keep only the value
+  local hostname = wezterm.hostname():gsub('%..*', '')
+  table.insert(cells, hostname)
   table.insert(cells, wezterm.strftime('%H:%M'))
   for _, b in ipairs(wezterm.battery_info()) do
     table.insert(cells, string.format('%.0f%%', b.state_of_charge * 100))
