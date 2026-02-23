@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - _No notable changes yet._
 
+## [2.0.2] - 2026-02-23
+
+### Fixed
+- Fixed WezTerm status update lag/freeze bug in `configs/wezterm/wezterm.lua` by preventing `string.gsub` multiple return values from being passed directly to `table.insert`.
+
+### Verified
+- Runtime log spam from `update-status` Lua runtime errors was eliminated after applying the config fix and reloading WezTerm.
+- Fully tested on Ubuntu 25.10.
+- Fully tested on Ubuntu 24.04 LTS.
+- macOS and Windows were not tested in this release cycle.
+- If you encounter platform-specific issues, please open a GitHub issue and I will prioritize fixes.
+
 ## [2.0.1] - 2026-02-23
 
 ### Added
@@ -199,7 +211,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/rldyourmnd/awesome-terminal-for-ai/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/rldyourmnd/awesome-terminal-for-ai/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.2
 [2.0.1]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.1
 [2.0.0]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.0
 [1.3.0]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v1.3.0
