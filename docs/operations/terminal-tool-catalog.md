@@ -18,9 +18,9 @@ The tables below define Linux layer expectations.
 | Tool | Binary | Install source | Health command | Runtime role |
 |---|---|---|---|---|
 | bat | `bat` | APT (`bat`) or symlink from `batcat` | `bat --version` | Better file cat with syntax highlighting. |
-| fd | `fd` | APT (`fd-find`) with symlink | `fdfind --version` | Fast `find` replacement. |
+| fd | `fd` | APT (`fd-find`) with symlink | `fd --version` or `fdfind --version` | Fast `find` replacement. |
 | rg | `rg` | APT (`ripgrep`) | `rg --version` | Fast search across repositories. |
-| sd | `sd` | `cargo install` | `sd --version` | Streamlined stream editor for safer regex replacements. |
+| sd | `sd` | `cargo install --locked` | `sd --version` | Streamlined stream editor for safer regex replacements. |
 | jq | `jq` | APT (`jq`) | `jq --version` | JSON transformation and extraction. |
 | yq | `yq` | Direct download | `yq --version` | YAML/JSON/XML query and edit utility. |
 | eza | `eza` | APT (`eza`) | `eza --version` | Modern `ls` replacement with git metadata. |
@@ -30,14 +30,14 @@ The tables below define Linux layer expectations.
 | Tool | Binary | Install source | Health command | Runtime role |
 |---|---|---|---|---|
 | fzf | `fzf` | Git clone script install | `fzf --version` | Fuzzy search for files/history. |
-| zoxide | `zoxide` | `cargo install` | `zoxide --version` | Frecency-based directory jumps. |
+| zoxide | `zoxide` | `cargo install --locked` | `zoxide --version` | Frecency-based directory jumps. |
 | atuin | `atuin` | Installer script (`setup.atuin.sh`) | `atuin --version` | Shared shell history with sync support. |
 | uv | `uv` | Installer script | `uv --version` | High-performance Python dependency workflow. |
 | bun | `bun` | `bun.sh` installer | `bun --version` | JavaScript runtime for fast JS tooling. |
-| watchexec | `watchexec` | `cargo install` | `watchexec --version` | File watcher and command automation loop. |
+| watchexec | `watchexec` | `cargo install --locked` | `watchexec --version` | File watcher and command automation loop. |
 | glow | `glow` | APT or GitHub tarball fallback | `glow --version` | Terminal markdown rendering in CI notes and docs. |
-| btm | `btm` | `cargo install bottom` | `btm --version` | Process and resource monitor. |
-| hyperfine | `hyperfine` | `cargo install` | `hyperfine --version` | Benchmarking and reproducibility checks. |
+| btm | `btm` | `cargo install --locked bottom` | `btm --version` | Process and resource monitor. |
+| hyperfine | `hyperfine` | `cargo install --locked` | `hyperfine --version` | Benchmarking and reproducibility checks. |
 
 ## Layer 3 Tools
 
@@ -45,18 +45,18 @@ The tables below define Linux layer expectations.
 |---|---|---|---|---|
 | gh | `gh` | APT (`gh`) | `gh --version` | GitHub operations from terminal. |
 | lazygit | `lazygit` | GitHub release binary (`amd64`/`arm64`) | `lazygit --version` | Interactive terminal Git TUI. |
-| delta | `delta` | `cargo install git-delta` | `delta --version` | Better git diff rendering and side-by-side review. |
+| delta | `delta` | `cargo install --locked git-delta` | `delta --version` | Better git diff rendering and side-by-side review. |
 
 ## Layer 4 Tools
 
 | Tool | Binary | Install source | Health command | Runtime role |
 |---|---|---|---|---|
 | grepai | `grepai` | GitHub release binary (`amd64`/`arm64`) | `grepai version` | Semantic search for code understanding. |
-| ast-grep | `sg` | `cargo install ast-grep` (binary name can be `sg`) | `sg --version` | AST-aware structural search and rewrite. |
-| probe | `probe` | `cargo install probe-code` | `probe --version` | Code extraction for local context windows. |
+| ast-grep | `sg` | `cargo install --locked ast-grep` (binary name can be `sg`) | `sg --version` | AST-aware structural search and rewrite. |
+| probe | `probe` | `cargo install --locked probe-code` | `probe --version` | Code extraction for local context windows. |
 | semgrep | `semgrep` | `pip install` | `semgrep --version` | Static security and pattern checks. |
 | ctags | `ctags` | APT (`universal-ctags`) | `ctags --version` | Tag generation for navigation and editors. |
-| tokei | `tokei` | `cargo install` | `tokei --version` | Repo size and language composition. |
+| tokei | `tokei` | `cargo install --locked` | `tokei --version` | Repo size and language composition. |
 
 ## Layer 5 Tools
 

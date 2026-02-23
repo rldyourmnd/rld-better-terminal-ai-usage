@@ -57,6 +57,13 @@ fish -n configs/fish/config.fish
 ./scripts/health-check.sh --summary
 ```
 
+Platform-specific checks (when relevant):
+
+- Linux flow smoke: `./scripts/install.sh --dry-run`
+- macOS flow smoke: `./scripts/macos/install.sh --dry-run`
+- Windows flow smoke: `.\scripts\install-windows.ps1 -DryRun`
+- Windows health-check: `.\scripts\health-check-windows.ps1 -Summary`
+
 If you changed tool versions or validation assumptions:
 
 - update `context/system-state.md`

@@ -2,42 +2,55 @@
 
 ## Prerequisites
 
-- Ubuntu/Debian system with `sudo` access
-- `git` and `curl` installed
-- Internet access for package and release downloads
+- Git and curl available
+- Internet access for package downloads
+- Platform package manager access:
+  - Linux: `sudo` + APT
+  - macOS: Homebrew
+  - Windows: WinGet + PowerShell profile write access
 
-## Recommended Install Path
+## Quick Start by Platform
+
+### Linux
 
 ```bash
 git clone https://github.com/rldyourmnd/rld-better-terminal-ai-usage.git
 cd rld-better-terminal-ai-usage
 ./scripts/install.sh
-exec fish
 ```
 
-## Layered Install Path
-
-Use this when you need checkpoints between layers.
+### macOS
 
 ```bash
-./scripts/install-foundation.sh
-./scripts/install-layer-1.sh
-./scripts/install-layer-2.sh
-./scripts/install-layer-3.sh
-./scripts/install-layer-4.sh
-./scripts/install-layer-5.sh
+git clone https://github.com/rldyourmnd/rld-better-terminal-ai-usage.git
+cd rld-better-terminal-ai-usage
+./scripts/install.sh
 ```
+
+### Windows (PowerShell)
+
+```powershell
+git clone https://github.com/rldyourmnd/rld-better-terminal-ai-usage.git
+cd rld-better-terminal-ai-usage
+.\scripts\install-windows.ps1
+```
+
+## Smoke Checks (No Installs)
+
+- Linux: `./scripts/install.sh --dry-run`
+- macOS: `./scripts/macos/install.sh --dry-run`
+- Windows: `.\scripts\install-windows.ps1 -DryRun`
 
 ## Initial Verification
 
-```bash
-./scripts/health-check.sh --summary
-```
+- Linux: `./scripts/health-check.sh --summary`
+- macOS: `./scripts/health-check-macos.sh --summary`
+- Windows: `.\scripts\health-check-windows.ps1 -Summary`
 
-Expected result: PASS status with no failures.
+Expected result: PASS with zero failures.
 
 ## Next Steps
 
-- Review [Installation and Layers](Installation-and-Layers) for component details.
-- Use [Operations Runbook](Operations-Runbook) for daily validation and change control.
-- Use [Troubleshooting](Troubleshooting) when checks fail.
+- [Installation and Layers](Installation-and-Layers)
+- [Operations Runbook](Operations-Runbook)
+- [Troubleshooting](Troubleshooting)

@@ -36,24 +36,33 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --key-bindings --completion --no-update-rc --no-bash --no-zsh
 
 # zoxide (95.5) - smart cd
-cargo install zoxide
+cargo install --locked zoxide
 
 # atuin (90.5) - history sync
-curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh | sh
+tmp_atuin="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://setup.atuin.sh -o "$tmp_atuin"
+sh "$tmp_atuin"
+rm -f "$tmp_atuin"
 
 # uv (94.3) - Python package manager
-curl -LsSf https://astral.sh/uv/install.sh | sh
+tmp_uv="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://astral.sh/uv/install.sh -o "$tmp_uv"
+sh "$tmp_uv"
+rm -f "$tmp_uv"
 
 # bun (92.7) - JavaScript runtime
-curl -fsSL https://bun.sh/install | bash
+tmp_bun="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://bun.sh/install -o "$tmp_bun"
+bash "$tmp_bun"
+rm -f "$tmp_bun"
 
 # watchexec (89.9) - file watcher
-cargo install watchexec
+cargo install --locked watchexec-cli
 
 # glow (88.2) - markdown renderer (recommended via apt, with GitHub fallback)
 if ! command -v glow >/dev/null 2>&1; then
   if command -v apt-cache >/dev/null 2>&1 && apt-cache show glow >/dev/null 2>&1; then
-    sudo apt install -y glow
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends glow
   else
     GLOW_VERSION=$(curl -s https://api.github.com/repos/charmbracelet/glow/releases/latest \
       | grep -oP '\"tag_name\": \"\\K(.*)(?=\")' || echo "v2.1.2")
@@ -64,7 +73,7 @@ if ! command -v glow >/dev/null 2>&1; then
       | head -n 1)"
 
     if [ -n "$GLOW_ASSET_URL" ]; then
-      curl -fSsL -o "$GLOW_TMP_DIR/glow.tar.gz" "$GLOW_ASSET_URL"
+      curl --proto '=https' --tlsv1.2 -fSsL -o "$GLOW_TMP_DIR/glow.tar.gz" "$GLOW_ASSET_URL"
       tar -xzf "$GLOW_TMP_DIR/glow.tar.gz" -C "$GLOW_TMP_DIR"
       mkdir -p "$HOME/.local/bin"
       if [ -x "$GLOW_TMP_DIR/glow" ]; then
@@ -83,10 +92,10 @@ if ! command -v glow >/dev/null 2>&1; then
 fi
 
 # bottom (91.5) - system monitor
-cargo install bottom
+cargo install --locked bottom
 
 # hyperfine (94.1) - benchmarking
-cargo install hyperfine
+cargo install --locked hyperfine
 ```
 
 ## Usage Examples

@@ -19,6 +19,8 @@ From PowerShell (recommended):
 ```powershell
 .\scripts\install-windows.ps1
 .\scripts\health-check-windows.ps1 -Summary
+.\scripts\install-windows.ps1 -Help
+.\scripts\health-check-windows.ps1 -Help
 ```
 
 Flow smoke check (no installs):
@@ -138,6 +140,11 @@ Shared WezTerm config is platform-gated with `wezterm.target_triple`:
 .\scripts\health-check-windows.ps1 -Summary
 .\scripts\health-check-windows.ps1 -Strict
 ```
+
+## CI Coverage
+
+- PowerShell parse validation for all `*.ps1` scripts
+- Windows flow smoke: `.\scripts\install-windows.ps1 -DryRun`
 
 Health check validates:
 

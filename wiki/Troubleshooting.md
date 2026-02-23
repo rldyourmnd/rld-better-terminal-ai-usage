@@ -2,43 +2,50 @@
 
 ## Fast Recovery Flow
 
-1. Identify the failing layer or command.
-2. Fix prerequisites (network, sudo, PATH, permissions).
-3. Re-run the specific installer layer.
-4. Validate with `./scripts/health-check.sh --summary`.
+1. Identify failing platform + layer.
+2. Fix prerequisites (network, package manager, PATH, permissions).
+3. Rerun only the failing layer.
+4. Re-run platform health-check.
+
+## Platform Health Commands
+
+- Linux: `./scripts/health-check.sh --summary`
+- macOS: `./scripts/health-check-macos.sh --summary`
+- Windows: `.\scripts\health-check-windows.ps1 -Summary`
 
 ## Common Failures
 
-### Layer script fails with `command not found`
+### `command not found` after install
 
-- Install the missing package/tool.
-- Re-run only the failed layer script.
+- Ensure user-local bin path exists and is exported:
+  - Linux/macOS: `$HOME/.local/bin`
+  - Windows: `$HOME\.local\bin` and `%APPDATA%\npm`
 
 ### Config parity mismatch
 
-- Compare local files with repository templates:
-  - `configs/wezterm/wezterm.lua`
-  - `configs/fish/config.fish`
-  - `configs/starship/starship.toml`
+- Re-copy templates from `configs/` to user dotfiles.
+- Re-run strict health-check.
 
-### PATH issues for local binaries
+### Linux `sg` is not `ast-grep`
 
-- Ensure `~/.local/bin` exists and is exported in shell startup files.
+- Check `sg --version` output.
+- If needed, run `~/.cargo/bin/sg --version` and reinstall ast-grep.
 
-### Release API/network failures
+### Global npm permission errors
 
-- Confirm outbound HTTPS and certificates.
-- Retry layer install after connectivity fix.
+- Configure user prefix:
+  - `npm config set prefix "$HOME/.local"`
+  - add `$HOME/.local/bin` to PATH
 
 ## Escalation
 
-When unresolved:
+When unresolved, provide:
 
-- capture `./scripts/health-check.sh` output
-- capture failing command stderr
-- include distro and shell profile details
-- open issue with reproducible steps
+- health-check output,
+- failing command output,
+- platform + shell + package-manager details,
+- exact layer/script invoked.
 
-## Canonical Deep Guide
+## Canonical Guide
 
 - <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/troubleshooting.md>

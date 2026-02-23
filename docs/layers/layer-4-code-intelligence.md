@@ -29,26 +29,36 @@ This layer provides semantic code search, AST-aware editing, and security analys
 
 ```bash
 # ctags - code indexing (requires sudo)
-sudo apt install -y universal-ctags
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends universal-ctags
 
 # tokei - code statistics
-cargo install tokei
+cargo install --locked tokei
 
 # ast-grep (78.7) - AST structural search
-cargo install ast-grep
+cargo install --locked ast-grep
 
 # probe - code extraction
-cargo install probe-code
+cargo install --locked probe-code
 
 # semgrep (70.4) - security analysis
-pip3 install --user --break-system-packages semgrep
+python3 -m pip install --user --break-system-packages semgrep || python3 -m pip install --user semgrep
 
 # grepai (88.4) - semantic code search (Go binary)
 GREPAI_VERSION=$(curl -s https://api.github.com/repos/yoanbernabeu/grepai/releases/latest | grep -oP '"tag_name": "\K[^"]+')
-GREPAI_ARCH="$(uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')"
-curl -sSL -o /tmp/grepai.tar.gz "https://github.com/yoanbernabeu/grepai/releases/download/${GREPAI_VERSION}/grepai_${GREPAI_VERSION#v}_linux_${GREPAI_ARCH}.tar.gz"
-tar xzf /tmp/grepai.tar.gz -C /tmp
-mv /tmp/grepai ~/.local/bin/
+case "$(uname -m)" in
+  x86_64|amd64) GREPAI_ARCH="x86_64" ;;
+  aarch64|arm64|armv8*|armv7*) GREPAI_ARCH="arm64" ;;
+  *) GREPAI_ARCH="x86_64" ;;
+esac
+GREPAI_URL="https://github.com/yoanbernabeu/grepai/releases/download/${GREPAI_VERSION}/grepai_${GREPAI_VERSION#v}_linux_${GREPAI_ARCH}.tar.gz"
+tmp_grepai="$(mktemp -d)"
+curl --proto '=https' --tlsv1.2 -fSsL -o "$tmp_grepai/grepai.tar.gz" "$GREPAI_URL"
+tar -xzf "$tmp_grepai/grepai.tar.gz" -C "$tmp_grepai"
+mkdir -p ~/.local/bin
+mv "$tmp_grepai/grepai" ~/.local/bin/grepai
+chmod +x ~/.local/bin/grepai
+rm -rf "$tmp_grepai"
 ```
 
 ## grepai - Semantic Code Search

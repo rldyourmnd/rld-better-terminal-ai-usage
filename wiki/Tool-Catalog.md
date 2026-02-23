@@ -1,18 +1,18 @@
 # Tool Catalog
 
-This page is an operator index. Full matrix remains in the repository catalog.
+This page is an operator index. Canonical matrix lives in docs.
 
 ## Foundation
 
 - WezTerm
-- Fish
+- Fish / PowerShell
 - Starship
 
 ## Layer 1: File Operations
 
 - bat
 - fd/fdfind
-- ripgrep
+- rg
 - sd
 - jq
 - yq
@@ -27,10 +27,10 @@ This page is an operator index. Full matrix remains in the repository catalog.
 - bun
 - watchexec
 - glow
-- bottom
+- bottom (`btm`)
 - hyperfine
 
-## Layer 3: GitHub Workflow
+## Layer 3: GitHub & Git
 
 - gh
 - lazygit
@@ -39,7 +39,7 @@ This page is an operator index. Full matrix remains in the repository catalog.
 ## Layer 4: Code Intelligence
 
 - grepai
-- ast-grep
+- ast-grep (`sg`)
 - probe
 - semgrep
 - ctags

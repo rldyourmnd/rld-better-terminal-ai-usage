@@ -26,23 +26,34 @@ This layer provides full GitHub functionality in the terminal, plus enhanced git
 
 ```bash
 # gh CLI (83.2) - GitHub in terminal
-sudo apt install -y gh
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gh
 
 # Authenticate
 gh auth login
 
 # lazygit (46) - Git TUI (download latest binary)
 LAZYGIT_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -oP '"tag_name": "\K[^"]+')
-LAZYGIT_ARCH="$(uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')"
-curl -sL "https://github.com/jesseduffield/lazygit/releases/download/${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION#v}_Linux_${LAZYGIT_ARCH}.tar.gz" | tar xz
-mv lazygit ~/.local/bin/
+case "$(uname -m)" in
+  x86_64|amd64) LAZYGIT_ARCH="x86_64" ;;
+  aarch64|arm64|armv8*|armv7*) LAZYGIT_ARCH="arm64" ;;
+  *) LAZYGIT_ARCH="x86_64" ;;
+esac
+LAZYGIT_URL="https://github.com/jesseduffield/lazygit/releases/download/${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION#v}_Linux_${LAZYGIT_ARCH}.tar.gz"
+mkdir -p ~/.local/bin
+tmp_lazygit="$(mktemp -d)"
+curl --proto '=https' --tlsv1.2 -fSsL -o "$tmp_lazygit/lazygit.tar.gz" "$LAZYGIT_URL"
+tar -xzf "$tmp_lazygit/lazygit.tar.gz" -C "$tmp_lazygit"
+mv "$tmp_lazygit/lazygit" ~/.local/bin/lazygit
+chmod +x ~/.local/bin/lazygit
+rm -rf "$tmp_lazygit"
 
 # delta - Git diff viewer
-cargo install git-delta
+cargo install --locked git-delta
 
 # Catppuccin theme for bat (required for delta)
 mkdir -p "$(bat --config-dir)/themes"
-curl -sL "https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme" -o "$(bat --config-dir)/themes/Catppuccin Mocha.tmTheme"
+curl --proto '=https' --tlsv1.2 -fSsL "https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme" -o "$(bat --config-dir)/themes/Catppuccin Mocha.tmTheme"
 bat cache --build
 
 # Configure git to use delta

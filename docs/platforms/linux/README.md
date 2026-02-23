@@ -16,6 +16,7 @@ This is the production implementation for Linux hosts.
 
 - Full install: `./scripts/install.sh`
 - Flow dry-run: `./scripts/install.sh --dry-run`
+- Installer help: `./scripts/install.sh --help`
 - Health check: `./scripts/health-check.sh --summary`
 
 ## Layer Scripts
@@ -43,6 +44,18 @@ This is the production implementation for Linux hosts.
 - Official shell installers are downloaded to a temporary file and executed locally (no direct `curl | sh` pattern).
 - Binary tarball installs for tools such as `lazygit`, `glow`, and `grepai` attempt checksum validation when release checksums are published.
 - `health-check.sh` validates real `ast-grep` resolution (avoids false-positive system `sg` binary).
+
+## CI Coverage
+
+- Linux flow smoke: `./scripts/install.sh --dry-run`
+- Shell script linting + syntax validation in CI workflows
+
+## Source References (Context7-Verified)
+
+- Cargo install lockfile semantics (`--locked`):
+  <https://github.com/rust-lang/cargo/blob/master/src/doc/src/commands/cargo-install.md>
+- npm global install permissions (`prefix ~/.local`):
+  <https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally>
 
 ## Optional Integrity Pinning
 

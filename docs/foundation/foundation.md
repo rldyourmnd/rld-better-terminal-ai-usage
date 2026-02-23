@@ -14,6 +14,12 @@ The Foundation layer provides the core terminal environment:
 
 **Performance target**: ~30ms shell startup, <5ms input latency
 
+Platform-specific production runbooks:
+
+- Linux: `docs/platforms/linux/README.md`
+- macOS: `docs/platforms/macos/README.md`
+- Windows: `docs/platforms/windows/README.md`
+
 ---
 
 ## Installation
@@ -22,13 +28,17 @@ The Foundation layer provides the core terminal environment:
 
 ```bash
 # Add WezTerm repository
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm.gpg
+tmp_key="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://apt.fury.io/wez/gpg.key -o "$tmp_key"
+sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm.gpg "$tmp_key"
+rm -f "$tmp_key"
 
 # Add to apt sources
 echo "deb [signed-by=/usr/share/keyrings/wezterm.gpg] https://apt.fury.io/wez/ * *" | sudo tee /etc/apt/sources.list.d/wezterm.list
 
 # Install
-sudo apt update && sudo apt install -y wezterm
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wezterm
 ```
 
 **Verify:**
@@ -40,7 +50,7 @@ wezterm --version
 ### 2. Fish Shell
 
 ```bash
-sudo apt install -y fish
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fish
 ```
 
 **Verify:**
@@ -57,7 +67,10 @@ chsh -s $(which fish)
 ### 3. Starship Prompt
 
 ```bash
-curl -sS https://starship.rs/install.sh | sh
+tmp_starship="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://starship.rs/install.sh -o "$tmp_starship"
+sh "$tmp_starship" -y
+rm -f "$tmp_starship"
 ```
 
 **Verify:**
@@ -409,7 +422,7 @@ fish: Unknown command: zoxide
 **Cause:** zoxide not installed yet (Layer 2 tool).
 
 **Solution:**
-1. Install zoxide (Layer 2): `cargo install zoxide`
+1. Install zoxide (Layer 2): `cargo install --locked zoxide`
 2. Or comment out the line in config.fish temporarily
 
 #### 3. Fish: "Unknown command: atuin"
@@ -422,7 +435,13 @@ fish: Unknown command: atuin
 **Cause:** atuin not installed yet (Layer 2 tool).
 
 **Solution:**
-1. Install atuin (Layer 2): `curl --proto "=https" --tlsv1.2 -sSf https://setup.atuin.sh | sh`
+1. Install atuin (Layer 2) safely:
+   ```bash
+   tmp_atuin="$(mktemp)"
+   curl --proto '=https' --tlsv1.2 -fsSL https://setup.atuin.sh -o "$tmp_atuin"
+   sh "$tmp_atuin"
+   rm -f "$tmp_atuin"
+   ```
 2. Or comment out the line in config.fish temporarily
 
 #### 4. Starship: "source: not enough arguments"

@@ -53,11 +53,17 @@ When using Better Terminal Usage:
 3. **Keep tools updated** - run installation scripts periodically to update
 4. **Review configuration files** before applying them to your system
 5. **Report suspicious code** - if you find anything concerning, please report it
+6. **Run strict health checks** after changes:
+   - Linux: `./scripts/health-check.sh --strict --summary`
+   - macOS: `./scripts/health-check-macos.sh --strict`
+   - Windows: `.\scripts\health-check-windows.ps1 -Strict`
 
 ## Known Security Considerations
 
 - Some tools require API keys (e.g., for cloud services)
 - Never commit API keys or secrets to the repository
 - Configuration files may contain sensitive paths - review before sharing
+- Release downloads can fail integrity checks when upstream checksums are missing;
+  prefer official release assets and documented checksum values when pinning.
 
 Thank you for helping keep Better Terminal Usage secure! 🔐

@@ -1,40 +1,42 @@
 # Better Terminal Usage Wiki
 
-This wiki is the operational knowledge base for the `rld-better-terminal-ai-usage` project.
+This wiki is the operational playbook for `rld-better-terminal-ai-usage`.
 
-## Purpose
+## Scope
 
-- Keep installation and operations guidance discoverable and task-oriented.
-- Separate quick execution docs from deep reference material.
-- Document stable workflows for provisioning, validation, upgrades, and incident response.
+- Linux (Debian/Ubuntu): production
+- macOS: production
+- Windows (PowerShell + WinGet): production
 
 ## Start Here
 
 1. [Getting Started](Getting-Started)
-2. [Installation and Layers](Installation-and-Layers)
-3. [Operations Runbook](Operations-Runbook)
+2. [Platform Guide](Platform-Guide)
+3. [Installation and Layers](Installation-and-Layers)
+4. [Operations Runbook](Operations-Runbook)
 
-## Core Navigation
+## What Was Updated
 
-- [Platform Guide](Platform-Guide)
-- [Architecture](Architecture)
-- [Tool Catalog](Tool-Catalog)
-- [Troubleshooting](Troubleshooting)
-- [Contributing and Governance](Contributing-and-Governance)
-- [Security](Security)
+- Linux installer hardening:
+  - no direct installer `curl | sh` pattern in Linux scripts,
+  - non-interactive APT behavior,
+  - `cargo install --locked` for reproducible Rust CLI installs,
+  - checksum-validation attempts for release archives where available.
+- Linux flow smoke entrypoint: `./scripts/install.sh --dry-run`.
+- Windows helper flags:
+  - `./scripts/install.sh --help` in shell dispatch flow,
+  - `-Help` for `install-windows.ps1` and `health-check-windows.ps1`.
+- CI now includes Linux, macOS, and Windows smoke/parsing coverage.
 
-## Source of Truth
-
-The wiki is an operational layer. Canonical source files remain in the repository:
+## Canonical Sources
 
 - README: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/README.md>
-- Foundation docs: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/foundation/foundation.md>
-- Layer docs: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/tree/main/docs/layers>
+- Platform docs: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/tree/main/docs/platforms>
 - Operations docs: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/tree/main/docs/operations>
-- Security policy: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/SECURITY.md>
+- Layer docs: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/tree/main/docs/layers>
 
-## Maintenance Model
+## Wiki Maintenance
 
-- Wiki source files are maintained in `wiki/` in the main repository.
-- Publish workflow uses `scripts/publish-wiki.sh`.
-- Every wiki update should have a clear commit message and a linked reason (issue, bug, maintenance task, or release).
+- Wiki source lives in `wiki/` in this repository.
+- Publish with `scripts/publish-wiki.sh`.
+- Update wiki and docs in the same PR when operator behavior changes.

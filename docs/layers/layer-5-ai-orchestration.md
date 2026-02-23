@@ -10,17 +10,11 @@ Layer 5 installs and uses three AI CLIs:
 - Gemini CLI (`@google/gemini-cli`)
 - Codex CLI (`@openai/codex`)
 
-## Current System Versions
+This layer is cross-platform and is executed by:
 
-Snapshot timestamp: `2026-02-23T07:30:05+07:00`
-
-| Tool | Provider | Installed Version |
-|------|----------|-------------------|
-| Claude Code | Anthropic | `2.1.50 (Claude Code)` |
-| Gemini CLI | Google | `non-interactive call times out (interactive auth/bootstrap path)` |
-| Codex CLI | OpenAI | `codex-cli 0.104.0 (warning: stale temp dir cleanup Permission denied)` |
-| Node.js | Node.js | `v24.13.1` |
-| npm | npm | `11.8.0` |
+- Linux: `scripts/install-layer-5.sh`
+- macOS: `scripts/macos/install-layer-5.sh`
+- Windows: `scripts/windows/install-layer-5.ps1`
 
 ## Installation
 
@@ -34,12 +28,16 @@ Snapshot timestamp: `2026-02-23T07:30:05+07:00`
 
 ```bash
 # Node.js is required for all tools
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt install -y nodejs
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nodejs npm
 
-npm install -g @anthropic-ai/claude-code
-npm install -g @google/gemini-cli
-npm install -g @openai/codex
+# Avoid EACCES issues for global npm installs
+npm config set prefix "$HOME/.local"
+export PATH="$HOME/.local/bin:$PATH"
+
+npm install -g --no-fund --no-audit --loglevel=error @anthropic-ai/claude-code
+npm install -g --no-fund --no-audit --loglevel=error @google/gemini-cli
+npm install -g --no-fund --no-audit --loglevel=error @openai/codex
 ```
 
 ## Authentication
@@ -74,4 +72,14 @@ codex
 claude "Explain this repository"
 gemini -p "Research best practices for this stack"
 codex exec --sandbox read-only "Review this code for regressions"
+```
+
+## Verification
+
+```bash
+claude --version
+gemini --version
+codex --version
+node --version
+npm --version
 ```

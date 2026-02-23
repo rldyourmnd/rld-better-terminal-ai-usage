@@ -17,6 +17,12 @@ Production-ready macOS implementation using Homebrew and the same layered model.
 - Full install (explicit): `./scripts/install-macos.sh`
 - Flow smoke check (no installs): `./scripts/macos/install.sh --dry-run`
 - Health check (explicit): `./scripts/health-check-macos.sh --summary`
+- Health check (strict): `./scripts/health-check-macos.sh --strict`
+
+## CI Coverage
+
+- macOS flow smoke: `./scripts/macos/install.sh --dry-run`
+- Shared markdown + script lint workflows
 
 ## macOS Layer Scripts
 

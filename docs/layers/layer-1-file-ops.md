@@ -22,22 +22,27 @@ This layer provides 10-100x faster alternatives to traditional file operations. 
 
 ```bash
 # bat (91.8) - cat replacement
-sudo apt install -y bat
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends bat
 # Create symlink (Ubuntu names it batcat)
 mkdir -p ~/.local/bin && ln -sf /usr/bin/batcat ~/.local/bin/bat
 
 # jq (85.7) - JSON processor
-sudo apt install -y jq
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends jq
 
 # fd (86.1) - find replacement
-sudo apt install -y fd-find
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends fd-find
 ln -sf $(which fdfind) ~/.local/bin/fd
 
 # eza - ls replacement
-sudo apt install -y eza
+if apt-cache show eza >/dev/null 2>&1; then
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends eza
+else
+  cargo install --locked eza
+fi
 
 # sd (90.8) - sed replacement
-cargo install sd
+cargo install --locked sd
 
 # yq (96.4) - YAML/JSON/XML processor
 ARCH=$(uname -m)
@@ -47,11 +52,14 @@ case "$ARCH" in
   *) ARCH=amd64 ;;
 esac
 mkdir -p ~/.local/bin
-curl -fSsL -o ~/.local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}"
+curl --proto '=https' --tlsv1.2 -fSsL -o ~/.local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}"
 chmod +x ~/.local/bin/yq
+# Optional pinning:
+# export YQ_SHA256="<sha256-from-official-release>"
+# echo "${YQ_SHA256}  ~/.local/bin/yq" | sha256sum -c -
 
 # ripgrep (81) - grep replacement
-sudo apt install -y ripgrep
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ripgrep
 ```
 
 ## Usage Examples

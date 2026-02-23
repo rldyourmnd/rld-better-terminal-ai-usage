@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `scripts/install-windows.ps1`
   - `scripts/health-check-windows.ps1`
 - Added CI PowerShell parse validation job on `windows-latest`.
+- Added Linux flow smoke validation job on `ubuntu-latest` (`./scripts/install.sh --dry-run`).
 
 ### Changed
 - Root `scripts/install.sh` now detects Windows-like shell environments (`MINGW/MSYS/CYGWIN`) and delegates to PowerShell Windows installer.
@@ -26,6 +27,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Windows defaults to `pwsh.exe`/`powershell.exe`
   - Unix-specific Wayland and unix-domain settings are guarded away from Windows.
 - `README.md`, platform docs, wiki platform pages, and operations health-check docs now mark Windows as production-ready.
+- Linux installers were hardened for safer and more reproducible provisioning:
+  - moved installer-script execution from direct pipes to downloaded temporary script files,
+  - normalized non-interactive APT usage in Linux scripts,
+  - migrated cargo installs to `cargo install --locked` where applicable,
+  - added checksum validation attempts for downloaded release archives (`lazygit`, `glow`, `grepai`) and optional `YQ_SHA256` pinning.
+- Root Linux installer now supports:
+  - `./scripts/install.sh --dry-run`
+  - `./scripts/install.sh --help`
+- Windows installer/health-check wrappers now support:
+  - `.\scripts\install-windows.ps1 -Help`
+  - `.\scripts\health-check-windows.ps1 -Help`
+- Linux `scripts/health-check.sh` now:
+  - checks `bat/batcat` and `fd/fdfind` compatibly,
+  - validates real `ast-grep` runtime instead of trusting any `sg` binary.
+- Updated repository documentation and wiki pages to align with current Linux/macOS/Windows production flows and validation contracts.
 
 ## [1.3.0] - 2026-02-23
 

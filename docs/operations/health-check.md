@@ -13,6 +13,12 @@ Windows uses `scripts/windows/health-check.ps1` (or wrapper `scripts/health-chec
 ./scripts/health-check.sh
 ```
 
+Linux flow smoke (no installs):
+
+```bash
+./scripts/install.sh --dry-run
+```
+
 Strict CI-style validation:
 
 ```bash
@@ -24,6 +30,13 @@ PowerShell (Windows):
 ```powershell
 .\scripts\health-check-windows.ps1 -Summary
 .\scripts\health-check-windows.ps1 -Strict
+```
+
+macOS:
+
+```bash
+./scripts/health-check-macos.sh --summary
+./scripts/health-check-macos.sh --strict
 ```
 
 ## What the Health Check Validates
@@ -38,6 +51,7 @@ PowerShell (Windows):
   - `~/.config/fish/config.fish` vs `configs/fish/config.fish`
 - Required tools installation
 - PATH integrity (`$HOME/.local/bin`)
+- Linux `ast-grep` runtime identity (ensures `sg` is ast-grep, not util-linux `sg`)
 - Known local runtime issues:
   - `semgrep` permission errors (current known issue)
   - `gemini` non-responsive invocation on this machine

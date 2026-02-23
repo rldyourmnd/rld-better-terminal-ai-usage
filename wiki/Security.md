@@ -2,18 +2,30 @@
 
 ## Responsible Disclosure
 
-Follow the project security policy for reporting vulnerabilities:
+Use GitHub Security Advisories to report vulnerabilities:
+
+- <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/security/advisories>
+
+## Security Baselines in This Repo
+
+- Strict-mode scripts (`set -euo pipefail` / `Set-StrictMode`)
+- User-local install paths where appropriate
+- Cross-platform health-check validation
+- Download integrity hardening in installers
+
+## Operator Rules
+
+- Never commit secrets/tokens.
+- Review install script diffs before execution.
+- Use least privilege (`sudo` only when needed).
+- Re-run strict health checks after security-relevant changes.
+
+## Security-Relevant Tools
+
+- `semgrep`
+- `ast-grep`
+- `grepai` (for investigation/navigation)
+
+## Policy Reference
 
 - <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/SECURITY.md>
-
-## Local Safety Practices
-
-- Never commit secrets or tokens.
-- Keep auth material in environment variables or secure stores.
-- Run security-relevant tools (`semgrep`, `ast-grep`) as part of validation when changing scripts.
-
-## Hardening Focus Areas
-
-- installer script integrity and strict mode
-- dependency source trust and checksum validation
-- shell config safety and PATH hygiene

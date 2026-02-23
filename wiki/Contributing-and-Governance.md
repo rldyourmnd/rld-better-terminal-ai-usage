@@ -3,19 +3,26 @@
 ## Contribution Rules
 
 - Keep changes scoped and verifiable.
-- Update docs with behavioral changes.
-- Run health checks before opening PR.
-- Avoid unreviewed destructive changes.
+- Update scripts, docs, and wiki together when behavior changes.
+- Prefer deterministic install and validation patterns.
+- Avoid destructive operations in shared branches.
 
-## Recommended PR Checklist
+## PR Checklist
 
-- [ ] Installation flow still works for changed layers.
-- [ ] `scripts/health-check.sh --summary` passes.
-- [ ] Docs updated (`README`, `docs/operations`, `wiki/` as needed).
-- [ ] Changelog updated when user-facing behavior changed.
+- [ ] Platform install flow still works for touched files.
+- [ ] Relevant dry-run command passes.
+- [ ] Relevant health-check passes.
+- [ ] `CHANGELOG.md` updated under `[Unreleased]`.
+- [ ] Wiki/docs links and commands are still valid.
+
+## Validation Matrix
+
+- Linux: `./scripts/install.sh --dry-run` and `./scripts/health-check.sh --summary`
+- macOS: `./scripts/macos/install.sh --dry-run` and `./scripts/health-check-macos.sh --summary`
+- Windows: `.\scripts\install-windows.ps1 -DryRun` and `.\scripts\health-check-windows.ps1 -Summary`
 
 ## Policy References
 
-- Contributing guide: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/CONTRIBUTING.md>
+- Contributing: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/CONTRIBUTING.md>
+- Security: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/SECURITY.md>
 - Code of Conduct: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/CODE_OF_CONDUCT.md>
-- Security policy: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/SECURITY.md>

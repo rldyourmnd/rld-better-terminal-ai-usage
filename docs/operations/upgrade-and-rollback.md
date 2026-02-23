@@ -36,6 +36,16 @@ git pull --ff-only origin main
 ./scripts/health-check.sh --summary
 ```
 
+macOS / Windows:
+
+```bash
+./scripts/health-check-macos.sh --summary
+```
+
+```powershell
+.\scripts\health-check-windows.ps1 -Summary
+```
+
 5. Validate runtime.
 
 ```bash
@@ -49,10 +59,12 @@ grepai help
 
 If the upgrade causes breakage:
 
-1. Capture current bad state and revert changes.
+1. Capture current bad state and switch to a known-good commit in a dedicated rollback branch.
 
 ```bash
-git checkout -- scripts install.sh docs context CHANGELOG.md
+git log --oneline -n 20
+git switch -c rollback/<date>-<issue>
+git checkout <known-good-commit>
 ```
 
 2. Restore previous configs from backup copies.
@@ -63,10 +75,18 @@ mv ~/.config/fish/config.fish.pre-upgrade.bak ~/.config/fish/config.fish
 mv ~/.config/starship.toml.pre-upgrade.bak ~/.config/starship.toml
 ```
 
-3. Re-run health-check in summary mode.
+3. Re-run health-check in summary mode for your platform.
 
 ```bash
 ./scripts/health-check.sh --summary
+```
+
+```bash
+./scripts/health-check-macos.sh --summary
+```
+
+```powershell
+.\scripts\health-check-windows.ps1 -Summary
 ```
 
 4. If shell behavior remains broken, start with a fresh login shell session and re-open.

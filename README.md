@@ -61,9 +61,9 @@
 
 | OS | Status | Docs | Entrypoints |
 |---|---|---|---|
-| Linux (Debian/Ubuntu) | Production | `docs/platforms/linux/README.md` | `./scripts/install.sh`, `./scripts/health-check.sh` |
+| Linux (Debian/Ubuntu) | Production | `docs/platforms/linux/README.md` | `./scripts/install.sh`, `./scripts/install.sh --dry-run`, `./scripts/health-check.sh` |
 | macOS | Production | `docs/platforms/macos/README.md` | `./scripts/install.sh` or `./scripts/install-macos.sh`, `./scripts/health-check-macos.sh` |
-| Windows | Production | `docs/platforms/windows/README.md` | `.\scripts\install-windows.ps1`, `.\scripts\health-check-windows.ps1` |
+| Windows | Production | `docs/platforms/windows/README.md` | `.\scripts\install-windows.ps1`, `.\scripts\install-windows.ps1 -DryRun`, `.\scripts\health-check-windows.ps1` |
 
 ## 🚀 Quick Start
 
@@ -109,6 +109,12 @@ Linux full install:
 
 ```bash
 ./scripts/install.sh
+```
+
+Linux flow smoke check (no installs):
+
+```bash
+./scripts/install.sh --dry-run
 ```
 
 Linux layer-by-layer:
@@ -176,6 +182,13 @@ Windows flow smoke check (no installs):
 .\scripts\install-windows.ps1 -DryRun
 ```
 
+Windows help:
+
+```powershell
+.\scripts\install-windows.ps1 -Help
+.\scripts\health-check-windows.ps1 -Help
+```
+
 Windows layer-by-layer:
 
 ```powershell
@@ -212,6 +225,12 @@ Run the built-in health-check before and after changes:
 ./scripts/health-check.sh
 ```
 
+Linux strict:
+
+```bash
+./scripts/health-check.sh --strict
+```
+
 macOS:
 
 ```bash
@@ -231,6 +250,7 @@ Checks include:
 - PATH/`~/.local/bin` checks.
 - Config parity checks for WezTerm, Fish, and Starship.
 - Known failure checks (`semgrep`, `gemini`) with suggested remediation.
+- Linux `ast-grep` runtime verification that avoids false positives from non-ast-grep `sg` binaries.
 
 State snapshots are tracked in:
 
@@ -330,5 +350,5 @@ MIT License. See [LICENSE](LICENSE).
 - All tool maintainers and community contributors.
 
 <p align="center">
-  <strong>An open-source, user-agnostic terminal setup for AI-native Linux development workflows.</strong>
+  <strong>An open-source, user-agnostic terminal setup for AI-native cross-platform development workflows.</strong>
 </p>

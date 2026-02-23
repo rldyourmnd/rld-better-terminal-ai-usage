@@ -2,43 +2,39 @@
 
 ## Daily Verification
 
-```bash
-./scripts/health-check.sh --summary
-```
+- Linux: `./scripts/health-check.sh --summary`
+- macOS: `./scripts/health-check-macos.sh --summary`
+- Windows: `.\scripts\health-check-windows.ps1 -Summary`
 
-Use strict mode before major releases:
+## Pre-Release Gate
 
-```bash
-./scripts/health-check.sh --strict
-```
+1. Run strict checks:
+   - Linux: `./scripts/health-check.sh --strict --summary`
+   - macOS: `./scripts/health-check-macos.sh --strict`
+   - Windows: `.\scripts\health-check-windows.ps1 -Strict`
+2. Ensure CI checks are green.
+3. Confirm docs/wiki/changelog updates are included.
 
 ## Change Workflow
 
-1. Implement change in scripts/configs/docs.
-2. Run health checks.
-3. Capture state updates in `context/system-state.md` and `context/script-validation.md`.
-4. Update wiki pages if operator behavior changed.
+1. Implement script/config/doc changes.
+2. Run platform health checks.
+3. Update `CHANGELOG.md` under `[Unreleased]`.
+4. If behavior changed, update wiki pages in the same branch.
 
-## Upgrade Workflow
+## Wiki Publish Workflow
 
-Use `docs/operations/upgrade-and-rollback.md` as source of truth.
+```bash
+./scripts/publish-wiki.sh
+```
 
-Core rules:
+Requirements:
 
-- Upgrade in small waves.
-- Validate after each wave.
-- Keep rollback path ready before changing core layers.
+- `gh` authenticated
+- push permission to `<repo>.wiki.git`
 
-## Incident Workflow
-
-1. Reproduce with minimal commands.
-2. Capture failing output and environment facts.
-3. Apply targeted fix.
-4. Re-run health check.
-5. Record remediation in docs/wiki if it affects future operators.
-
-## Reference Docs
+## Canonical Runbooks
 
 - Health checks: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/health-check.md>
 - Troubleshooting: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/troubleshooting.md>
-- Upgrade and rollback: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/upgrade-and-rollback.md>
+- Upgrade/rollback: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/upgrade-and-rollback.md>

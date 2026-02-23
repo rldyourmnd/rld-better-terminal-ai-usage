@@ -1,12 +1,15 @@
 # Troubleshooting
 
-This guide captures operational failures commonly seen on Debian/Ubuntu systems.
+This guide captures operational failures commonly seen across Linux
+(Debian/Ubuntu), macOS, and Windows flows.
 
 ## General Recovery
 
 - Re-run the relevant installer script after fixing prerequisites.
 - Ensure internet access and valid `sudo` credentials for system package steps.
 - Re-run `./scripts/health-check.sh --summary` after each change.
+- On macOS use `./scripts/health-check-macos.sh --summary`.
+- On Windows use `.\scripts\health-check-windows.ps1 -Summary`.
 
 ## Common Issues and Fixes
 
@@ -19,9 +22,16 @@ Required package/tool is missing.
 **Fix**
 
 ```bash
-sudo apt update
-sudo apt install -y <package>
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends <package>
 ./scripts/install-layer-2.sh # or relevant layer
+```
+
+Windows equivalent:
+
+```powershell
+winget install --id <Package.Id> --exact --source winget
+.\scripts\install-windows.ps1
 ```
 
 ### 2) `config parity check failed`
@@ -117,6 +127,20 @@ Corporate proxy/firewall limits release metadata fetch.
 
 ```bash
 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt ./scripts/install-layer-3.sh
+```
+
+### 7) `sg` exists but is not ast-grep
+
+**Cause**
+
+Some Linux systems expose `sg` from `util-linux`, which is not `ast-grep`.
+
+**Fix**
+
+```bash
+~/.cargo/bin/sg --version
+cargo install --locked ast-grep
+./scripts/health-check.sh --strict --summary
 ```
 
 ## Escalation Protocol

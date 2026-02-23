@@ -30,7 +30,13 @@ Layer 1 provides modern, high-performance replacements for classic Unix file too
 
 #### 1. apt packages
 ```bash
-sudo apt install -y bat fd-find ripgrep jq eza
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends bat fd-find ripgrep jq
+if apt-cache show eza >/dev/null 2>&1; then
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends eza
+else
+  cargo install --locked eza
+fi
 ```
 
 #### 2. Create symlinks (Ubuntu-specific)
@@ -45,7 +51,7 @@ ln -sf /usr/bin/fdfind ~/.local/bin/fd
 
 #### 3. sd (sed replacement)
 ```bash
-cargo install sd
+cargo install --locked sd
 ```
 
 #### 4. yq (YAML/JSON/XML processor)
@@ -57,8 +63,11 @@ case "$ARCH" in
   *) ARCH=amd64 ;;
 esac
 mkdir -p ~/.local/bin
-curl -fSsL -o ~/.local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}"
+curl --proto '=https' --tlsv1.2 -fSsL -o ~/.local/bin/yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${ARCH}"
 chmod +x ~/.local/bin/yq
+# Optional pinning:
+# export YQ_SHA256="<sha256-from-official-release>"
+# echo "${YQ_SHA256}  ~/.local/bin/yq" | sha256sum -c -
 ```
 
 #### 5. Ensure PATH includes ~/.local/bin
@@ -439,7 +448,10 @@ source ~/.bashrc
 
 **Solution:**
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+tmp_rustup="$(mktemp)"
+curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs -o "$tmp_rustup"
+sh "$tmp_rustup" -y
+rm -f "$tmp_rustup"
 source "$HOME/.cargo/env"
 ```
 

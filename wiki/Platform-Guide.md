@@ -1,25 +1,33 @@
 # Platform Guide
 
-This repository is structured by operating systems.
+## Status Matrix
 
-## Linux (Debian/Ubuntu)
+| Platform | Status | Install | Dry-Run | Health |
+| --- | --- | --- | --- | --- |
+| Linux (Debian/Ubuntu) | Production | `./scripts/install.sh` | `./scripts/install.sh --dry-run` | `./scripts/health-check.sh --summary` |
+| macOS | Production | `./scripts/install.sh` or `./scripts/install-macos.sh` | `./scripts/macos/install.sh --dry-run` | `./scripts/health-check-macos.sh --summary` |
+| Windows | Production | `.\scripts\install-windows.ps1` | `.\scripts\install-windows.ps1 -DryRun` | `.\scripts\health-check-windows.ps1 -Summary` |
 
-- Status: production
-- Docs: `docs/platforms/linux/README.md`
-- Install: `./scripts/install.sh`
-- Health check: `./scripts/health-check.sh --summary`
+## Linux Notes
 
-## macOS
+- Non-interactive APT installs are used in scripts.
+- Rust-based tools use `cargo install --locked` where applicable.
+- Flow smoke available via `./scripts/install.sh --dry-run`.
 
-- Status: production
-- Docs: `docs/platforms/macos/README.md`
-- Install: `./scripts/install.sh` or `./scripts/install-macos.sh`
-- Health check: `./scripts/health-check-macos.sh --summary`
+## macOS Notes
 
-## Windows
+- Homebrew-based provisioning.
+- Shared layered model with Linux/Windows.
+- Dedicated dry-run in `scripts/macos/install.sh --dry-run`.
 
-- Status: production
-- Docs: `docs/platforms/windows/README.md`
-- Install (PowerShell): `.\scripts\install-windows.ps1`
-- Install (Git Bash/MSYS/Cygwin): `./scripts/install.sh` (auto-dispatch)
-- Health check (PowerShell): `.\scripts\health-check-windows.ps1 -Summary`
+## Windows Notes
+
+- WinGet-first strategy with fallback installers.
+- PowerShell profile integration for Starship/zoxide.
+- Wrapper scripts support `-Help`.
+
+## Platform Docs
+
+- Linux: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/platforms/linux/README.md>
+- macOS: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/platforms/macos/README.md>
+- Windows: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/platforms/windows/README.md>

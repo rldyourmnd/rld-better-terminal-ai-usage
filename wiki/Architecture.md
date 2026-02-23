@@ -3,34 +3,38 @@
 ## Design Goals
 
 - Deterministic provisioning
-- Script-level separation of concerns
-- Fast rollback and targeted remediation
-- Predictable terminal UX across machines
+- Clear platform boundaries
+- Re-runnable layer scripts
+- Reproducible validation before/after changes
 
-## Layer Model
+## Topology
 
 ```text
-Foundation: terminal + shell + prompt
- -> Layer 1: file operations
- -> Layer 2: productivity
- -> Layer 3: github workflow
- -> Layer 4: code intelligence
- -> Layer 5: AI orchestration
+Dispatcher: scripts/install.sh
+  -> Linux pipeline (bash)
+  -> macOS pipeline (bash/Homebrew)
+  -> Windows pipeline (PowerShell/WinGet)
+
+Per-platform flow:
+  Foundation -> Layer1 -> Layer2 -> Layer3 -> Layer4 -> Layer5
 ```
 
 ## Key Boundaries
 
-- `scripts/` controls installation flow and guardrails.
-- `configs/` is the canonical template set for terminal/shell/prompt.
-- `docs/` contains deep reference and runbooks.
-- `context/` stores state snapshots and research artifacts.
+- `scripts/`: install and health-check behavior
+- `configs/`: canonical template configs
+- `docs/`: deep reference and runbooks
+- `wiki/`: operational quick guides
+- `context/`: machine/research snapshots
 
-## Runtime Validation Boundary
+## Validation Boundary
 
-`./scripts/health-check.sh` validates syntax, parity, tool availability, and drift indicators.
+- Linux: `scripts/health-check.sh`
+- macOS: `scripts/macos/health-check.sh`
+- Windows: `scripts/windows/health-check.ps1`
 
 ## Operational Contract
 
-- Update scripts and docs together.
-- Keep context snapshots current when runtime state changes.
-- Keep wiki concise and task-first, with links to canonical deep docs.
+- Script changes require doc updates.
+- Behavior changes require changelog updates.
+- Wiki should remain concise and linked to canonical docs.
