@@ -2,7 +2,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # HEALTH CHECK
 # ═══════════════════════════════════════════════════════════════════════════════
-# Runs a full pre-flight and runtime validation for the Better Terminal Usage repo.
+# Runs a full pre-flight and runtime validation for the Awesome Terminal for AI repo.
 # Run: ./scripts/health-check.sh
 # Run summary only: ./scripts/health-check.sh --summary
 # Run strict mode: ./scripts/health-check.sh --strict
@@ -144,7 +144,7 @@ fi
 log_banner() {
     echo ""
     echo "════════════════════════════════════════════════════════════"
-    echo "  BETTER TERMINAL USAGE - HEALTH CHECK"
+    echo "  AWESOME TERMINAL FOR AI - HEALTH CHECK"
     echo "  $(date -Iseconds)"
     echo "════════════════════════════════════════════════════════════"
 }

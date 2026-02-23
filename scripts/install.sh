@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# BETTER TERMINAL USAGE - Complete Installation Script
+# AWESOME TERMINAL FOR AI - Complete Installation Script
 # ╀═════════════════════════════════════════════════════════════════════════════
 # Orchestrates all installation layers and foundation setup.
 # Run: ./scripts/install.sh
