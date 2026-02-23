@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- No unreleased entries yet.
+
+## [2.0.0] - 2026-02-23
+
+### Added
 - Added production-ready Windows implementation with layered PowerShell installers and health-check:
   - `scripts/windows/install.ps1`
   - `scripts/windows/install-foundation.ps1`
@@ -42,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - checks `bat/batcat` and `fd/fdfind` compatibly,
   - validates real `ast-grep` runtime instead of trusting any `sg` binary.
 - Updated repository documentation and wiki pages to align with current Linux/macOS/Windows production flows and validation contracts.
+
+### Fixed
+- Resolved Windows PowerShell help flag conflict by removing explicit `help` alias collisions in:
+  - `scripts/windows/install.ps1`
+  - `scripts/windows/health-check.ps1`
 
 ## [1.3.0] - 2026-02-23
 
@@ -142,7 +152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v2.0.0
 [1.3.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.3.0
 [1.2.2]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.2.2
 [1.2.1]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.2.1
