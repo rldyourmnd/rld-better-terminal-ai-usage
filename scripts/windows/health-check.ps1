@@ -1,7 +1,7 @@
 param(
     [Alias('summary')][switch]$Summary,
     [Alias('strict')][switch]$Strict,
-    [Alias('help', 'h')][switch]$Help
+    [Alias('h')][switch]$Help
 )
 
 Set-StrictMode -Version Latest

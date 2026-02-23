@@ -1,6 +1,6 @@
 param(
     [Alias('dry-run')][switch]$DryRun,
-    [Alias('help', 'h')][switch]$Help
+    [Alias('h')][switch]$Help
 )
 
 Set-StrictMode -Version Latest
