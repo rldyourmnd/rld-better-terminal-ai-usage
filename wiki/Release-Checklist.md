@@ -5,12 +5,17 @@
 - Ensure `CHANGELOG.md` has complete `[Unreleased]` notes.
 - Confirm docs and wiki reflect actual commands/flags.
 - Confirm version bump/tag strategy.
+- Confirm `VERSION` matches release tag.
 
 ## 2. Validate
 
 - Linux:
   - `./scripts/install.sh --dry-run`
   - `./scripts/health-check.sh --strict --summary`
+  - validate renderer/display fallbacks for terminal stability:
+    - `WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process`
+    - `WEZTERM_FORCE_X11=1 wezterm start --always-new-process`
+    - `WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process`
 - macOS:
   - `./scripts/macos/install.sh --dry-run`
   - `./scripts/health-check-macos.sh --strict`

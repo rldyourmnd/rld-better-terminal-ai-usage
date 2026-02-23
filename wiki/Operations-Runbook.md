@@ -5,6 +5,9 @@
 - Linux: `./scripts/health-check.sh --summary`
 - macOS: `./scripts/health-check-macos.sh --summary`
 - Windows: `.\scripts\health-check-windows.ps1 -Summary`
+- Linux health-check now includes recent user-journal runtime diagnostics for:
+  - GNOME compositor freeze signatures,
+  - WezTerm runtime warning signatures.
 
 ## Pre-Release Gate
 
@@ -21,6 +24,14 @@
 2. Run platform health checks.
 3. Update `CHANGELOG.md` under `[Unreleased]`.
 4. If behavior changed, update wiki pages in the same branch.
+
+## Runtime Incident Triage (Linux WezTerm)
+
+```bash
+WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process
+WEZTERM_FORCE_X11=1 wezterm start --always-new-process
+WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process
+```
 
 ## Wiki Publish Workflow
 

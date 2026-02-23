@@ -26,6 +26,19 @@
 - Re-copy templates from `configs/` to user dotfiles.
 - Re-run strict health-check.
 
+### Terminal freeze on move/resize (multi-monitor)
+
+- Start with session-aware defaults from repo config:
+  - `cp configs/wezterm/wezterm.lua ~/.wezterm.lua`
+- Test low-overhead native Wayland mode:
+  - `WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process`
+- If needed, force X11 path:
+  - `WEZTERM_FORCE_X11=1 wezterm start --always-new-process`
+- Last-resort renderer fallback:
+  - `WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process`
+- Inspect last logs:
+  - `journalctl --user -b --since '20 minutes ago' | rg -n "size change accounting|frame counter but no frame drawn time|MetaShapedTexture|update-status event: runtime error"`
+
 ### Linux `sg` is not `ast-grep`
 
 - Check `sg --version` output.
