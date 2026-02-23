@@ -4,7 +4,7 @@ Captured from the current machine and intended as the canonical "current state" 
 
 ## Captured At
 
-- Timestamp: 2026-02-23T07:30:05+07:00
+- Timestamp: 2026-02-23T07:35:50+07:00
 - Host profile: Linux, NVIDIA RTX 2070, i7-8750H, 32GB RAM
 
 ## Rendering and Shell Profile
@@ -52,13 +52,13 @@ Captured from the current machine and intended as the canonical "current state" 
 | `sg` | `ast-grep 0.40.5` |
 | `probe` | `probe-code 0.6.0` |
 | `tokei` | `tokei 14.0.0 compiled with serialization support: json` |
-| `semgrep` | `PermissionError on /home/rldyourmnd/.semgrep/semgrep.log` |
+| `semgrep` | `1.152.0` |
 | `ctags` | `Universal Ctags 5.9.0, Copyright (C) 2015 Universal Ctags Team` |
 | `node` | `v24.13.1` |
 | `npm` | `11.8.0` |
 | `claude` | `2.1.50 (Claude Code)` |
-| `gemini` | `non-interactive call times out (interactive auth/bootstrap path)` |
-| `codex` | `codex-cli 0.104.0 (warning: stale temp dir cleanup Permission denied)` |
+| `gemini` | `0.29.5` |
+| `codex` | `codex-cli 0.104.0` |
 
 ## Context7 Validation Notes
 
@@ -71,8 +71,6 @@ The following official docs were consulted through Context7 for configuration va
 
 ## Health-Check Snapshot
 
-- `scripts/health-check.sh` status: PASS (5 warnings)
+- `scripts/health-check.sh` status: PASS (3 warnings)
 - Key warnings:
-  - `semgrep` fails `--version` due log file permission error
-  - `gemini` interactive command behavior requires manual auth flow
   - Config parity mismatches for three user template files
