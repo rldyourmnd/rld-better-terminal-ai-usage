@@ -16,6 +16,21 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+OS_NAME="$(uname -s)"
+
+if [[ "$OS_NAME" == "Darwin" ]]; then
+    if [[ -x "$PROJECT_DIR/scripts/macos/health-check.sh" ]]; then
+        exec "$PROJECT_DIR/scripts/macos/health-check.sh" "$@"
+    fi
+    echo "macOS health-check script not found: $PROJECT_DIR/scripts/macos/health-check.sh"
+    exit 1
+fi
+
+if [[ "$OS_NAME" != "Linux" ]]; then
+    echo "Unsupported OS for this health-check: $OS_NAME"
+    exit 1
+fi
+
 SUMMARY_MODE=false
 STRICT_MODE=false
 VERBOSE=true

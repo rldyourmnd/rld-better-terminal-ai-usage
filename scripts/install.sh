@@ -26,6 +26,22 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 command_exists() { command -v "$1" &>/dev/null; }
 
+OS_NAME="$(uname -s)"
+if [[ "$OS_NAME" == "Darwin" ]]; then
+    if [[ -x "$PROJECT_DIR/scripts/macos/install.sh" ]]; then
+        log_info "Detected macOS. Delegating to scripts/macos/install.sh"
+        exec "$PROJECT_DIR/scripts/macos/install.sh" "$@"
+    fi
+    log_error "macOS installer is missing: $PROJECT_DIR/scripts/macos/install.sh"
+    exit 1
+fi
+
+if [[ "$OS_NAME" != "Linux" ]]; then
+    log_error "Unsupported OS: $OS_NAME"
+    log_error "Supported now: Linux (Debian/Ubuntu), macOS"
+    exit 1
+fi
+
 run_step() {
     local script_path="$1"
     local name
