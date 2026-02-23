@@ -14,8 +14,8 @@
   <a href="https://github.com/rldyourmnd/awesome-terminal-for-ai/actions/workflows/ci.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/rldyourmnd/awesome-terminal-for-ai/ci.yml?branch=main&style=for-the-badge" alt="CI">
   </a>
-  <a href="https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.0">
-    <img src="https://img.shields.io/badge/release-v2.0.0-2ea44f?style=for-the-badge" alt="Release 2.0.0">
+  <a href="https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.1">
+    <img src="https://img.shields.io/badge/release-v2.0.1-2ea44f?style=for-the-badge" alt="Release 2.0.1">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/rldyourmnd/awesome-terminal-for-ai?style=for-the-badge" alt="License">
