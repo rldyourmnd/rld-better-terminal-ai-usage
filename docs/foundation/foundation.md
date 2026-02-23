@@ -177,7 +177,6 @@ config.front_end = 'OpenGL'
 config.unix_domains = {
   {
     name = 'unix',
-    socket_path = '/tmp/wezterm-gui-sock',
     local_echo_threshold_ms = 10,
   },
 }

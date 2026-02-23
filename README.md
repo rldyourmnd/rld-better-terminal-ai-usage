@@ -134,6 +134,12 @@ macOS full install:
 ./scripts/install-macos.sh
 ```
 
+macOS flow smoke check (no installs):
+
+```bash
+./scripts/macos/install.sh --dry-run
+```
+
 or via auto-detect:
 
 ```bash
@@ -164,6 +170,12 @@ Windows full install:
 .\scripts\install-windows.ps1
 ```
 
+Windows flow smoke check (no installs):
+
+```powershell
+.\scripts\install-windows.ps1 -DryRun
+```
+
 Windows layer-by-layer:
 
 ```powershell
@@ -179,7 +191,7 @@ Windows layer-by-layer:
 
 | Layer | Script | Includes |
 |---|---|---|
-| Foundation | `install-foundation.sh` | WezTerm, Fish, Starship, Nerd Fonts, shared configs |
+| Foundation | `install-foundation.sh` | WezTerm, Fish/PowerShell, Starship, Nerd Fonts, shared configs |
 | Layer 1 | `install-layer-1.sh` | bat, fd (fdfind), rg, sd, jq, yq, eza |
 | Layer 2 | `install-layer-2.sh` | fzf, zoxide, atuin, uv, bun, watchexec, glow, btm, hyperfine |
 | Layer 3 | `install-layer-3.sh` | gh CLI, lazygit, delta |

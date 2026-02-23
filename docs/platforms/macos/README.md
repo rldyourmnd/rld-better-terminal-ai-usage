@@ -15,6 +15,7 @@ Production-ready macOS implementation using Homebrew and the same layered model.
 
 - Full install (auto-detect): `./scripts/install.sh`
 - Full install (explicit): `./scripts/install-macos.sh`
+- Flow smoke check (no installs): `./scripts/macos/install.sh --dry-run`
 - Health check (explicit): `./scripts/health-check-macos.sh --summary`
 
 ## macOS Layer Scripts
@@ -66,3 +67,4 @@ Production-ready macOS implementation using Homebrew and the same layered model.
 - Fish default shell setup requires adding fish path to `/etc/shells` and running `chsh -s <fish_path>`.
 - WezTerm GUI is installed via Homebrew cask; script applies shared repo config to `~/.wezterm.lua`.
 - Config parity is validated by `scripts/macos/health-check.sh`.
+- `scripts/macos/install-layer-4.sh` installs `probe-code` via `cargo install --locked` for reproducibility.

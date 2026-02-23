@@ -21,6 +21,12 @@ From PowerShell (recommended):
 .\scripts\health-check-windows.ps1 -Summary
 ```
 
+Flow smoke check (no installs):
+
+```powershell
+.\scripts\install-windows.ps1 -DryRun
+```
+
 From Git Bash / MSYS2 / Cygwin:
 
 ```bash
@@ -54,6 +60,9 @@ into PowerShell scripts.
 - Profile bootstrapping:
   - `Invoke-Expression (&starship init powershell)`
   - `Invoke-Expression (& { (zoxide init powershell | Out-String) })`
+- WinGet install scope strategy:
+  - tries `--scope user`
+  - if needed retries with `--scope machine`
 
 ### Layer 1 (File Operations)
 
@@ -117,6 +126,11 @@ into PowerShell scripts.
 Native Windows flow uses PowerShell + Starship. Fish integration is recommended
 via WSL distribution (install fish inside WSL), because Fish support on Windows
 is primarily through compatibility environments (WSL/MSYS2/Cygwin).
+
+Shared WezTerm config is platform-gated with `wezterm.target_triple`:
+
+- Windows defaults to `pwsh`/`powershell.exe`
+- macOS/Linux defaults to Fish when available
 
 ## Health Check
 
