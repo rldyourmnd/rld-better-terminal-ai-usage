@@ -10,6 +10,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - No unreleased changes yet.
 
+## [1.2.2] - 2026-02-23
+
+### Added
+- Added a professional GitHub Wiki source tree under `wiki/` with Home, sidebar/footer, architecture, operations runbook, troubleshooting, security, and contribution pages.
+- Added `scripts/publish-wiki.sh` for repeatable Wiki publication via `gh` with idempotent sync behavior.
+
+### Changed
+- Updated `README.md` to include Wiki discoverability and document the `wiki/` + publish workflow.
+- Enhanced WezTerm UX by moving the tab bar to the bottom and adding a neon-pink left status signature (`rldyourmnd`).
+- Refreshed runtime/context validation snapshots to reflect current project health-check state.
+
+### Fixed
+- Fixed Wiki publication sync to preserve cloned wiki git metadata (`.git`) during `rsync`, preventing false "already up to date" states.
+
 ## [1.2.1] - 2026-02-23
 
 ### Fixed
@@ -70,7 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.2.2
 [1.2.1]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.2.1
 [1.1.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.1.0
 [1.0.0]: https://github.com/rldyourmnd/rld-better-terminal-ai-usage/releases/tag/v1.0.0
