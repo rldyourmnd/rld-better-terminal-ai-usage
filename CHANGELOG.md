@@ -20,12 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `scripts/linux/install-foundation.sh`
   - `scripts/linux/install-layer-{1..5}.sh`
   - `scripts/linux/install-nerd-fonts.sh`
-- Preserved backward compatibility by keeping root Linux wrapper entrypoints in `scripts/`.
+- Simplified top-level `scripts/` UX by removing legacy Linux layer wrappers.
+- Moved shared starship helper to `scripts/shared/starship/switch-profile.sh`.
 - Reorganized Linux deep reference docs into OS-scoped location:
   - `docs/platforms/linux/reference/foundation.md`
   - `docs/platforms/linux/reference/layers/*`
   - `docs/platforms/linux/reference/terminal-tool-catalog.md`
 - Refreshed README/wiki/docs navigation with cleaner OS-first UX and updated script/doc paths.
+
+### Removed
+- Removed repository directories:
+  - `context/`
+  - `research/`
 
 ## [2.0.0] - 2026-02-23
 

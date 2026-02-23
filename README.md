@@ -72,12 +72,14 @@ scripts/
 ├── linux/                         # Linux canonical implementation
 ├── macos/                         # macOS canonical implementation
 ├── windows/                       # Windows canonical implementation
+├── shared/                        # cross-platform helper scripts
 ├── install-macos.sh               # wrapper
 ├── install-windows.ps1            # wrapper
 ├── health-check-macos.sh          # wrapper
 └── health-check-windows.ps1       # wrapper
 
 docs/
+├── README.md                      # docs navigation index
 ├── platforms/
 │   ├── linux/
 │   │   ├── README.md
@@ -125,7 +127,7 @@ wiki/                              # wiki source (published via script)
 
 ## Compatibility Notes
 
-Legacy Linux root-level scripts (`scripts/install-layer-*.sh`, `scripts/install-foundation.sh`) are kept as wrappers and forward to `scripts/linux/*` to preserve existing workflows.
+Linux layer scripts are now canonical under `scripts/linux/*` (root-level legacy Linux layer wrappers were removed for cleaner UX).
 
 ## Contributing
 
