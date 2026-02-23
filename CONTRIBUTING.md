@@ -192,7 +192,7 @@ When suggesting new tools, consider these criteria:
 ## ❓ Questions?
 
 Feel free to:
-- Open a [Discussion](https://github.com/rldyourmnd/awesome-terminal-for-ai/discussions)
+- Open an [Issue](https://github.com/rldyourmnd/awesome-terminal-for-ai/issues)
 - Ask in an issue with the `question` label
 
 ---
