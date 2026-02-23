@@ -23,6 +23,6 @@
 
 ## Policy References
 
-- Contributing: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/CONTRIBUTING.md>
-- Security: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/SECURITY.md>
-- Code of Conduct: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/CODE_OF_CONDUCT.md>
+- Contributing: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/CONTRIBUTING.md>
+- Security: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/SECURITY.md>
+- Code of Conduct: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/CODE_OF_CONDUCT.md>

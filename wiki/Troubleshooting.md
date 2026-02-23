@@ -48,4 +48,4 @@ When unresolved, provide:
 
 ## Canonical Guide
 
-- <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/troubleshooting.md>
+- <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/docs/operations/troubleshooting.md>

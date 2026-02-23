@@ -35,6 +35,6 @@ Requirements:
 
 ## Canonical Runbooks
 
-- Health checks: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/health-check.md>
-- Troubleshooting: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/troubleshooting.md>
-- Upgrade/rollback: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/blob/main/docs/operations/upgrade-and-rollback.md>
+- Health checks: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/docs/operations/health-check.md>
+- Troubleshooting: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/docs/operations/troubleshooting.md>
+- Upgrade/rollback: <https://github.com/rldyourmnd/awesome-terminal-for-ai/blob/main/docs/operations/upgrade-and-rollback.md>
