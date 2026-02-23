@@ -40,6 +40,23 @@ This is the production implementation for Linux hosts.
 
 `./scripts/install.sh` now auto-detects OS. On Linux it runs the existing Linux pipeline.
 
+## WezTerm Runtime Modes
+
+Linux WezTerm config is session-aware by default:
+
+- Wayland session (`XDG_SESSION_TYPE=wayland`) -> native Wayland.
+- X11 session -> X11/XWayland.
+- Renderer default -> `OpenGL` (stable baseline).
+
+Explicit runtime overrides:
+
+```bash
+WEZTERM_FORCE_WAYLAND=1 wezterm start --always-new-process
+WEZTERM_FORCE_X11=1 wezterm start --always-new-process
+WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process
+WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process
+```
+
 ## Operational Guarantees
 
 - Official shell installers are downloaded to a temporary file and executed locally (no direct `curl | sh` pattern).

@@ -113,10 +113,11 @@ The config is optimized for long-running AI sessions. If WezTerm GUI crashes, th
 ### Key Features
 
 - **OpenGL rendering** - Stable GPU acceleration (WebGPU+Vulkan can cause SIGSEGV with NVIDIA 580.x)
+- **Session-aware display protocol** - Wayland session uses native Wayland; X11 session uses X11/XWayland
 - **Built-in multiplexer** - Session persistence, no tmux needed
 - **local_echo_threshold_ms=10** - Predictive echo for instant feel
 - **Disabled ligatures** - Faster text rendering for AI output streaming
-- **Retro tab bar** - More stable than fancy tab bar
+- **Optional minimal UI mode** - `WEZTERM_MINIMAL_UI=1` for compositor stress scenarios
 
 ### Keybindings
 
@@ -169,19 +170,25 @@ table.insert(config.hyperlink_rules, {
 ### GPU Configuration
 
 ```lua
--- OpenGL for maximum stability (WebGPU+Vulkan may cause SIGSEGV with NVIDIA 580.x)
-config.front_end = 'OpenGL'
+-- OpenGL is default stable renderer
+config.front_end = 'OpenGL'  -- or WEZTERM_RENDERER=opengl
 
--- Alternative: WebGPU (uncomment if your drivers support it)
--- config.front_end = 'WebGpu'
--- config.webgpu_power_preference = 'HighPerformance'
--- local gpus = wezterm.gui.enumerate_gpus()
--- for _, gpu in ipairs(gpus) do
---   if gpu.backend == 'Vulkan' and gpu.device_type == 'DiscreteGpu' then
---     config.webgpu_preferred_adapter = gpu
---     break
---   end
--- end
+-- Runtime overrides:
+-- WEZTERM_RENDERER=software
+-- WEZTERM_RENDERER=webgpu
+-- WEZTERM_SAFE_RENDERER=1  -- equivalent software fallback
+```
+
+### Display Protocol Selection
+
+```lua
+-- Linux default (session-aware):
+-- XDG_SESSION_TYPE=wayland -> enable_wayland=true
+-- XDG_SESSION_TYPE=x11     -> enable_wayland=false
+
+-- Force overrides:
+-- WEZTERM_FORCE_WAYLAND=1
+-- WEZTERM_FORCE_X11=1
 ```
 
 ### Multiplexer Configuration
@@ -199,10 +206,11 @@ config.default_gui_startup_args = { 'connect', 'unix' }
 
 ### Appearance Configuration
 
-The config uses retro tab bar for stability (fancy tab bar has complex rendering pipeline):
+Default profile keeps fancy tab bar and gradient. Minimal profile disables both:
 
 ```lua
-config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = true
+-- WEZTERM_MINIMAL_UI=1 -> use_fancy_tab_bar=false, gradient disabled
 config.window_decorations = 'TITLE | RESIZE'  -- Classic title bar
 config.hide_tab_bar_if_only_one_tab = false
 config.show_new_tab_button_in_tab_bar = true
