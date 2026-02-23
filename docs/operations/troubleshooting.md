@@ -72,7 +72,46 @@ Reload WezTerm config (`Ctrl+Shift+R` by default) and validate:
 journalctl --user -b --since '10 minutes ago' | rg "update-status event: runtime error"
 ```
 
-### 4) `semgrep` command fails with `PermissionError: .../.semgrep/semgrep.log`
+### 4) Terminal freezes when moving/resizing windows across monitors
+
+**Cause**
+
+Most commonly compositor-path instability (GNOME/Mutter frame allocation path),
+especially during aggressive resize operations in multi-monitor setups.
+
+**Fix**
+
+1) Ensure the repository config is active:
+
+```bash
+cp configs/wezterm/wezterm.lua ~/.wezterm.lua
+```
+
+2) Test native Wayland + low-overhead UI profile:
+
+```bash
+WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process
+```
+
+3) If the issue persists, force X11 path:
+
+```bash
+WEZTERM_FORCE_X11=1 wezterm start --always-new-process
+```
+
+4) If rendering still stalls, force software renderer:
+
+```bash
+WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process
+```
+
+5) Validate logs around the incident:
+
+```bash
+journalctl --user -b --since '20 minutes ago' | rg -n "size change accounting|frame counter but no frame drawn time|MetaShapedTexture|needs an allocation|update-status event: runtime error"
+```
+
+### 5) `semgrep` command fails with `PermissionError: .../.semgrep/semgrep.log`
 
 **Cause**
 
@@ -106,7 +145,7 @@ python3 -m pip uninstall -y semgrep
 python3 -m pip install --user semgrep
 ```
 
-### 5) `gemini` command times out / hangs
+### 6) `gemini` command times out / hangs
 
 **Cause**
 
@@ -123,7 +162,7 @@ gemini
 
 - For non-interactive use, define `GEMINI_API_KEY`.
 
-### 6) `~/.local/bin` missing or not on `PATH`
+### 7) `~/.local/bin` missing or not on `PATH`
 
 **Cause**
 
@@ -142,7 +181,7 @@ fi
 
 Then restart shell.
 
-### 7) `curl` or GitHub API blocked
+### 8) `curl` or GitHub API blocked
 
 **Cause**
 
@@ -157,7 +196,7 @@ Corporate proxy/firewall limits release metadata fetch.
 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt ./scripts/linux/install-layer-3.sh
 ```
 
-### 8) `sg` exists but is not ast-grep
+### 9) `sg` exists but is not ast-grep
 
 **Cause**
 
@@ -171,7 +210,7 @@ cargo install --locked ast-grep
 ./scripts/health-check.sh --strict --summary
 ```
 
-### 9) `nvidia-smi` fails with `Failed to initialize NVML: Unknown Error`
+### 10) `nvidia-smi` fails with `Failed to initialize NVML: Unknown Error`
 
 **Cause**
 

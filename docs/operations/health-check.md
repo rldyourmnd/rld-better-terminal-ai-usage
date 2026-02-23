@@ -55,8 +55,19 @@ macOS:
 - Known local runtime issues:
   - `semgrep` permission errors (often environment/sandbox-dependent)
   - `gemini` non-responsive invocation on this machine
+  - recent compositor/runtime freeze signatures from user journal (`journalctl --user`)
+    - GNOME/Mutter resize-path signals (`size change accounting`, `frame counter`, `MetaShapedTexture`)
+    - WezTerm runtime signals (`update-status` runtime error, mux broken pipe)
 - Tool inventory contract drift (terminal+tool catalog updates)
 - Installer script health (`git diff`-stable script files and executable bit)
+
+If runtime freeze warnings appear, test these runtime overrides before escalating:
+
+```bash
+WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process
+WEZTERM_FORCE_X11=1 wezterm start --always-new-process
+WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process
+```
 
 ## Recommended Usage
 

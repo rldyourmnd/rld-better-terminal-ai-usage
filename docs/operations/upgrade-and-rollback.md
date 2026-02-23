@@ -53,6 +53,15 @@ exec fish
 lazygit
 gh --version
 grepai help
+journalctl --user -b --since '20 minutes ago' | rg -n "size change accounting|frame counter but no frame drawn time|MetaShapedTexture|update-status event: runtime error"
+```
+
+Optional renderer/display validation matrix:
+
+```bash
+WEZTERM_FORCE_WAYLAND=1 WEZTERM_MINIMAL_UI=1 wezterm start --always-new-process
+WEZTERM_FORCE_X11=1 wezterm start --always-new-process
+WEZTERM_SAFE_RENDERER=1 wezterm start --always-new-process
 ```
 
 ## Rollback Procedure
