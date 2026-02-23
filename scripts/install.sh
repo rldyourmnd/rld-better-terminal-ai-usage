@@ -49,13 +49,24 @@ case "$OS_NAME" in
     MINGW*|MSYS*|CYGWIN*)
         if [[ -f "$PROJECT_DIR/scripts/install-windows.ps1" ]]; then
             WINDOWS_SCRIPT_PATH="$(to_windows_path_if_needed "$PROJECT_DIR/scripts/install-windows.ps1")"
+            PS_ARGS=()
+            for arg in "$@"; do
+                case "$arg" in
+                    --dry-run)
+                        PS_ARGS+=("-DryRun")
+                        ;;
+                    *)
+                        PS_ARGS+=("$arg")
+                        ;;
+                esac
+            done
             if command_exists pwsh; then
                 log_info "Detected Windows-compatible shell environment. Delegating to install-windows.ps1 via pwsh"
-                exec pwsh -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "$@"
+                exec pwsh -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "${PS_ARGS[@]}"
             fi
             if command_exists powershell.exe; then
                 log_info "Detected Windows-compatible shell environment. Delegating to install-windows.ps1 via powershell.exe"
-                exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "$@"
+                exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$WINDOWS_SCRIPT_PATH" "${PS_ARGS[@]}"
             fi
             log_error "Neither pwsh nor powershell.exe found in PATH."
             exit 1

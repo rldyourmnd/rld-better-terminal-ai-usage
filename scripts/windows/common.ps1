@@ -214,21 +214,23 @@ function Install-WingetPackage {
     Assert-WingetAvailable
 
     foreach ($packageId in $PackageIds) {
-        Write-Info "Installing $DisplayName via winget id $packageId"
-        try {
-            $code = Invoke-WingetInstallById -PackageId $packageId -Scope 'user'
-        } catch {
-            $code = 1
+        foreach ($scope in @('user', 'machine')) {
+            Write-Info "Installing $DisplayName via winget id $packageId (scope: $scope)"
+            try {
+                $code = Invoke-WingetInstallById -PackageId $packageId -Scope $scope
+            } catch {
+                $code = 1
+            }
+
+            Refresh-SessionPath
+
+            if ($code -eq 0 -and (Test-CommandAvailable -Name $CommandName)) {
+                Write-Success "$DisplayName installed via winget ($scope scope)"
+                return $true
+            }
+
+            Write-Warn "winget id $packageId failed in scope '$scope' or command '$CommandName' still unavailable"
         }
-
-        Refresh-SessionPath
-
-        if ($code -eq 0 -and (Test-CommandAvailable -Name $CommandName)) {
-            Write-Success "$DisplayName installed via winget"
-            return $true
-        }
-
-        Write-Warn "winget id $packageId did not produce command '$CommandName'"
     }
 
     if ($Fallback) {
@@ -259,15 +261,17 @@ function Install-WingetPackageById {
     Assert-WingetAvailable
     Write-Info "Installing winget package id $PackageId"
 
-    try {
-        $code = Invoke-WingetInstallById -PackageId $PackageId -Scope 'user'
-    } catch {
-        $code = 1
-    }
+    foreach ($scope in @('user', 'machine')) {
+        try {
+            $code = Invoke-WingetInstallById -PackageId $PackageId -Scope $scope
+        } catch {
+            $code = 1
+        }
 
-    if ($code -eq 0) {
-        Write-Success "winget package installed: $PackageId"
-        return $true
+        if ($code -eq 0) {
+            Write-Success "winget package installed: $PackageId ($scope scope)"
+            return $true
+        }
     }
 
     if ($Required) {

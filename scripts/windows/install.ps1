@@ -1,3 +1,7 @@
+param(
+    [Alias('dry-run')][switch]$DryRun
+)
+
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
@@ -24,11 +28,20 @@ foreach ($step in $steps) {
     }
 
     Write-Info "Running $step"
-    & $path
-    Write-Success "$step complete"
+    if ($DryRun) {
+        Write-Info "[dry-run] would execute: $path"
+    } else {
+        & $path
+        Write-Success "$step complete"
+    }
 }
 
 Write-Section 'WINDOWS INSTALLATION COMPLETE'
+if ($DryRun) {
+    Write-Host '[SUCCESS] Dry-run flow validation PASS' -ForegroundColor Green
+    exit 0
+}
+
 Write-Host 'Next steps:' -ForegroundColor Green
 Write-Host '1. Open a new terminal session (or run: RefreshEnv in terminal that supports it).' -ForegroundColor Green
 Write-Host '2. Run health-check: .\scripts\health-check-windows.ps1 -Summary' -ForegroundColor Green
