@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- _No notable changes yet._
+
+## [2.0.1] - 2026-02-23
+
+### Added
 - Added OS-first script documentation indexes:
   - `scripts/README.md`
   - `scripts/linux/README.md`
@@ -34,6 +39,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - pinned marketplace actions to immutable commit SHAs,
   - added per-job timeout limits,
   - expanded link-check coverage to docs/wiki core markdown files.
+- Clarified canonical UX entrypoints across docs:
+  - `scripts/install.sh` and `scripts/health-check.sh` are primary entrypoints,
+  - `README.md` now links explicit docs index and wiki publish prerequisites,
+  - `docs/README.md` defines canonical documentation starting points,
+  - `wiki/Getting-Started.md` explicitly points to `README.md` quick-start as source of truth.
+- Updated contributor contact path from Discussions to Issues (active support channel).
+
+### Verified
+- Fully tested on Ubuntu 25.10.
+- Fully tested on Ubuntu 24.04 LTS.
+- macOS and Windows were not tested in this release cycle.
+- If you encounter platform-specific issues, please open a GitHub issue and I will prioritize fixes.
 
 ### Removed
 - Removed repository directories:
@@ -182,7 +199,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/rldyourmnd/awesome-terminal-for-ai/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/rldyourmnd/awesome-terminal-for-ai/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.1
 [2.0.0]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v2.0.0
 [1.3.0]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v1.3.0
 [1.2.2]: https://github.com/rldyourmnd/awesome-terminal-for-ai/releases/tag/v1.2.2
