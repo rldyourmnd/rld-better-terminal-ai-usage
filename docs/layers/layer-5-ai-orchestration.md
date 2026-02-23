@@ -12,15 +12,15 @@ Layer 5 installs and uses three AI CLIs:
 
 ## Current System Versions
 
-Snapshot timestamp: `2026-02-23T02:30:22+07:00`
+Snapshot timestamp: `2026-02-23T07:30:05+07:00`
 
 | Tool | Provider | Installed Version |
 |------|----------|-------------------|
 | Claude Code | Anthropic | `2.1.50 (Claude Code)` |
-| Gemini CLI | Google | `0.29.5` |
-| Codex CLI | OpenAI | `codex-cli 0.104.0` |
-| Node.js | Node.js | `v24.12.0` |
-| npm | npm | `11.6.2` |
+| Gemini CLI | Google | `non-interactive call times out (interactive auth/bootstrap path)` |
+| Codex CLI | OpenAI | `codex-cli 0.104.0 (warning: stale temp dir cleanup Permission denied)` |
+| Node.js | Node.js | `v24.13.1` |
+| npm | npm | `11.8.0` |
 
 ## Installation
 

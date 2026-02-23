@@ -16,7 +16,7 @@ We take the security of Better Terminal Usage seriously. If you have discovered 
 
 Instead, please report them via GitHub Security Advisories:
 
-1. Go to the [Security Advisories](https://github.com/rldyourmnd/better-terminal-usage/security/advisories) page
+1. Go to the [Security Advisories](https://github.com/rldyourmnd/rld-better-terminal-ai-usage/security/advisories) page
 2. Click "Report a vulnerability"
 3. Fill out the form with details about the vulnerability
 

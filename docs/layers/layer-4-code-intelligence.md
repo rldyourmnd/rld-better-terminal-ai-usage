@@ -45,7 +45,8 @@ pip3 install --user --break-system-packages semgrep
 
 # grepai (88.4) - semantic code search (Go binary)
 GREPAI_VERSION=$(curl -s https://api.github.com/repos/yoanbernabeu/grepai/releases/latest | grep -oP '"tag_name": "\K[^"]+')
-curl -sSL -o /tmp/grepai.tar.gz "https://github.com/yoanbernabeu/grepai/releases/download/${GREPAI_VERSION}/grepai_${GREPAI_VERSION#v}_linux_amd64.tar.gz"
+GREPAI_ARCH="$(uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')"
+curl -sSL -o /tmp/grepai.tar.gz "https://github.com/yoanbernabeu/grepai/releases/download/${GREPAI_VERSION}/grepai_${GREPAI_VERSION#v}_linux_${GREPAI_ARCH}.tar.gz"
 tar xzf /tmp/grepai.tar.gz -C /tmp
 mv /tmp/grepai ~/.local/bin/
 ```

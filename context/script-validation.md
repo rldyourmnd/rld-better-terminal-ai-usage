@@ -1,10 +1,10 @@
 # Script Validation Report
 
-This report captures static validation of all repository installation scripts.
+This report captures static and operational validation for repository bootstrap scripts.
 
 ## Validation Timestamp
 
-- 2026-02-23T02:30:22+07:00
+ - 2026-02-23T07:30:05+07:00
 
 ## Scope
 
@@ -17,15 +17,26 @@ Validated scripts:
 - `scripts/install-layer-3.sh`
 - `scripts/install-layer-4.sh`
 - `scripts/install-layer-5.sh`
+- `scripts/health-check.sh`
 
 ## Checks Performed
 
-1. Shell syntax check (`bash -n`) on all scripts: PASS.
-2. Shebang consistency (`#!/usr/bin/env bash`) on all scripts: PASS.
-3. Strict mode check (`set -euo pipefail`) on all scripts: PASS.
-4. Executable bit check (`chmod +x scripts/*.sh` and verify): PASS.
+1. Shell syntax check (`bash -n scripts/*.sh`): PASS.
+2. Fish syntax check (`fish -n configs/fish/config.fish`): PASS.
+3. Shebang consistency (`#!/usr/bin/env bash`) on all scripts: PASS.
+4. Strict mode check (`set -euo pipefail`) on all scripts: PASS.
+5. Executable bit check (`chmod +x scripts/*.sh` and verify): PASS.
+6. Runtime validation via `./scripts/health-check.sh --summary`: PASS (61 passed, 5 warnings, 0 hard failures).
+7. Config parity check: FAIL (system files differ from repo templates):
+   - `~/.wezterm.lua`
+   - `~/.config/fish/config.fish`
+   - `~/.config/starship.toml`
 
 ## Notes
 
 - `shellcheck` is not installed on this machine, so shellcheck linting was not executed.
-- Runtime end-to-end execution was intentionally not run because scripts perform package installation and may require interactive sudo/network actions.
+- Runtime end-to-end installation runs were not executed by default because scripts perform package installation and may require interactive `sudo` / network operations.
+- Known runtime findings:
+- `./scripts/health-check.sh --summary`: 61 passed, 5 warnings, 0 hard failures.
+  - `semgrep --version` fails `PermissionError` at `~/.semgrep/semgrep.log` in this environment.
+  - `gemini` is interactive and does not return within 4 seconds in this non-interactive context.

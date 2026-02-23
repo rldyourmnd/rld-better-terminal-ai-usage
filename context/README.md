@@ -11,6 +11,7 @@ Live machine snapshots are stored separately in `context/system-state.md`.
 context/
 ├── README.md                    # This file
 ├── benchmarks.md                # Performance benchmarks
+├── script-validation.md         # Validation reports and evidence
 ├── system-state.md              # Current machine versions and config parity
 ├── research/
 │   ├── terminals.md             # Terminal emulator research
@@ -21,6 +22,13 @@ context/
     ├── layer-3-github.md        # GitHub & Git tools
     └── layer-4-code-intelligence.md  # Code intelligence tools
 ```
+
+Operational runbooks are stored in `/docs/operations`:
+
+- `docs/operations/health-check.md`
+- `docs/operations/terminal-tool-catalog.md`
+- `docs/operations/troubleshooting.md`
+- `docs/operations/upgrade-and-rollback.md`
 
 ## Quick Reference
 

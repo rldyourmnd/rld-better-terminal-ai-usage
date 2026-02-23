@@ -2,19 +2,22 @@
 
 <p align="center">
   <a href="https://github.com/rldyourmnd/rld-better-terminal-ai-usage">
-    <img src="docs/assets/terminal-screenshot.png" alt="Better Terminal Usage screenshot" width="100%">
+    <img src="docs/assets/terminal-screenshot.png" alt="Terminal screenshot" width="100%">
   </a>
 </p>
 
 <p align="center">
-  <strong>Opinionated Linux terminal environment bootstrapping: WezTerm + Fish + Starship with a layered developer tool stack.</strong>
+  <strong>Production-ready Linux terminal stack: WezTerm + Fish + Starship with a 5-layer AI-native toolchain.</strong>
 </p>
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-installation">Installation</a> •
+  <a href="#-terminal--tools-catalog">Terminal & Tools Catalog</a> •
+  <a href="#-verification-and-health-checks">Verification and Health Checks</a> •
   <a href="#-architecture">Architecture</a> •
-  <a href="#-screenshots">Screenshots</a> •
+  <a href="#-operations">Operations</a> •
+  <a href="#-troubleshooting">Troubleshooting</a> •
   <a href="https://github.com/rldyourmnd/rld-better-terminal-ai-usage/wiki">Wiki</a>
 </p>
 
@@ -44,14 +47,12 @@
 
 ## ✅ What this repository is
 
-`rld-better-terminal-ai-usage` is a collection of scripts and configuration files to quickly set up a development terminal environment on Ubuntu/Debian Linux.
+`rld-better-terminal-ai-usage` is a production-oriented terminal bootstrap for Debian/Ubuntu that provides:
 
-- Base terminal stack: WezTerm + Fish + Starship.
-- Layered installation flow with independent scripts per layer.
-- Optional AI CLI support (Claude, Gemini, Codex) via Layer 5.
-- `install.sh` works as an orchestrator for all installation layers.
-
-The repository is designed to be user-agnostic in scripts and runtime configs (no hardcoded `/home/<user>` in install/config logic).
+- WezTerm + Fish + Starship base environment.
+- Layered CLI tooling split into 5 isolated install layers.
+- Reproducible verification and troubleshooting workflow.
+- User-agnostic scripts (no hardcoded `/home/<user>` in install/config logic).
 
 ## 🚀 Quick Start
 
@@ -67,59 +68,79 @@ After setup:
 exec fish
 ```
 
-If Layer 5 is installed, authenticate AI CLI tools:
-
-```bash
-claude      # browser auth
-gemini      # Login with Google
-codex       # set OPENAI_API_KEY in environment
-```
-
 ## 🧩 Installation
 
 ### Requirements
 
-- Ubuntu/Debian (apt-based).
-- `curl` and `git` (required by `install.sh`).
-- `sudo` access for system packages.
-- Internet access.
+- Ubuntu/Debian (apt-based)
+- `curl` and `git` (required by installer scripts)
+- `sudo` for system packages
+- Internet access
+- `amd64` or `arm64` Linux (multi-arch installer fallbacks are handled automatically)
 
-### Full install
+### Full install (recommended)
 
 ```bash
 ./scripts/install.sh
 ```
 
-`install.sh` executes:
+`install.sh` runs these layers in this order:
 
+- `scripts/install-foundation.sh`
 - `scripts/install-layer-1.sh`
 - `scripts/install-layer-2.sh`
 - `scripts/install-layer-3.sh`
 - `scripts/install-layer-4.sh`
 - `scripts/install-layer-5.sh`
-- `scripts/install-foundation.sh`
+
+Use this deterministic sequence if you want checkpointed output per layer.
 
 ### Layer-by-layer install
 
 ```bash
+./scripts/install-foundation.sh
 ./scripts/install-layer-1.sh
 ./scripts/install-layer-2.sh
 ./scripts/install-layer-3.sh
 ./scripts/install-layer-4.sh
 ./scripts/install-layer-5.sh
-./scripts/install-foundation.sh
 ```
 
 ### Installed content by layer
 
 | Layer | Script | Includes |
 |---|---|---|
-| Foundation | `install-foundation.sh` | WezTerm, Fish, Starship, Nerd Fonts, and config files |
+| Foundation | `install-foundation.sh` | WezTerm, Fish, Starship, Nerd Fonts, shared configs |
 | Layer 1 | `install-layer-1.sh` | bat, fd (fdfind), rg, sd, jq, yq, eza |
-| Layer 2 | `install-layer-2.sh` | fzf, zoxide, atuin, uv, bun, watchexec, glow, bottom, hyperfine |
+| Layer 2 | `install-layer-2.sh` | fzf, zoxide, atuin, uv, bun, watchexec, glow, btm, hyperfine |
 | Layer 3 | `install-layer-3.sh` | gh CLI, lazygit, delta |
 | Layer 4 | `install-layer-4.sh` | grepai, ast-grep, probe, semgrep, ctags, tokei |
-| Layer 5 | `install-layer-5.sh` | claude CLI, gemini CLI, codex CLI |
+| Layer 5 | `install-layer-5.sh` | claude, gemini, codex |
+
+## 🧰 Terminal & Tools Catalog
+
+[`docs/operations/terminal-tool-catalog.md`](docs/operations/terminal-tool-catalog.md) is the authoritative inventory for all terminals and tools used by this repo, including expected binaries, install source, and health checks.
+
+## 🛠 Verification and Health checks
+
+Run the built-in health-check before and after changes:
+
+```bash
+./scripts/health-check.sh
+```
+
+Checks include:
+
+- Bash syntax validation for all installer scripts.
+- Tool presence and version probes.
+- PATH/`~/.local/bin` checks.
+- Config parity checks for WezTerm, Fish, and Starship.
+- Known failure checks (`semgrep`, `gemini`) with suggested remediation.
+
+State snapshots are tracked in:
+
+- `context/system-state.md` (current machine snapshot)
+- `context/script-validation.md` (validation report)
 
 ## 🏗️ Architecture
 
@@ -128,7 +149,7 @@ Foundation: WezTerm + Fish + Starship
 ↓
 Layer 1: File Operations (bat, fd, rg, sd, jq, yq, eza)
 ↓
-Layer 2: Productivity (fzf, zoxide, atuin, uv, bun, watchexec, glow, bottom, hyperfine)
+Layer 2: Productivity (fzf, zoxide, atuin, uv, bun, watchexec, glow, btm, hyperfine)
 ↓
 Layer 3: GitHub workflow (gh, lazygit, delta)
 ↓
@@ -137,16 +158,19 @@ Layer 4: Code Intelligence (grepai, ast-grep, probe, semgrep, ctags, tokei)
 Layer 5: AI orchestration (claude, gemini, codex)
 ```
 
-## 🖼️ Screenshots
+## 📦 Operations
 
-<p align="center">
-  <img src="docs/assets/terminal-screenshot.png" alt="Terminal screenshot" width="100%">
-</p>
+- `docs/operations/health-check.md` – production checklists and runbook
+- `docs/operations/terminal-tool-catalog.md` – terminal and layer tool matrix
+- `docs/operations/troubleshooting.md` – known issues and recovery steps
+- `docs/operations/upgrade-and-rollback.md` – controlled upgrade strategy
+- `docs/layers/*.md` – per-layer installation and command usage
+- `context/` – research and reference snapshots
 
 ## 📁 Project structure
 
 ```text
-better-terminal-usage/
+rld-better-terminal-ai-usage/
 ├── scripts/
 │   ├── install.sh
 │   ├── install-foundation.sh
@@ -154,45 +178,51 @@ better-terminal-usage/
 │   ├── install-layer-2.sh
 │   ├── install-layer-3.sh
 │   ├── install-layer-4.sh
-│   └── install-layer-5.sh
+│   ├── install-layer-5.sh
+│   └── health-check.sh
 ├── configs/
 │   ├── fish/config.fish
 │   ├── wezterm/wezterm.lua
 │   └── starship/
 ├── docs/
-│   └── layers/
+│   ├── foundation/
+│   ├── layers/
+│   └── operations/
 ├── context/
 └── CHANGELOG.md
 ```
 
 ## 🛠 Troubleshooting
 
-- If a layer fails, re-run that layer script after fixing the issue.
+- If a layer fails, resolve the blocker and re-run only the failed layer.
+- If config parity fails, compare local files with `configs/*`.
+- If third-party CLI commands fail, check:
 
 ```bash
-command -v bat rg fzf gh lazygit delta claude gemini codex
+./scripts/health-check.sh --summary
 ```
 
-- If `sudo` is not available or apt access is restricted, Layer 3/4/5 scripts provide fallback instructions in their output.
+### Local CLI checks
+
+```bash
+command -v bat rg fzf gh lazygit delta claude codex
+```
 
 ## 🤝 Contributing
 
-If you want to contribute:
-
 - open an issue: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/issues>
-- propose ideas in discussions: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/discussions>
+- start a discussion: <https://github.com/rldyourmnd/rld-better-terminal-ai-usage/discussions>
 - submit PRs with focused, verifiable changes.
 
 ## 📄 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE).
 
 ## 🙌 Acknowledgements
 
-- WezTerm, Fish, Starship teams and maintainers.
-- All CLI tools used in this setup and their maintainers.
-- Community documentation and project assets.
+- WezTerm, Fish, and Starship teams and maintainers.
+- All tool maintainers and community contributors.
 
 <p align="center">
-  <strong>An open-source, user-agnostic terminal setup for developers using AI in daily workflows.</strong>
+  <strong>An open-source, user-agnostic terminal setup for AI-native Linux development workflows.</strong>
 </p>

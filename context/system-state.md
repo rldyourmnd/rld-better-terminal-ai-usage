@@ -4,7 +4,7 @@ Captured from the current machine and intended as the canonical "current state" 
 
 ## Captured At
 
-- Timestamp: 2026-02-23T02:30:22+07:00
+- Timestamp: 2026-02-23T07:30:05+07:00
 - Host profile: Linux, NVIDIA RTX 2070, i7-8750H, 32GB RAM
 
 ## Rendering and Shell Profile
@@ -18,9 +18,9 @@ Captured from the current machine and intended as the canonical "current state" 
 
 ## Config Parity (System vs Repo)
 
-- `~/.wezterm.lua` == `configs/wezterm/wezterm.lua`
-- `~/.config/fish/config.fish` == `configs/fish/config.fish`
-- `~/.config/starship.toml` == `configs/starship/starship.toml`
+- `~/.wezterm.lua` ❌ differs from `configs/wezterm/wezterm.lua`
+- `~/.config/fish/config.fish` ❌ differs from `configs/fish/config.fish`
+- `~/.config/starship.toml` ❌ differs from `configs/starship/starship.toml`
 
 ## Installed Tool Versions (System)
 
@@ -29,7 +29,7 @@ Captured from the current machine and intended as the canonical "current state" 
 | `wezterm` | `wezterm 20240203-110809-5046fc22` |
 | `fish` | `fish, version 4.5.0` |
 | `starship` | `starship 1.24.2` |
-| `bat` | `bat 0.26.1` |
+| `bat` | `bat 0.25.0` |
 | `fdfind` | `fdfind 10.3.0` |
 | `rg` | `ripgrep 15.1.0` |
 | `sd` | `sd 1.0.0` |
@@ -37,6 +37,7 @@ Captured from the current machine and intended as the canonical "current state" 
 | `yq` | `yq (https://github.com/mikefarah/yq/) version v4.52.4` |
 | `eza` | `v0.21.0 [+git]` |
 | `fzf` | `0.68.0 (Homebrew)` |
+| `glow` | `glow version unknown (built from source)` |
 | `zoxide` | `zoxide 0.9.9` |
 | `atuin` | `atuin 18.12.1 (42dd242541d1db21c676e213a98d50ee74bd553d)` |
 | `uv` | `uv 0.10.4 (Homebrew 2026-02-17)` |
@@ -50,13 +51,14 @@ Captured from the current machine and intended as the canonical "current state" 
 | `grepai` | `grepai version 0.33.0` |
 | `sg` | `ast-grep 0.40.5` |
 | `probe` | `probe-code 0.6.0` |
-| `semgrep` | `1.152.0` |
+| `tokei` | `tokei 14.0.0 compiled with serialization support: json` |
+| `semgrep` | `PermissionError on /home/rldyourmnd/.semgrep/semgrep.log` |
 | `ctags` | `Universal Ctags 5.9.0, Copyright (C) 2015 Universal Ctags Team` |
-| `node` | `v24.12.0` |
-| `npm` | `11.6.2` |
+| `node` | `v24.13.1` |
+| `npm` | `11.8.0` |
 | `claude` | `2.1.50 (Claude Code)` |
-| `gemini` | `0.29.5` |
-| `codex` | `codex-cli 0.104.0` |
+| `gemini` | `non-interactive call times out (interactive auth/bootstrap path)` |
+| `codex` | `codex-cli 0.104.0 (warning: stale temp dir cleanup Permission denied)` |
 
 ## Context7 Validation Notes
 
@@ -65,3 +67,12 @@ The following official docs were consulted through Context7 for configuration va
 - WezTerm (`/wezterm/wezterm`): `front_end` supports `OpenGL` / `WebGpu` / `Software`; `enable_wayland` is valid.
 - Fish (`/fish-shell/fish-shell`): `fish_add_path`, `type -q`, and `abbr -a` patterns are valid.
 - Starship (`/starship/starship`): top-level `format`/`right_format` and module `disabled` config style is valid.
+- Semgrep (`/semgrep/semgrep-docs`): `scan` is default command family and `--version` is documented.
+
+## Health-Check Snapshot
+
+- `scripts/health-check.sh` status: PASS (5 warnings)
+- Key warnings:
+  - `semgrep` fails `--version` due log file permission error
+  - `gemini` interactive command behavior requires manual auth flow
+  - Config parity mismatches for three user template files
