@@ -28,3 +28,7 @@ Platform wrappers (`install-macos.sh`, `install-windows.ps1`, `health-check-maco
 
 - `scripts/shared/starship/switch-profile.sh`
 - `scripts/publish-wiki.sh`
+
+## Linux Runtime Recovery
+
+- `scripts/linux/fix-nvidia-nvml.sh` repairs common NVML/NVIDIA runtime issues (`nvidia-smi` unknown error).

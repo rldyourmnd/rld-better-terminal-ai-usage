@@ -16,3 +16,9 @@ Canonical Linux implementation for Debian/Ubuntu.
 - Full flow: `./scripts/install.sh`
 - Dry-run: `./scripts/install.sh --dry-run`
 - Health: `./scripts/health-check.sh --summary`
+
+## Recovery Utilities
+
+- NVML/NVIDIA recovery: `./scripts/linux/fix-nvidia-nvml.sh`
+  - starts `nvidia-persistenced` if needed
+  - can register boot pull-in for `multi-user.target`

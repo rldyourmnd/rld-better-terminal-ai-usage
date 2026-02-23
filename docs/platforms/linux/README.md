@@ -18,6 +18,7 @@ This is the production implementation for Linux hosts.
 - Flow dry-run: `./scripts/install.sh --dry-run`
 - Installer help: `./scripts/install.sh --help`
 - Health check: `./scripts/health-check.sh --summary`
+- NVML/NVIDIA recovery: `./scripts/linux/fix-nvidia-nvml.sh`
 
 ## Layer Scripts
 
@@ -72,4 +73,10 @@ export YQ_SHA256="<sha256-from-official-release>"
 bash -n scripts/*.sh scripts/macos/*.sh
 ./scripts/health-check.sh --summary
 ./scripts/health-check.sh --strict
+```
+
+If NVML reports `nvidia-smi: Failed to initialize NVML: Unknown Error`, run:
+
+```bash
+./scripts/linux/fix-nvidia-nvml.sh
 ```
