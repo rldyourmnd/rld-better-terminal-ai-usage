@@ -49,7 +49,7 @@ function Check-Command {
 
     if (Test-CommandAvailable -Name $Name) {
         $version = Get-CommandVersion -CommandName $Name -VersionArgs $VersionArgs
-        Add-Pass "$Name: $version"
+        Add-Pass ("{0}: {1}" -f $Name, $version)
         return
     }
 
