@@ -10,3 +10,7 @@
   - `wiki/Operations-Runbook.md`
 - Added launcher/build consolidation around `rldyourterm` entrypoints and wrappers.
 - Preserved foundation runtime code as the upstream terminal core under `rldyourterm/` for source continuity.
+- Added release infrastructure for tag-driven publishing:
+  - `.github/workflows/release.yml`
+  - `scripts/release-check.sh`
+  - `docs/operations/release.md`

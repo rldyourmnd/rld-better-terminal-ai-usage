@@ -34,6 +34,8 @@
 
 - Merge to `main`.
 - Create tag and release notes.
+- Validate with:
+  - `./scripts/release-check.sh --tag <tag>`
 - Publish wiki updates if changed:
 
 ```bash
