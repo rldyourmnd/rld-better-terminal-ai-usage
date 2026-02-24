@@ -7,98 +7,73 @@
 ## 1) Product Priorities (hard priority order)
 1. `СТАБИЛЬНОСТЬ`
    - Сохранение сессий при сбоях рендеринга.
-   - Корректный failover: GPU -> CPU без падения процесса терминала.
+   - Корректный failover: GPU -> CPU без завершения процесса терминала.
    - Детект, retry/backoff и наблюдаемость для всех критических границ.
 2. `BEST PRACTICES FOR AI TOOLS`
    - Поведение, заточенное под CLI-потоки CodeX, OpenCode, Claude Code, Gemini CLI.
    - Предсказуемая производительность ввода/вывода в автоматических сессиях.
-   - Минимум шума в терминале и строгий контроль lifecycle shell-процессов.
+   - Минимум шума и низкая дестабилизация в рабочем процессе AI.
 3. `СКОРОСТЬ`
-   - Низкая латентность (input -> frame).
-   - Два режима рендера: `cpu` и `gpu`, плюс `auto`.
-   - Контролируемое потребление памяти и устойчивый FPS.
+   - Минимальная латентность (input -> frame).
+   - Два режима рендера: `cpu` и `gpu` + `auto`.
+   - Контролируемое потребление RAM/CPU.
 
 ## 1.1) Product Persona and Compatibility Intent
-- Пользователь v1.0: визуальный продуктовый владелец и AI CLI power-user (длительные сессии с активной автоматизацией и shell-интеракциями), для которых критичны стабильность и предсказуемая скорость.
-- Shell policy: дефолтно `fish + starship`; допускается прозрачный fallback на `zsh` как вспомогательный путь.
-- Bash не является целевым shell для v1.0 на Linux/macOS; любые проверки Bash-совместимости выполняются через совместимые ANSI/terminal-паттерны.
-- Терминальная совместимость в v1.0 фиксируется как корректность критичных сценариев: ANSI цвет/style, курсорные операции, очистка/перерисовка, прокрутка, paste, resize stability.
+- Пользователь v1.0: визуальный продуктовый владелец и AI CLI power-user с длительными сессиями.
+- Shell policy: дефолтно `fish + starship`; допускается fallback `zsh`.
+- Bash не является целевым shell для v1.0 на Linux/macOS; совместимость базовых ANSI/terminal-сценариев обязательна.
+- Критичные сценарии AI: prompt latency, paste latency, корректный scrollback, отсутствие цветовых/курсорных артефактов.
 
-## 1.2 OS Coverage (v1 and Roadmap)
-- v1.0.0: Linux (Ubuntu 22.04 LTS, 24.04 LTS, 25.10) + macOS.
-- Roadmap for Linux: include future Ubuntu 26 LTS validation after initial 26.04 baseline in same release track.
-- Windows support is part of phase architecture and implemented as a distinct platform slice.
-- OS-specific code is not allowed in `core`; only in `foundation` and platform adapters.
+## 1.2 OS Scope and Delivery Stage
+- v1.0.0: Linux (Ubuntu 22.04 LTS, 24.04 LTS, 25.10, поддержка Debian-пакетной экосистемы), macOS.
+- Windows: отдельный архитектурный слой и адаптер в `foundation`, включение полной функциональности после v1.0.
+- Будущее расширение ОС не влияет на функциональные гейты v1.0.
 
-## 2) Вехи разработки
-- Шаг 1: рабочая версия базового терминала с одним окном и двумя рендерами (CPU/GPU), без расширений.
-- Шаг 2: внедрение VSA архитектуры до уровня контрактов/границ.
-- Шаг 3: расширение фичами после того, как базовое ядро стабильно.
+## 2) VSA Архитектурная модель (обязательная)
+- `foundation/`: адаптеры ОС и интеграции (PTY, window/event loop, clipboard, env hooks).
+- `core/`: доменная модель терминала (grid/state/parser/events), без зависимостей от OS API.
+- `services/`: оркестрация сессий, режимов рендера, retry/fallback и контролируемого завершения.
+- `features/`: модульные возможности (render.cpu, render.gpu, settings.ui, shell-integration, diagnostics).
+- `ui/`: визуальное поведение на основе сервисных контрактов.
+- `app/`: CLI и сборка бинарей.
 
-## 3) Архитектурная модель VSA (обязательная)
-- `foundation/`: адаптеры ОС (PTY, окна, clipboard, события окна, shell hooks).
-- `core/`: доменная логика терминала (grid, escape/ANSI parser, сессионная модель), без зависимостей от окон/рендера.
-- `services/`: оркестрация и переключение режимов, retry/fallback, контроль жизненного цикла сессий.
-- `features/`: модульные возможности (render.cpu, render.gpu, settings.ui, shell.integration, diagnostics).
-- `ui/`: отрисовка и интерфейс пользователя на основе контрактов сервисов.
-- `app/`: бинарники/CLI и интеграционные сборки.
+## 2.1) Правила зависимостей
+- Зависимости только внутрь:
+  - `app -> features -> services -> core`
+  - `foundation` подключается через explicit adapter trait-port interfaces в `foundation/api`.
+- Прямой импорт `core` в `foundation` запрещён.
+- Любые внешние crates в  v1.0 подключаются только через адаптеры.
 
-## 4) Правила зависимостей
-- Все зависимости строго направлены внутрь.
-- Взаимодействие слоев только через trait-порты (`api/`).
-- `core` не имеет прямых зависимостей от конкретных фреймворков рендера/окон.
+## 3) Hard Constraints v1.0 (не изменяются без ADR)
+- Поддержка трёх render режимов: `cpu`, `gpu`, `auto`.
+- Автопереключение `auto`: GPU first, затем bounded retry, затем CPU.
+- In-terminal настройки обязательны как primary UX (`Ctrl/Cmd + Shift + P`).
+- Ограничение сложности: базовый терминал один tab/окно в v1.0.
+- Debug mode for diagnostics: по умолчанию выключен, включается runtime-командой и фиксируется в событии журнала.
+- Схема метрик: structured logs + event-id + trace correlation для сбоев GPU/PTY/window.
+- Лимит строки состояния: целевой максимум 50_000 строк scrollback в v1.0.
 
-## 5) Принципы стабильности и производительности
-- GPU и CPU режимы обязательны, оба должны быть production-ready.
-- Автоматический fallback на CPU при любой GPU-проверяемой ошибке.
-- Любой failure на слое интеграции не должен рушить core loop.
-- Ошибки считаются штатным событием проектирования и переводятся в контролируемые состояния.
+## 4) Stability/Performance Governance
+- GPU failure не падает на core loop.
+- `GPU -> CPU` fallback всегда логируется и приводит к уведомлению пользователя.
+- Любое падение, restart, fallback — наблюдаемое событие через `trace` и `diagnostics`.
 
-## 7) UI и настройки
-- Никаких «только config-file» сценариев.
-- Настройки редактируются внутри терминала через command palette (`Ctrl/Cmd + Shift + P`, командная строка настроек).
-- Базовый визуальный стиль: современный shell UI, стартовая тема `cuberpunk`.
+## 5) Работа с документами и релизом
+- Перед переходом к коду фиксируется документационный lock:
+  - `planning/discovery/v1.0.0-answer-lock.md`
+  - `planning/v1.0.0-development-blueprint.md`
+  - `planning/architecture/adr-0001-layer-boundaries.md`
+  - `planning/adr/0002-pty-strategy.md`
+  - `planning/adr/0003-render-fallback.md`
+  - `planning/adr/0004-settings-command-palette.md`
+  - `planning/stack/v1.0.0-module-integration-contracts.md`
+  - `planning/quality/v1.0.0-quality-gates.md`
+  - `planning/risk/v1.0.0-risk-matrix.md`
+- Ветвление и финальные этапы без CI: только manual test pack и ручной QA.
+- Версия v1.0.0 должна быть консистентно зафиксирована во всех `metrics/version/1.0.0/*.md`.
 
-## 8) Shell Integration
-- Базовый автологин для `fish + Starship` сохраняется как дефолт.
-- Fallback на `zsh` допустим как поддерживающий сценарий для стабильности.
-- Bash policy v1.0: не включён как целевой базовый shell, расширение только отдельным решением через roadmap.
-
-## 8.1) Terminal Compatibility Contract
-- Поддержка базового ANSI/terminal behavior обязательна для:
-  - цвета, атрибуты и reset-последовательности,
-  - позиционирование и движение курсора,
-  - очистка экранов/областей,
-  - управление scrollback и paste.
-- Экзотические/редкие ANSI-расширения допускается обработать как деградационные без падения сессии.
-- Производительность и целостность рендера для AI-сценариев выше приоритетна, чем полная legacy-совместимость.
-
-## 9) Риск-минимизация и источники
-- Отказываемся от импортов готовых терминальных исходных кодов как основного ядра.
-- Для фундаментальных примитивов допускаются проверенные crates:
-  - PTY: `portable-pty`
-  - окно/события: `winit`
-  - GPU рендер: `wgpu`
-  - текстовая обработка через отдельный выбранный internal rendering pipeline
-- Каждая внешняя зависимость должна иметь обоснование и быть изолированной адаптером.
-
-## 9.1 Integration Scope (what we connect to / what we build)
-- We do **not** inherit or copy terminal source trees as core logic.
-- We integrate only OS-level primitives and reusable utility crates via adapters:
-  - PTY lifecycle and IO: `portable-pty` (spawn/resize/read/write/kill).
-  - Windowing + input + lifecycle: `winit`.
-  - GPU acceleration: `wgpu` (backend-per-platform).
-  - Text path: internal text subsystem (CPU + GPU implementations behind a common trait).
-  - Clipboard + misc platform services: optional crate adapters (`arboard`, etc.) behind traits.
-
-## 10) Работа с документацией и репозиторием
-- Каждое исследование/решение по слоям и метрикам уходит в `planning/*`.
-- Метрики и целевые параметры версий в `metrics/version/*/*.md`.
-- Перед завершением этапа обязательно:
-  - 1+ коммит,
-  - пуш в GitHub,
-  - короткое объяснение изменений.
-
-## 11) Ориентиры качества для v1.0.0
-- Целевой набор для фиксации: стабильные CPU/GPU режимы, базовая shell-совместимость,
-  in-terminal palette settings, базовый cuberpunk UI, и наблюдаемость fallback-логики.
+## 6) Non-goals v1.0.0 (запрещено по умолчанию)
+- Multiplexer-режим в v1.0.0.
+- Полноценные windows/мульти-оконные сценарии в v1.0.0.
+- Расширенные визуальные эффекты (blur/shadow/gradients) в v1.0.0.
+- Внешние файлы-конфиги как первичный путь настройки.

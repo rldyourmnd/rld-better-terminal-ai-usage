@@ -34,6 +34,10 @@
 - Дополнительный fallback-путь на `zsh` для совместимости и стабильности.
 - Bash не является обязательным целевым shell в v1.0.0 на Linux/macOS; совместимость строится по базовым ANSI/terminal-поведениям.
 
+Узлы контракта и политики:
+- ADR: `planning/adr/0002-pty-strategy.md`, `planning/adr/0003-render-fallback.md`
+- Модульные интерфейсы: `planning/stack/v1.0.0-module-integration-contracts.md`
+
 ## OS-структура (логическое разделение)
 
 ```

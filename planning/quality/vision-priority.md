@@ -24,6 +24,10 @@
 - No full multiplexer on v1 (single-terminal baseline first).
 - No external config-file-only UX; settings are first-class in-terminal controls.
 
+Quality gates mapping:
+- `planning/quality/v1.0.0-quality-gates.md`
+- `planning/quality/v1.0.0-acceptance-matrix.md`
+
 ## Feature Baseline
 - OS: Linux (Ubuntu/deb) and macOS.
 - Shell baseline: fish + Starship by default with opt-in auto-init.

@@ -1,16 +1,22 @@
 # v1.0.0 Quality Targets
 
 ## Stability Targets
-- Session persistence across renderer transitions.
-- GPU renderer failure fallback to CPU within <500 ms.
-- No user-facing crash on shell resize/scroll bursts.
+- session persistence during render transitions (gpu<->cpu) and resize storms;
+- GPU failures recover to CPU without shell termination;
+- no uncontrolled shutdown on long output/long session conditions.
 
 ## AI Workflow Targets
-- Deterministic command input latency under heavy output.
-- No unexpected prompt corruption for fish + Starship.
-- No startup blocking caused by shell integrations.
+- deterministic prompt roundtrip under burst-like output;
+- stable copy/paste and scrollback during heavy interaction;
+- command palette settings remain runtime-safe and rollback-safe.
 
-## Speed Targets
-- Target 60+ FPS in normal workloads.
-- Minimized CPU wake-up cycles in idle mode.
-- Memory budget and allocation caps monitored per platform profile.
+## Speed and Efficiency Targets
+- bounded idle CPU wakeups (no busy polling in hot path);
+- controlled transition for `auto` mode;
+- default scrollback cap: 50_000 lines and bounded diagnostic event queues;
+- visual stability across 60↔144Hz transitions.
+
+## Evidence and Traceability
+- Primary acceptance source: `planning/quality/v1.0.0-acceptance-matrix.md`.
+- Quality gates: `planning/quality/v1.0.0-quality-gates.md`.
+- Manual completion evidence: `planning/operations/v1.0.0-manual-test-plan.md`.
