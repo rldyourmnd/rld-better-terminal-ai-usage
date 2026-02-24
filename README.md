@@ -92,6 +92,10 @@ cargo build --workspace --release
 Check release notes and operational runbooks in `docs/operations/` before upgrading major
 dependencies or toolchain baselines.
 
+## Release
+
+- `docs/operations/release.md`
+
 ## Contributing
 
 - Review `CONTRIBUTING.md` and `SECURITY.md`.

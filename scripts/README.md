@@ -8,6 +8,7 @@ Use these first:
 
 - Install: `scripts/install.sh` (OS dispatcher)
 - Health-check: `scripts/health-check.sh` (OS dispatcher)
+- Release validation: `./scripts/release-check.sh --tag <vMAJOR.MINOR.PATCH>`
 
 Platform wrappers (`install-macos.sh`, `install-windows.ps1`, `health-check-macos.sh`, `health-check-windows.ps1`) are convenience entrypoints.
 
@@ -28,6 +29,10 @@ Platform wrappers (`install-macos.sh`, `install-windows.ps1`, `health-check-maco
 
 - `scripts/shared/starship/switch-profile.sh`
 - `scripts/publish-wiki.sh`
+
+## Release Support
+
+- `scripts/release-check.sh` validates release metadata consistency before tag publish.
 
 ## Linux Runtime Recovery
 
